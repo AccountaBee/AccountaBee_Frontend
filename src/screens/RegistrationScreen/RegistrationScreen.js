@@ -4,12 +4,10 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { firebase } from "../../firebase/config";
 import styles from "./styles";
 import axios from "axios";
+import { registerNewUser } from '../../../redux/reducers/users';
+import {connect} from 'react-redux'
 
-const instance = axios.create({
-	baseURL: "https://accountabee.herokuapp.com/api"
-});
-
-export default function RegistrationScreen({ navigation }) {
+function RegistrationScreen(props, { navigation }) {
 	const [firstName, setFirstName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -30,14 +28,13 @@ export default function RegistrationScreen({ navigation }) {
 			.then(async response => {
 				const uid = response.user.uid;
 				const body = {
-					uid,
+          uid,
+          firstName,
 					email,
-					firstName,
 					password
-				};
-
-				const { data } = await instance.post("/users/signup", body);
-				console.log(data);
+        };
+        await props.gotUser(body)
+        console.log('PROPS.USER.EMAIL', props.user.email)
 			})
 			.catch(error => {
 				alert(error);
@@ -103,3 +100,14 @@ export default function RegistrationScreen({ navigation }) {
 		</View>
 	);
 }
+
+const mapState = state => ({
+  user: state.user
+})
+
+const mapDispatch = dispatch => ({
+  gotUser: (user) => dispatch(registerNewUser(user)) 
+})
+
+export default connect(mapState, mapDispatch)(RegistrationScreen)
+
