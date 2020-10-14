@@ -11,6 +11,7 @@ const firebaseConfig = {
   appId: process.env.EXPO_API_APP_ID,
 };
 
+
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }

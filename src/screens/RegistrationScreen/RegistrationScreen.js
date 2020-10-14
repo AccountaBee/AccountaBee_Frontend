@@ -36,7 +36,7 @@ export default function RegistrationScreen({navigation}) {
             //     .set(data)
             //     .then(() => {
             //       console.log('hI')
-                    navigation.navigate('Home', {user: data})
+            //navigation.navigate('Home', {user: data})
                 // })
                 // .catch((error) => {
                 //     alert(error)

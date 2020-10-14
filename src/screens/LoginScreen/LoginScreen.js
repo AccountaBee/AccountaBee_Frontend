@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import { firebase } from '../../firebase/config'
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
@@ -12,6 +13,13 @@ export default function LoginScreen({navigation}) {
     }
 
     const onLoginPress = () => {
+      return firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(response => {
+        //setUser(response.user);
+        return response.user;
+      });
     }
 
     return (
