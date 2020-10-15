@@ -10,11 +10,15 @@ export default function SettingsScreen(props) {
 		navigation.navigate("Goals");
 	};
 
+	const onFriendsPress = () => {
+		navigation.navigate("AddFriends");
+	};
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.header}>Settings</Text>
 			<CustomButton style={styles.button} title="Change My Goals" onPress={() => onGoalsPress()} />
-			<CustomButton style={styles.button} title="Add Friends" />
+			<CustomButton style={styles.button} title="Add Friends" onPress={() => onFriendsPress()} />
 			<CustomButton style={styles.button} title="Update Profile" />
 		</View>
 	);
