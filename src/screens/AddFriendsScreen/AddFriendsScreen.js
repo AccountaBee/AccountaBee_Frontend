@@ -11,3 +11,7 @@ export default function SettingsScreen(props) {
 		</View>
 	);
 }
+
+//input field search by friend's email
+
+// make axios request to route to get all of a user's friends, set friends in state
