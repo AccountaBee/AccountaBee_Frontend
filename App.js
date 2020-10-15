@@ -13,16 +13,10 @@ import {
 	FeedScreen,
 	SettingsScreen,
 	GoalScreen,
+	GoalScreen2,
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { useAuth, userContext } from './src/context';
-if (!global.btoa) {
-	global.btoa = encode;
-}
-if (!global.atob) {
-	global.atob = decode;
-}
-
 if (!global.btoa) {
 	global.btoa = encode;
 }
@@ -39,6 +33,14 @@ const TabsScreen = () => (
 		<Tabs.Screen
 			name="Goals"
 			component={GoalScreen}
+			options={{
+				animationEnabled: false,
+				headerShown: false,
+			}}
+		/>
+		<Tabs.Screen
+			name="Goals2"
+			component={GoalScreen2}
 			options={{
 				animationEnabled: false,
 				headerShown: false,
@@ -74,6 +76,7 @@ export default function App() {
 									component={TabsScreen}
 									options={{
 										animationEnabled: false,
+										headerShown: false,
 									}}
 								/>
 								<Stack.Screen
