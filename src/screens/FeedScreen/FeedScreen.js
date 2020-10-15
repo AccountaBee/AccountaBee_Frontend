@@ -3,7 +3,7 @@ import { useSession } from '../../context';
 import { Text, View, Button } from 'react-native';
 import { firebase } from '../../firebase/config';
 
-export default function HomeScreen(props) {
+export default function FeedScreen(props) {
 	const user = useSession();
 
 	const signout = () => {
@@ -18,8 +18,8 @@ export default function HomeScreen(props) {
 
 	return (
 		<View>
-			<Text>Home Screen</Text>
-			<Button title="Sign Out" onPress={() => signout()}></Button>
+			<Text>Feed Screen</Text>
+			<Button title="Sign Out" onPress={() => signout()} />
 		</View>
 	);
 }
