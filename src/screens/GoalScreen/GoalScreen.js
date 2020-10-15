@@ -4,6 +4,7 @@ import CustomDelButton from '../CustomDelButton';
 import CustomButton from '../CustomButton';
 import styles from './style';
 import { connect } from 'react-redux';
+import { gotGoals } from '../../../redux/reducers/newGoals';
 
 function GoalScreen(props) {
 	const [newGoal, setGoal] = useState('');
@@ -22,18 +23,14 @@ function GoalScreen(props) {
 		}
 	};
 
-	const typeHandler = (text) => {
-		console.log(text);
-		setGoal(text);
-	};
-
 	const handleGoalDel = (title) => {
 		setAllGoals(allGoals.filter((goal) => goal.title !== title));
 	};
 
-	const nextPage = () => {
+	const nextPage = async () => {
 		if (allGoals.length > 0) {
-			props.navigation.navigate('Goals2', { goals: allGoals });
+			await props.setGoals(allGoals);
+			props.navigation.navigate('Goals2');
 		} else {
 			alert('Please add at least one goal.');
 		}
@@ -54,7 +51,7 @@ function GoalScreen(props) {
 					<TextInput
 						style={[styles.textInput, styles.breakBot]}
 						placeholder="Please enter a goal"
-						onChangeText={(text) => typeHandler(text)}
+						onChangeText={(text) => setGoal(text)}
 						value={newGoal}
 					/>
 					<CustomButton
@@ -92,7 +89,7 @@ function GoalScreen(props) {
 				<CustomButton
 					style={styles.nextButton}
 					title="NEXT"
-					onPress={() => nextPage()}
+					onPress={nextPage}
 				/>
 			</View>
 		</>
@@ -103,4 +100,8 @@ const mapState = (state) => ({
 	username: state.user.firstName,
 });
 
-export default connect(mapState)(GoalScreen);
+const mapDispatch = (dispatch) => ({
+	setGoals: (goals) => dispatch(gotGoals(goals)),
+});
+
+export default connect(mapState, mapDispatch)(GoalScreen);

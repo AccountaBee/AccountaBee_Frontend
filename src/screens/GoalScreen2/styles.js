@@ -13,7 +13,7 @@ export default StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: '#8688BC',
 		width: '80%',
-		marginTop: 10,
+		marginTop: 40,
 	},
 	flex: {
 		flexDirection: 'row',
@@ -47,7 +47,7 @@ export default StyleSheet.create({
 		marginBottom: 15,
 	},
 	goals: {
-		width: '60%',
+		width: '80%',
 		paddingTop: 10,
 		fontSize: 18,
 		marginLeft: 0,
@@ -55,8 +55,8 @@ export default StyleSheet.create({
 	},
 	goalHeader: {
 		marginLeft: 20,
-		fontSize: 22,
-		fontWeight: '500',
+		marginBottom: 40,
+		fontSize: 20,
 	},
 	breakBot: {
 		marginBottom: 15,

@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View } from 'react-native';
 import CustomButton from '../CustomButton';
 import styles from './styles';
 import { connect } from 'react-redux';
 
-export default function GoalScreen2({ route }) {
-	const [allGoals, setGoals] = useState(route.goals);
-
+function GoalScreen2(props) {
 	// const setFrequency = (value, id) => {
 	// 	setAllGoals(
 	// 		allGoals.map((goal) => {
@@ -20,20 +18,39 @@ export default function GoalScreen2({ route }) {
 	// 	);
 	// 	console.log(allGoals);
 	// };
-	// console.log('route.goals: ', route.params);
-	// console.log('route.params: ', route.params);
+	console.log('props.goals: ', props.goals);
 	return (
 		<>
-			<Text style={styles.goals}>
-				How many times per week do you want to do this?
+			<View style={styles.container}>
+				<Text style={[styles.headline, styles.bigger]}>Weekly Frequency</Text>
+			</View>
+			<Text
+				style={[
+					styles.goals,
+					styles.goalHeader,
+					styles.breakTop,
+					styles.breakBot,
+				]}
+			>
+				How many times per week do you want perform these goals?
 			</Text>
-			<CustomButton title="SET GOALS" />
+			{props.goals &&
+				props.goals.map((goal, idx) => (
+					<View key={idx + 1}>
+						<View style={styles.flex}>
+							<Text style={styles.goals}>
+								{idx + 1}. {goal.title}
+							</Text>
+						</View>
+					</View>
+				))}
+			<CustomButton style={styles.nextButton} title="SET GOALS" />
 		</>
-		// <Dropdown
-		// 	data={dropdownFrequency}
-		// 	value={goal.frequency}
-		// 	useNativeDriver={true}
-		// 	onChangeText={(value) => setFrequency(value, goal.id)}
-		// />
 	);
 }
+
+const mapState = (state) => ({
+	goals: state.newGoals,
+});
+
+export default connect(mapState)(GoalScreen2);
