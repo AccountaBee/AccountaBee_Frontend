@@ -14,6 +14,7 @@ import {
 	SettingsScreen,
 	GoalScreen,
 	GoalScreen2,
+	AddFriendsScreen,
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { useAuth, userContext } from './src/context';
@@ -26,6 +27,22 @@ if (!global.atob) {
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
+const SettingsStack = createStackNavigator();
+
+// creating a seperate stack so that the bottom tabs stay on the add friends screen
+const SettingsScreenNav = () => (
+	<SettingsStack.Navigator>
+		<SettingsStack.Screen name="Settings" component={SettingsScreen} />
+		<SettingsStack.Screen
+			name="AddFriends"
+			component={AddFriendsScreen}
+			options={{
+				animationEnabled: false,
+				headerShown: false,
+			}}
+		/>
+	</SettingsStack.Navigator>
+);
 
 const TabsScreen = () => (
 	<Tabs.Navigator>
@@ -47,7 +64,7 @@ const TabsScreen = () => (
 			}}
 		/>
 		<Tabs.Screen name="Feed" component={FeedScreen} />
-		<Tabs.Screen name="Settings" component={SettingsScreen} />
+		<Tabs.Screen name="Settings" component={SettingsScreenNav} />
 	</Tabs.Navigator>
 );
 

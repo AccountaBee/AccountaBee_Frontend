@@ -7,7 +7,7 @@ import CustomButton from '../CustomButton';
 import { registerNewUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
 
-function RegistrationScreen(props) {
+function RegistrationScreen(props, { navigation }) {
 	const [firstName, setFirstName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -26,12 +26,12 @@ function RegistrationScreen(props) {
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then(async (response) => {
-				const uid = response.user.uid;
+				// follow this structure on other pages to get the token of the current user!
+				let token = await firebase.auth().currentUser.getIdToken();
 				const body = {
-					uid,
+					token,
 					email,
 					firstName,
-					password,
 				};
 				await props.gotUser(body);
 				props.navigation.navigate('Goals');
