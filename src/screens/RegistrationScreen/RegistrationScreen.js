@@ -14,7 +14,7 @@ function RegistrationScreen(props, { navigation }) {
 	const [confirmPassword, setConfirmPassword] = useState("");
 
 	const onFooterLinkPress = () => {
-		navigation.navigate("Login");
+		props.navigation.navigate("Login");
 	};
 
 	const onRegisterPress = () => {
