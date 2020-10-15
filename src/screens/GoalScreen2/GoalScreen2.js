@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import CustomButton from '../CustomButton';
+import NumericInput from 'react-native-numeric-input';
 import styles from './styles';
 import { connect } from 'react-redux';
 
 function GoalScreen2(props) {
-	// const setFrequency = (value, id) => {
-	// 	setAllGoals(
-	// 		allGoals.map((goal) => {
-	// 			if (goal.id === id) {
-	// 				goal.frequency = value;
-	// 				return goal;
-	// 			} else {
-	// 				return goal;
-	// 			}
-	// 		})
-	// 	);
-	// 	console.log(allGoals);
-	// };
-	console.log('props.goals: ', props.goals);
+	const setFrequency = (value, title) => {
+		props.goals = props.goals.map((goal) => {
+			if (goal.title === title) {
+				goal.frequency = value;
+				return goal;
+			} else {
+				return goal;
+			}
+		});
+		console.log(props.goals);
+	};
+
 	return (
 		<>
 			<View style={styles.container}>
@@ -41,6 +40,14 @@ function GoalScreen2(props) {
 							<Text style={styles.goals}>
 								{idx + 1}. {goal.title}
 							</Text>
+							<NumericInput
+								minValue={1}
+								maxValue={7}
+								style={styles.numberInput}
+								iconStyle={{ color: '#8688BC' }}
+								value={goal.frequency}
+								// onChange={(value) => setFrequency(value, goal.title)}
+							/>
 						</View>
 					</View>
 				))}

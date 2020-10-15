@@ -9,13 +9,20 @@ export default StyleSheet.create({
 		borderBottomRightRadius: 15,
 		marginRight: 15,
 	},
+	numberInput: {
+		marginTop: 15,
+		color: '#8688BC',
+	},
 	nextButton: {
 		alignSelf: 'center',
 		backgroundColor: '#8688BC',
 		width: '80%',
-		marginTop: 40,
+		marginTop: 60,
 	},
 	flex: {
+		width: '78%',
+		marginTop: 20,
+		marginLeft: 40,
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 	},
@@ -71,12 +78,5 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 20,
 		marginTop: 100,
-	},
-	button: {
-		paddingVertical: 16,
-		paddingHorizontal: 10,
-		marginTop: 0,
-		marginLeft: 0,
-		backgroundColor: '#9FC78A',
 	},
 });
