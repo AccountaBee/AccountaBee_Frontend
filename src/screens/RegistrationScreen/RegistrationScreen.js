@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import CustomButton from '../CustomButton';
+import { Text, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../../firebase/config';
 import styles from './styles';
-import axios from 'axios';
+import CustomButton from '../CustomButton';
+import { registerNewUser } from '../../../redux/reducers/users';
+import { connect } from 'react-redux';
 
-const instance = axios.create({
-	baseURL: 'https://accountabee.herokuapp.com/api',
-});
-
-export default function RegistrationScreen({ navigation }) {
+function RegistrationScreen(props, { navigation }) {
 	const [firstName, setFirstName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -36,10 +33,8 @@ export default function RegistrationScreen({ navigation }) {
 					firstName,
 					password,
 				};
-
-				const { data } = await instance.post('/users/signup', body);
-				console.log(data);
-				navigation.navigate('Goals');
+				await props.gotUser(body);
+				props.navigation.navigate('Goals');
 			})
 			.catch((error) => {
 				alert(error);
@@ -108,3 +103,13 @@ export default function RegistrationScreen({ navigation }) {
 		</View>
 	);
 }
+
+const mapState = (state) => ({
+	user: state.user,
+});
+
+const mapDispatch = (dispatch) => ({
+	gotUser: (user) => dispatch(registerNewUser(user)),
+});
+
+export default connect(mapState, mapDispatch)(RegistrationScreen);
