@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, TextInput } from "react-native";
 import styles from "./styles";
 
 export default function SettingsScreen(props) {
@@ -7,11 +7,19 @@ export default function SettingsScreen(props) {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.header}>Add Friends</Text>
+			<Text style={styles.header}>My Friends</Text>
+			<Text>Add a Friend! Search your friend's email to add them</Text>
+			<TextInput
+				style={styles.input}
+				placeholder="email"
+				placeholderTextColor="#aaaaaa"
+				underlineColorAndroid="transparent"
+				autoCapitalize="none"
+			/>
 		</View>
 	);
 }
 
 //input field search by friend's email
 
-// make axios request to route to get all of a user's friends, set friends in state
+// make axios request to route to get all of a user's friends, set friends in state and render on page
