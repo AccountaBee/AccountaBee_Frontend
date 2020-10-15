@@ -7,6 +7,7 @@ export default StyleSheet.create({
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
+		opacity : 0.8
 	},
 	flex: {
 		flexDirection: 'row',

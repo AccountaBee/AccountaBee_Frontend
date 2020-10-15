@@ -13,6 +13,7 @@ import {
 	FeedScreen,
 	SettingsScreen,
 	GoalScreen,
+	SingleGoalScreen,
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { useAuth, userContext } from './src/context';
@@ -44,6 +45,7 @@ const TabsScreen = () => (
 				headerShown: false,
 			}}
 		/>
+		<Tabs.Screen name="Single Goal" component={SingleGoalScreen} />
 		<Tabs.Screen name="Feed" component={FeedScreen} />
 		<Tabs.Screen name="Settings" component={SettingsScreen} />
 	</Tabs.Navigator>
