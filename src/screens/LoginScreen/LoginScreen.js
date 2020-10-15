@@ -4,22 +4,32 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import styles from "./styles";
 import CustomButton from "../CustomButton";
 import { firebase } from "../../firebase/config";
+import { login } from "../../../redux/reducers/users";
+import { connect } from "react-redux";
 
-export default function LoginScreen({ navigation }) {
+
+function LoginScreen(props, { navigation }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const onFooterLinkPress = () => {
-		navigation.navigate("Registration");
+		props.navigation.navigate("Registration");
 	};
 
 	const onLoginPress = () => {
-		return firebase
+		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then(response => {
-				//setUser(response.user);
-				return response.user;
+			.then(async response => {
+        let token = await firebase.auth().currentUser.getIdToken();
+        const body = {
+					token
+				};
+        await props.gotUser(body);
+        props.navigation.navigate("Home")
+      })
+      .catch(() => {
+				alert('Sorry your email or password are incorrect. Please check again!');
 			});
 	};
 
@@ -48,7 +58,10 @@ export default function LoginScreen({ navigation }) {
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
-				<CustomButton title="LOG IN" style={styles.button} onPress={() => onLoginPress} />
+        <CustomButton 
+          title="LOG IN" 
+          style={styles.button} 
+          onPress={() => onLoginPress()} />
 				<View style={styles.footerView}>
 					<Text style={styles.footerText}>
 						Don't have an account?{" "}
@@ -61,3 +74,13 @@ export default function LoginScreen({ navigation }) {
 		</View>
 	);
 }
+
+const mapState = state => ({
+	user: state.user
+});
+
+const mapDispatch = dispatch => ({
+	gotUser: body => dispatch(login(body))
+});
+
+export default connect(mapState, mapDispatch)(LoginScreen);

@@ -12,7 +12,6 @@ export default function FeedScreen(props) {
 			.signOut()
 			.then(() => {
 				console.log('You are signed out');
-				//setUser(false);
 			});
 	};
 
