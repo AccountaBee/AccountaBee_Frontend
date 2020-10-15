@@ -14,7 +14,7 @@ function RegistrationScreen(props, { navigation }) {
 	const [confirmPassword, setConfirmPassword] = useState("");
 
 	const onFooterLinkPress = () => {
-		navigation.navigate("Login");
+		props.navigation.navigate("Login");
 	};
 
 	const onRegisterPress = () => {
@@ -26,7 +26,7 @@ function RegistrationScreen(props, { navigation }) {
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then(async response => {
-				// follow this structure on the goals page to get the token of the current user!
+				// follow this structure on other pages to get the token of the current user!
 				let token = await firebase.auth().currentUser.getIdToken();
 				const body = {
 					token,

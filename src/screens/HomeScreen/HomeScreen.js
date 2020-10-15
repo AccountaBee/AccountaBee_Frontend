@@ -2,17 +2,18 @@ import React from 'react';
 import { useSession } from '../../context';
 import { Text, View, Button } from 'react-native';
 import { firebase } from '../../firebase/config';
+import { logout } from "../../../redux/reducers/users";
+import { connect } from "react-redux";
 
-export default function HomeScreen(props) {
+function HomeScreen(props) {
 	const user = useSession();
 
-	const signout = () => {
-		return firebase
+  const signout = () => {
+		firebase
 			.auth()
 			.signOut()
 			.then(() => {
-				console.log('You are signed out');
-				//setUser(false);
+        props.removeUser()
 			});
 	};
 
@@ -23,3 +24,13 @@ export default function HomeScreen(props) {
 		</View>
 	);
 }
+
+const mapState = state => ({
+	user: state.user
+});
+
+const mapDispatch = dispatch => ({
+	removeUser: () => dispatch(logout())
+});
+
+export default connect(mapState, mapDispatch)(HomeScreen);

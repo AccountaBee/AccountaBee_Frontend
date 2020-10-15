@@ -1,11 +1,11 @@
-import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { View, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import {
 	LoginScreen,
 	HomeScreen,
@@ -14,15 +14,10 @@ import {
 	SettingsScreen,
 	GoalScreen,
 	SingleGoalScreen,
+	AddFriendsScreen
 } from './src/screens';
 import { decode, encode } from 'base-64';
 import { useAuth, userContext } from './src/context';
-if (!global.btoa) {
-	global.btoa = encode;
-}
-if (!global.atob) {
-	global.atob = decode;
-}
 
 if (!global.btoa) {
 	global.btoa = encode;
@@ -33,6 +28,22 @@ if (!global.atob) {
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
+const SettingsStack = createStackNavigator();
+
+// creating a seperate stack so that the bottom tabs stay on the add friends screen
+const SettingsScreenNav = () => (
+	<SettingsStack.Navigator>
+		<SettingsStack.Screen name="Settings" component={SettingsScreen} />
+		<SettingsStack.Screen
+			name="AddFriends"
+			component={AddFriendsScreen}
+			options={{
+				animationEnabled: false,
+				headerShown: false
+			}}
+		/>
+	</SettingsStack.Navigator>
+);
 
 const TabsScreen = () => (
 	<Tabs.Navigator>
@@ -42,12 +53,12 @@ const TabsScreen = () => (
 			component={GoalScreen}
 			options={{
 				animationEnabled: false,
-				headerShown: false,
+				headerShown: false
 			}}
 		/>
 		<Tabs.Screen name="Single Goal" component={SingleGoalScreen} />
 		<Tabs.Screen name="Feed" component={FeedScreen} />
-		<Tabs.Screen name="Settings" component={SettingsScreen} />
+		<Tabs.Screen name="Settings" component={SettingsScreenNav} />
 	</Tabs.Navigator>
 );
 
@@ -75,7 +86,7 @@ export default function App() {
 									name="Home"
 									component={TabsScreen}
 									options={{
-										animationEnabled: false,
+										animationEnabled: false
 									}}
 								/>
 								<Stack.Screen
@@ -83,7 +94,7 @@ export default function App() {
 									component={GoalScreen}
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 								/>
 							</>
@@ -95,7 +106,7 @@ export default function App() {
 									title=""
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 								/>
 								<Stack.Screen
@@ -103,7 +114,7 @@ export default function App() {
 									title=""
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 									component={RegistrationScreen}
 								/>
