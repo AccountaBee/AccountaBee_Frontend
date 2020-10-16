@@ -13,10 +13,12 @@ import {
 	FeedScreen,
 	SettingsScreen,
 	GoalScreen,
+	SingleGoalScreen,
 	AddFriendsScreen
-} from "./src/screens";
-import { decode, encode } from "base-64";
-import { useAuth, userContext } from "./src/context";
+} from './src/screens';
+import { decode, encode } from 'base-64';
+import { useAuth, userContext } from './src/context';
+
 if (!global.btoa) {
 	global.btoa = encode;
 }
@@ -54,6 +56,7 @@ const TabsScreen = () => (
 				headerShown: false
 			}}
 		/>
+		<Tabs.Screen name="Single Goal" component={SingleGoalScreen} />
 		<Tabs.Screen name="Feed" component={FeedScreen} />
 		<Tabs.Screen name="Settings" component={SettingsScreenNav} />
 	</Tabs.Navigator>
