@@ -1,22 +1,37 @@
-// import axios from 'axios'
+import axios from 'axios';
+import { firebase } from '../../src/firebase/config';
 
+// ---------- ACTION TYPES ---------- //
+const SET_GOALS = 'SET_GOALS';
 
-// const ADD_GOAL = 'ADD_GOAL'
-// const GET_GOALS = 'GET_GOAL'
+// ---------- ACTION CREATORS ---------- //
+export const gotGoals = (goals) => ({ type: SET_GOALS, goals });
 
-// const gotGoals = goals => ({type: GET_GOALS, goals})
+const instance = axios.create({
+	baseURL: 'https://accountabee.herokuapp.com/api',
+});
 
+export const setGoalsThunk = (goals) => async (dispatch) => {
+	try {
+		let token = await firebase.auth().currentUser.getIdToken();
+		console.log('set a token');
+		let { data, status } = await instance.post('/', { goals, token });
+		console.log('status is: ', status);
+		if (status === 200) {
+			dispatch(gotGoals(data));
+		} else {
+			console.log('error setting goals in database, status error: ', status);
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
 
-
-// case GET_GOALS:
-//       return {...state}
-
-//       export const getSkinType = (id) => async dispatch => {
-//         try {
-//           const res = await axios.get(`https://skinrx-server.herokuapp.com/api/skintypes/${id}`)
-//           console.log('dataaaaaaaaaa', res.data)
-//           dispatch(gotSkinType(res.data))
-//         } catch (error) {
-//           console.log(error)
-//         }
-//       }
+export default function (state = [], action) {
+	switch (action.type) {
+		case SET_GOALS:
+			return action.goals;
+		default:
+			return state;
+	}
+}

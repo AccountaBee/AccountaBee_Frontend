@@ -4,7 +4,7 @@ import CustomDelButton from '../CustomDelButton';
 import CustomButton from '../CustomButton';
 import styles from './style';
 import { connect } from 'react-redux';
-import { gotGoals } from '../../../redux/reducers/newGoals';
+import { gotGoals } from '../../../redux/reducers/goals';
 
 function GoalScreen(props) {
 	const [newGoal, setGoal] = useState('');

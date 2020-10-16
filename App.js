@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
@@ -31,7 +32,7 @@ const Tabs = createBottomTabNavigator();
 const GoalStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
-// Goal-setting stack (will ultimately be part of the settings screen stack, but for dev purposes using a separate stack)
+// Goal-setting stack (will likely ultimately be part of the settings screen stack, but for dev purposes using a separate stack)
 const GoalScreenNav = () => (
 	<GoalStack.Navigator>
 		<GoalStack.Screen
