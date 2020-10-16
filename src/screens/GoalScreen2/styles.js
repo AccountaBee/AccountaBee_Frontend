@@ -9,14 +9,20 @@ export default StyleSheet.create({
 		borderBottomRightRadius: 15,
 		marginRight: 15,
 	},
+	numberInput: {
+		marginTop: 15,
+		color: '#8688BC',
+	},
 	nextButton: {
 		alignSelf: 'center',
 		backgroundColor: '#8688BC',
 		width: '80%',
-		marginTop: 10,
-		opacity: 0.8,
+		marginTop: 60,
 	},
 	flex: {
+		width: '78%',
+		marginTop: 20,
+		marginLeft: 40,
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 	},
@@ -48,7 +54,7 @@ export default StyleSheet.create({
 		marginBottom: 15,
 	},
 	goals: {
-		width: '60%',
+		width: '80%',
 		paddingTop: 10,
 		fontSize: 18,
 		marginLeft: 0,
@@ -56,8 +62,8 @@ export default StyleSheet.create({
 	},
 	goalHeader: {
 		marginLeft: 20,
-		fontSize: 22,
-		fontWeight: '500',
+		marginBottom: 40,
+		fontSize: 20,
 	},
 	breakBot: {
 		marginBottom: 15,
@@ -72,12 +78,5 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 20,
 		marginTop: 100,
-	},
-	button: {
-		paddingVertical: 16,
-		paddingHorizontal: 10,
-		marginTop: 0,
-		marginLeft: 0,
-		backgroundColor: '#9FC78A',
 	},
 });

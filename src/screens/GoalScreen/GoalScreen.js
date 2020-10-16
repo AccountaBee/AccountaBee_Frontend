@@ -1,134 +1,108 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, Button, ScrollView } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
+import CustomDelButton from '../CustomDelButton';
 import CustomButton from '../CustomButton';
 import styles from './style';
-import { useSession } from '../../context';
+import { connect } from 'react-redux';
+import { gotGoals } from '../../../redux/reducers/goals';
 
-export default function GoalScreen(props) {
+function GoalScreen(props) {
 	const [newGoal, setGoal] = useState('');
 	const [allGoals, setAllGoals] = useState([]);
-
-	const user = useSession();
 
 	const addGoalHander = () => {
 		if (allGoals.length < 3) {
 			let newGoalObj = {
-				id: allGoals.length + 1,
-				goal: newGoal.trim(),
+				title: newGoal.trim(),
 				frequency: 3,
 			};
 			setAllGoals([...allGoals, newGoalObj]);
 			setGoal('');
 		} else {
-			alert("Don't burn yourself out! Stick to three goals at once.");
+			setGoal('');
+			alert("Don't burn yourself out!\nStick to three goals at once.");
 		}
 	};
 
-	const typeHandler = (text) => {
-		console.log(text);
-		setGoal(text);
+	const handleGoalDel = (title) => {
+		setAllGoals(allGoals.filter((goal) => goal.title !== title));
 	};
 
-	const handleGoalDel = (delIdx) => {
-		setAllGoals(allGoals.filter((goal) => goal.id !== delIdx));
+	const nextPage = async () => {
+		if (allGoals.length > 0) {
+			await props.setGoals(allGoals);
+			props.navigation.navigate('Goals2');
+		} else {
+			alert('Please add at least one goal.');
+		}
 	};
 
-	const buttonTitle = allGoals.length ? 'Set Goals >>' : '';
-	console.log('user: ', user);
 	return (
-		<View style={styles.container}>
-			<Text style={styles.headline}>Hello, {user.email}!</Text>
-			<Text style={styles.headline}>
-				What goals do you have that will help you to have a healthy, productive
-				week?
-			</Text>
-			<Text style={styles.headline}>Please enter up to 3 goals.</Text>
-			<View style={styles.breakBot} />
-			<View style={styles.flex}>
-				<TextInput
-					style={styles.textInput}
-					placeholder="Please enter a goal"
-					onChangeText={(text) => typeHandler(text)}
-					value={newGoal}
-				/>
-				<CustomButton
-					title="Add"
-					style={styles.button}
-					onPress={addGoalHander}
-				/>
+		<>
+			<View style={styles.container}>
+				<Text style={[styles.headline, styles.bigger]}>
+					Hello{props.username ? ' ' + props.username : ''}!
+				</Text>
+				<Text style={styles.headline}>
+					What goals do you have that will {'\n'}help you to have a healthy,
+					{'\n'}productive week?
+				</Text>
+				<Text style={styles.headline}>Please enter up to 3 goals.</Text>
+				<View style={[styles.flex]}>
+					<TextInput
+						style={[styles.textInput, styles.breakBot]}
+						placeholder="Please enter a goal"
+						onChangeText={(text) => setGoal(text)}
+						value={newGoal}
+					/>
+					<CustomButton
+						title="Add"
+						style={styles.button}
+						onPress={addGoalHander}
+					/>
+				</View>
 			</View>
 			<View>
-				<Text style={[styles.goals, styles.breakTop, styles.breakBot]}>
+				<Text
+					style={[
+						styles.goals,
+						styles.goalHeader,
+						styles.breakTop,
+						styles.breakBot,
+					]}
+				>
 					{allGoals.length ? 'Your Goals:' : ''}
 				</Text>
-				{allGoals.map((goal) => (
-					<View key={goal.id}>
+				{allGoals.map((goal, idx) => (
+					<View key={idx + 1}>
 						<View style={styles.flex}>
 							<Text style={styles.goals}>
-								{goal.id}. {goal.goal}
+								{idx + 1}. {goal.title}
 							</Text>
-							<Button
-								color="red"
-								title="Del"
-								onPress={() => handleGoalDel(goal.id)}
-							/>
+							<CustomDelButton onPress={() => handleGoalDel(goal.title)} />
 						</View>
 					</View>
 				))}
+				<Text style={styles.subheader}>
+					Once you're happy with these goals,{'\n'}let's set their weekly
+					frequency.
+				</Text>
+				<CustomButton
+					style={styles.nextButton}
+					title="NEXT"
+					onPress={nextPage}
+				/>
 			</View>
-		</View>
+		</>
 	);
 }
 
-// SECOND PAGE
-// const setFrequency = (value, id) => {
-//     setAllGoals(
-//         allGoals.map((goal) => {
-//             if (goal.id === id) {
-//                 goal.frequency = value;
-//                 return goal;
-//             } else {
-//                 return goal;
-//             }
-//         })
-//     );
-//     console.log(allGoals);
-// };
+const mapState = (state) => ({
+	username: state.user.firstName,
+});
 
-// <Text style={styles.goals}>
-// 								How many times per week do you want to {goal.goal}?
-// 							</Text>
-// 							<Dropdown
-// 								data={dropdownFrequency}
-// 								value={goal.frequency}
-// 								useNativeDriver={true}
-// 								onChangeText={(value) => setFrequency(value, goal.id)}
-// 							/>
+const mapDispatch = (dispatch) => ({
+	setGoals: (goals) => dispatch(gotGoals(goals)),
+});
 
-// THIRD PAGE
-// const [startDay, setStartDay] = useState('Monday');
-// const setDay = (day) => {
-//     setStartDay(day);
-//     console.log(startDay);
-// };
-
-// const dropdownDays = [
-//     { label: 'Sunday', value: 'sunday' },
-//     { label: 'Monday', value: 'monday' },
-//     { label: 'Tuesday', value: 'tuesday' },
-//     { label: 'Wednesday', value: 'wednesday' },
-//     { label: 'Thursday', value: 'thursday' },
-//     { label: 'Friday', value: 'friday' },
-//     { label: 'Saturday', value: 'saturday' },
-// ];
-
-// <Text style={styles.headline}>
-// Lastly, what day do you want your week to start on?
-// </Text>
-// <Dropdown
-// data={dropdownDays}
-// value={startDay}
-// useNativeDriver={true}
-// onChangeText={(value) => setDay(value)}
-// />
-// <Button title={buttonTitle} color="blue" />
+export default connect(mapState, mapDispatch)(GoalScreen);
