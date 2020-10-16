@@ -6,3 +6,4 @@ export { default as RegistrationScreen } from './RegistrationScreen/Registration
 export { default as GoalScreen } from './GoalScreen/GoalScreen';
 export { default as GoalScreen2 } from './GoalScreen2/GoalScreen2';
 export { default as AddFriendsScreen } from './AddFriendsScreen/AddFriendsScreen';
+export { default as SingleGoalScreen } from './SingleGoalScreen/SingleGoalScreen';

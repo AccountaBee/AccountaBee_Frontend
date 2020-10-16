@@ -14,6 +14,7 @@ export default StyleSheet.create({
 		backgroundColor: '#8688BC',
 		width: '80%',
 		marginTop: 10,
+		opacity: 0.8,
 	},
 	flex: {
 		flexDirection: 'row',
