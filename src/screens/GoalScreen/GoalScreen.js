@@ -19,7 +19,8 @@ function GoalScreen(props) {
 			setAllGoals([...allGoals, newGoalObj]);
 			setGoal('');
 		} else {
-			alert("Don't burn yourself out! Stick to three goals at once.");
+			setGoal('');
+			alert("Don't burn yourself out!\nStick to three goals at once.");
 		}
 	};
 
@@ -83,7 +84,7 @@ function GoalScreen(props) {
 					</View>
 				))}
 				<Text style={styles.subheader}>
-					Once you're happy with these goals{'\n'}let's set their weekly
+					Once you're happy with these goals,{'\n'}let's set their weekly
 					frequency.
 				</Text>
 				<CustomButton

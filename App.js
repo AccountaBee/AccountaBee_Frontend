@@ -4,6 +4,7 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Feather } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import {
@@ -27,7 +28,30 @@ if (!global.atob) {
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
+const GoalStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
+
+// Goal-setting stack (will ultimately be part of the settings screen stack, but for dev purposes using a separate stack)
+const GoalScreenNav = () => (
+	<GoalStack.Navigator>
+		<GoalStack.Screen
+			name="Goals"
+			component={GoalScreen}
+			options={{
+				animationEnabled: false,
+				headerShown: false,
+			}}
+		/>
+		<GoalStack.Screen
+			name="Goals2"
+			component={GoalScreen2}
+			options={{
+				animationEnabled: false,
+				headerShown: false,
+			}}
+		/>
+	</GoalStack.Navigator>
+);
 
 // creating a seperate stack so that the bottom tabs stay on the add friends screen
 const SettingsScreenNav = () => (
@@ -44,20 +68,35 @@ const SettingsScreenNav = () => (
 	</SettingsStack.Navigator>
 );
 
+// Bottom of page tab navigator
 const TabsScreen = () => (
-	<Tabs.Navigator>
-		<Tabs.Screen name="Dashboard" component={HomeScreen} />
+	<Tabs.Navigator
+		screenOptions={({ route }) => ({
+			tabBarIcon: () => {
+				let iconName;
+				if (route.name === 'Home') {
+					iconName = 'pie-chart';
+				} else if (route.name === 'Settings') {
+					iconName = 'settings';
+				} else if (route.name === 'Feed') {
+					iconName = 'message-square';
+				} else if (route.name === 'Goals') {
+					iconName = 'target';
+				}
+				return <Feather name={iconName} size={20} color="white" />;
+			},
+		})}
+		tabBarOptions={{
+			activeBackgroundColor: '#8688BC',
+			inactiveBackgroundColor: '#8688BC',
+			activeTintColor: 'white',
+			inactiveTintColor: 'white',
+		}}
+	>
+		<Tabs.Screen name="Home" component={HomeScreen} />
 		<Tabs.Screen
 			name="Goals"
-			component={GoalScreen}
-			options={{
-				animationEnabled: false,
-				headerShown: false,
-			}}
-		/>
-		<Tabs.Screen
-			name="Goals2"
-			component={GoalScreen2}
+			component={GoalScreenNav}
 			options={{
 				animationEnabled: false,
 				headerShown: false,
