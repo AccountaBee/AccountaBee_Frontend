@@ -4,7 +4,7 @@ import CustomDelButton from '../CustomDelButton';
 import CustomButton from '../CustomButton';
 import styles from './style';
 import { connect } from 'react-redux';
-import { gotGoals } from '../../../redux/reducers/goals';
+import { setGoalsThunk, deletedGoalThunk } from '../../../redux/reducers/goals';
 
 function GoalScreen(props) {
 	const [newGoal, setGoal] = useState('');
@@ -24,8 +24,9 @@ function GoalScreen(props) {
 		}
 	};
 
-	const handleGoalDel = (title) => {
-		setAllGoals(allGoals.filter((goal) => goal.title !== title));
+	const handleGoalDel = (title, id) => {
+    setAllGoals(allGoals.filter((goal) => goal.title !== title));
+    deletedGoalThunk(id)
 	};
 
 	const nextPage = async () => {
@@ -79,7 +80,7 @@ function GoalScreen(props) {
 							<Text style={styles.goals}>
 								{idx + 1}. {goal.title}
 							</Text>
-							<CustomDelButton onPress={() => handleGoalDel(goal.title)} />
+							<CustomDelButton onPress={() => handleGoalDel(goal.title, goal.id)} />
 						</View>
 					</View>
 				))}
@@ -102,7 +103,8 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-	setGoals: (goals) => dispatch(gotGoals(goals)),
+  setGoals: (goals) => dispatch(setGoalsThunk(goals)), //changed to setGoalsThunk from gotGoals
+  removeGoal: (id) => dispatch(deletedGoalThunk(id))
 });
 
 export default connect(mapState, mapDispatch)(GoalScreen);
