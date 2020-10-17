@@ -37,8 +37,9 @@ const SettingsStack = createStackNavigator();
 // Goal-setting stack (will likely ultimately be part of the settings screen stack, but for dev purposes using a separate stack)
 const GoalScreenNav = () => (
 	<GoalStack.Navigator>
+		{/* Why is this in the tab nav?? */}
 		<GoalStack.Screen
-			name="Goals"
+			name="Goals1"
 			component={GoalScreen}
 			options={{
 				animationEnabled: false,
@@ -75,7 +76,7 @@ const SettingsScreenNav = () => (
 const TabsScreen = () => (
 	<Tabs.Navigator
 		screenOptions={({ route }) => ({
-			tabBarIcon: () => {
+			tabBarIcon: ({ focused, color }) => {
 				let iconName;
 				if (route.name === 'Home') {
 					iconName = 'pie-chart';
@@ -85,15 +86,16 @@ const TabsScreen = () => (
 					iconName = 'message-square';
 				} else if (route.name === 'Goals') {
 					iconName = 'target';
+				} else if (route.name === 'Single Goal') {
+					iconName = 'check-circle';
 				}
-				return <Feather name={iconName} size={20} color="white" />;
+				color = focused ? '#9FC78A' : '#8688BC';
+				return <Feather name={iconName} size={20} color={color} />;
 			},
 		})}
 		tabBarOptions={{
-			activeBackgroundColor: '#8688BC',
-			inactiveBackgroundColor: '#8688BC',
-			activeTintColor: 'white',
-			inactiveTintColor: 'white',
+			activeTintColor: '#9FC78A',
+			inactiveTintColor: '#8688BC',
 		}}
 	>
 		<Tabs.Screen name="Home" component={HomeScreen} />
@@ -141,7 +143,15 @@ export default function App() {
 								/>
 								<Stack.Screen
 									name="Goals"
-									component={GoalScreen}
+									component={TabsScreen}
+									options={{
+										animationEnabled: false,
+										headerShown: false,
+									}}
+								/>
+								<Stack.Screen
+									name="Tabs"
+									component={TabsScreen}
 									options={{
 										animationEnabled: false,
 										headerShown: false,
