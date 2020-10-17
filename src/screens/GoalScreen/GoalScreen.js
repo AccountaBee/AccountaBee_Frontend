@@ -6,7 +6,7 @@ import styles from './style';
 import { connect } from 'react-redux';
 import { setGoalsThunk, deletedGoalThunk } from '../../../redux/reducers/goals';
 
-function GoalScreen(props) {
+function GoalScreen(props, { navigation }) {
 	const [newGoal, setGoal] = useState('');
 	const [allGoals, setAllGoals] = useState([]);
 
@@ -91,7 +91,7 @@ function GoalScreen(props) {
 				<CustomButton
 					style={styles.nextButton}
 					title="NEXT"
-					onPress={nextPage}
+					onPress={() => nextPage()}
 				/>
 			</View>
 		</>
