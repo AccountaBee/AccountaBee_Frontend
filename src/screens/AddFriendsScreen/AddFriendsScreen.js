@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TextInput } from "react-native";
+import { Text, View, TextInput, Button } from "react-native";
 import styles from "./styles";
 
 export default function SettingsScreen(props) {
@@ -16,6 +16,7 @@ export default function SettingsScreen(props) {
 				underlineColorAndroid="transparent"
 				autoCapitalize="none"
 			/>
+			<Button title="Return to Settings" onPress={() => navigation.navigate("Settings")} />
 		</View>
 	);
 }

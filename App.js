@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
-import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Feather } from '@expo/vector-icons';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { View, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Feather } from "@expo/vector-icons";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import {
 	LoginScreen,
 	HomeScreen,
@@ -17,10 +17,10 @@ import {
 	GoalScreen,
 	GoalScreen2,
 	SingleGoalScreen,
-	AddFriendsScreen,
-} from './src/screens';
-import { decode, encode } from 'base-64';
-import { useAuth, userContext } from './src/context';
+	AddFriendsScreen
+} from "./src/screens";
+import { decode, encode } from "base-64";
+import { useAuth, userContext } from "./src/context";
 
 if (!global.btoa) {
 	global.btoa = encode;
@@ -43,7 +43,7 @@ const GoalScreenNav = () => (
 			component={GoalScreen}
 			options={{
 				animationEnabled: false,
-				headerShown: false,
+				headerShown: false
 			}}
 		/>
 		<GoalStack.Screen
@@ -51,7 +51,7 @@ const GoalScreenNav = () => (
 			component={GoalScreen2}
 			options={{
 				animationEnabled: false,
-				headerShown: false,
+				headerShown: false
 			}}
 		/>
 	</GoalStack.Navigator>
@@ -62,11 +62,11 @@ const SettingsScreenNav = () => (
 	<SettingsStack.Navigator>
 		<SettingsStack.Screen name="Settings" component={SettingsScreen} />
 		<SettingsStack.Screen
-			name="AddFriends"
+			name="Friends"
 			component={AddFriendsScreen}
 			options={{
 				animationEnabled: false,
-				headerShown: false,
+				headerShown: false
 			}}
 		/>
 	</SettingsStack.Navigator>
@@ -78,33 +78,32 @@ const TabsScreen = () => (
 		screenOptions={({ route }) => ({
 			tabBarIcon: ({ focused, color }) => {
 				let iconName;
-				if (route.name === 'Home') {
-					iconName = 'pie-chart';
-				} else if (route.name === 'Settings') {
-					iconName = 'settings';
-				} else if (route.name === 'Feed') {
-					iconName = 'message-square';
-				} else if (route.name === 'Goals') {
-					iconName = 'target';
-				} else if (route.name === 'Single Goal') {
-					iconName = 'check-circle';
+				if (route.name === "Home") {
+					iconName = "pie-chart";
+				} else if (route.name === "Settings") {
+					iconName = "settings";
+				} else if (route.name === "Feed") {
+					iconName = "message-square";
+				} else if (route.name === "Goals") {
+					iconName = "target";
+				} else if (route.name === "Single Goal") {
+					iconName = "check-circle";
 				}
-				color = focused ? '#9FC78A' : '#8688BC';
+				color = focused ? "#9FC78A" : "#8688BC";
 				return <Feather name={iconName} size={20} color={color} />;
-			},
+			}
 		})}
 		tabBarOptions={{
-			activeTintColor: '#9FC78A',
-			inactiveTintColor: '#8688BC',
-		}}
-	>
+			activeTintColor: "#9FC78A",
+			inactiveTintColor: "#8688BC"
+		}}>
 		<Tabs.Screen name="Home" component={HomeScreen} />
 		<Tabs.Screen
 			name="Goals"
 			component={GoalScreenNav}
 			options={{
 				animationEnabled: false,
-				headerShown: false,
+				headerShown: false
 			}}
 		/>
 		<Tabs.Screen name="Single Goal" component={SingleGoalScreen} />
@@ -138,7 +137,7 @@ export default function App() {
 									component={TabsScreen}
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 								/>
 								<Stack.Screen
@@ -146,7 +145,7 @@ export default function App() {
 									component={TabsScreen}
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 								/>
 								<Stack.Screen
@@ -154,7 +153,7 @@ export default function App() {
 									component={TabsScreen}
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 								/>
 							</>
@@ -166,7 +165,7 @@ export default function App() {
 									title=""
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 								/>
 								<Stack.Screen
@@ -174,7 +173,7 @@ export default function App() {
 									title=""
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 									component={RegistrationScreen}
 								/>
