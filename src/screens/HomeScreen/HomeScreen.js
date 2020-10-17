@@ -1,36 +1,30 @@
-import React from 'react';
-import { useSession } from '../../context';
-import { Text, View, Button } from 'react-native';
-import { firebase } from '../../firebase/config';
-import { logout } from "../../../redux/reducers/users";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+// import { firebase } from '../../firebase/config';
+import { logout } from '../../../redux/reducers/users';
+import { connect } from 'react-redux';
+import styles from './styles';
 
 function HomeScreen(props) {
-	const user = useSession();
+	const [allGoals, setGoals] = useState('');
 
-  const signout = () => {
-		firebase
-			.auth()
-			.signOut()
-			.then(() => {
-        props.removeUser()
-			});
-	};
+	useEffect(() => {
+		props.goals && setGoals(props.goals);
+		console.log('allGoals: ', allGoals);
+	});
 
 	return (
-		<View>
-			<Text>Home Screen</Text>
-			<Button title="Sign Out" onPress={() => signout()}></Button>
-		</View>
+		<>
+			<View style={styles.container}>
+				<Text style={styles.headline}>My Goals</Text>
+			</View>
+		</>
 	);
 }
 
-const mapState = state => ({
-	user: state.user
+const mapState = (state) => ({
+	user: state.user,
+	goals: state.goals,
 });
 
-const mapDispatch = dispatch => ({
-	removeUser: () => dispatch(logout())
-});
-
-export default connect(mapState, mapDispatch)(HomeScreen);
+export default connect(mapState)(HomeScreen);

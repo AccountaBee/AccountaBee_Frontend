@@ -15,7 +15,8 @@ export const setGoalsThunk = (goals) => async (dispatch) => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		console.log('set a token');
-		let { data, status } = await instance.post('/', { goals, token });
+		console.log('goals: ', goals);
+		let { data, status } = await instance.post('/goals/', { goals, token });
 		console.log('status is: ', status);
 		if (status === 200) {
 			dispatch(gotGoals(data));
