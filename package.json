@@ -28,6 +28,7 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
+    "react-native-svg": "^12.1.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.13.12",
@@ -35,7 +36,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "victory-native": "^35.0.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

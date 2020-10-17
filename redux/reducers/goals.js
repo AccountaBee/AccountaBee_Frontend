@@ -8,7 +8,7 @@ const SET_GOALS = 'SET_GOALS';
 export const gotGoals = (goals) => ({ type: SET_GOALS, goals });
 
 const instance = axios.create({
-	baseURL: 'https://accountabee.herokuapp.com/api',
+	baseURL: 'https://accountabee.herokuapp.com/api/goals',
 });
 
 export const setGoalsThunk = (goals) => async (dispatch) => {
@@ -16,7 +16,7 @@ export const setGoalsThunk = (goals) => async (dispatch) => {
 		let token = await firebase.auth().currentUser.getIdToken();
 		console.log('set a token');
 		console.log('goals: ', goals);
-		let { data, status } = await instance.post('/goals/', { goals, token });
+		let { data, status } = await instance.post('/', { goals, token });
 		console.log('status is: ', status);
 		if (status === 200) {
 			dispatch(gotGoals(data));
@@ -25,6 +25,17 @@ export const setGoalsThunk = (goals) => async (dispatch) => {
 		}
 	} catch (error) {
 		console.error(error);
+	}
+};
+
+export const getGoalsThunk = () => async (dispatch) => {
+	try {
+		const token = await firebase.auth().currentUser.getIdToken();
+		const { data } = await instance.get('/', { token });
+		console.log('DATA IS HERE: ', data);
+		dispatch(gotGoals(data));
+	} catch (error) {
+		console.log(error);
 	}
 };
 
