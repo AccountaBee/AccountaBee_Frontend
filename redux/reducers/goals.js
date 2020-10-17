@@ -3,11 +3,11 @@ import { firebase } from '../../src/firebase/config';
 
 // ---------- ACTION TYPES ---------- //
 const GOT_GOALS = 'GOT_GOALS'
-const DELETE_GOAL = 'DELETE_GOAL'
+const SET_GOALS = 'SET_GOALS'
 
 // ---------- ACTION CREATORS ---------- //
+const setGoals = goals => ({type: SET_GOALS, goals})
 const gotGoals = goals => ({type: GOT_GOALS, goals})
-const deletedGoal = goals = ({type: DELETE_GOAL, goals})
 
 const instance = axios.create({
 	baseURL: 'https://accountabee.herokuapp.com/api/goals',
@@ -16,12 +16,9 @@ const instance = axios.create({
 export const setGoalsThunk = (goals) => async (dispatch) => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		console.log('set a token');
-		console.log('goals: ', goals);
-		let { data, status } = await instance.post('/goals/', { goals, token });
-		console.log('status is: ', status);
+		let { data, status } = await instance.post('/', { goals, token });
 		if (status === 200) {
-			dispatch(gotGoals(data));
+			dispatch(setGoals(data));
 		} else {
 			console.log('error setting goals in database, status error: ', status);
 		}
@@ -30,14 +27,14 @@ export const setGoalsThunk = (goals) => async (dispatch) => {
 	}
 };
 
-export const deleteGoalThunk = (id) => async (dispatch) => {
+export const deleteGoalThunk = (goalId) => async () => {
 	try {
-		let token = await firebase.auth().currentUser.getIdToken();
 		console.log('in deletedGoalThunk');
-		let { data, status } = await instance.post('/', { goals, token });
-		console.log('status is: ', status);
+		let { data, status } = await instance.delete(`/${goalId}`);
+    console.log('status is: ', status);
+    console.log('data is:', data)
 		if (status === 200) {
-			dispatch(deletedGoal(data));
+      console.log('goal successfully deleted')
 		} else {
 			console.log('error deleting goals in database, status error: ', status);
 		}
@@ -96,10 +93,10 @@ export const resetGoalsThunk = () => async dispatch => {
 
 export default function(state = [], action) {
   switch (action.type) {
+    case SET_GOALS:
+      return action.goals
     case GOT_GOALS:
       return action.goals
-    case DELETE_GOAL:
-      return {}
     default:
       return state
   }
