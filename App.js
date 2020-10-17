@@ -8,6 +8,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather } from "@expo/vector-icons";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import Toast from "react-native-toast-message";
+
 import {
 	LoginScreen,
 	HomeScreen,
@@ -181,6 +183,7 @@ export default function App() {
 						)}
 					</Stack.Navigator>
 				</NavigationContainer>
+				<Toast ref={ref => Toast.setRef(ref)} />
 			</userContext.Provider>
 		</Provider>
 	);
