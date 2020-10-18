@@ -10,6 +10,7 @@ import { completedDaysThunk } from '../../../redux/reducers/goals'
 import { connect } from 'react-redux';
 
 function SingleGoalScreen(props) {
+  console.log('PROPS.ROUTE.PARAMS', props.route.params)
     const user = useSession();
     const [isCompleted, setIsCompleted] = useState(false)
     const toggleItem = () =>{
@@ -23,6 +24,7 @@ function SingleGoalScreen(props) {
    })
    //props.navigation.route.params should be an object with goal as key and title of goal as value
    //in navigation.navigate
+
 	return (
         <View>
             <View style={styles.headcontainer}>
