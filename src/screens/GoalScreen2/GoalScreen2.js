@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import CustomButton from '../CustomButton';
 import NumericInput from 'react-native-numeric-input';
@@ -8,26 +8,13 @@ import { setGoalsThunk } from '../../../redux/reducers/goals';
 
 function GoalScreen2(props) {
 	const [allGoals, setAllGoals] = useState([]);
-	// console.log('route params: ', route.params);
-	// console.log('route: ', props.route.params.goals);
 
 	useEffect(() => {
 		let tempGoals = props.route.params.goals;
 		setAllGoals(tempGoals);
-		// console.log('allGoals in state', allGoals);
-		// console.log('props.goals: ', props.goals);
 	}, []);
 
-	// function setPrevious() {
-	// 	const prevGoalsRef = useRef();
-	// 	prevGoalsRef.current = allGoals;
-	// 	return prevGoalsRef.current;
-	// }
-
-	// const prevGoals = setPrevious();
-
 	const setFrequency = (value, title) => {
-		console.log('allGoals before frequency: ', allGoals);
 		const newGoals = allGoals.map((goal) => {
 			if (goal.title === title) {
 				goal.frequency = value;
@@ -37,14 +24,13 @@ function GoalScreen2(props) {
 			}
 		});
 		setAllGoals(newGoals);
-		console.log('allGoals after frequency: ', allGoals);
 	};
 
 	const setGoalsPress = async () => {
 		await props.setGoals(allGoals);
 		props.navigation.navigate('Home');
 	};
-	// console.log('allGoals in state 2', allGoals);
+
 	return (
 		<>
 			<View style={styles.container}>

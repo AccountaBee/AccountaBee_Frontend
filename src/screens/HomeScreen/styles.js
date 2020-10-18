@@ -20,7 +20,9 @@ export default StyleSheet.create({
 
 export const pieStyle = StyleSheet.create({
 	textContainer: {
-		marginTop: '9%',
+		display: 'flex',
+		justifyContent: 'center',
+		textAlignVertical: 'center',
 		marginLeft: '8%',
 		maxWidth: '44%',
 	},
@@ -28,14 +30,18 @@ export const pieStyle = StyleSheet.create({
 		justifyContent: 'space-between',
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		borderColor: 'red',
-		borderWidth: 2,
+		borderBottomWidth: 0.5,
+		borderColor: '#424347',
 	},
 	goalName: {
+		fontWeight: '500',
+		color: '#424347',
 		fontSize: 20,
 		paddingBottom: 15,
 	},
 	subhead: {
+		color: '#424347',
+		marginTop: 10,
 		fontSize: 16,
 	},
 });

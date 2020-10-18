@@ -10,7 +10,7 @@ import {
 	getGoalsThunk,
 } from '../../../redux/reducers/goals';
 
-function GoalScreen(props, { navigation }) {
+function GoalScreen(props) {
 	const [newGoal, setGoal] = useState('');
 	const [allGoals, setAllGoals] = useState([]);
 
