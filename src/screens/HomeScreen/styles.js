@@ -17,3 +17,9 @@ export default StyleSheet.create({
 		marginBottom: 20,
 	},
 });
+
+export const pieStyle = StyleSheet.create({
+	pie: {
+		textAlign: 'right',
+	},
+});
