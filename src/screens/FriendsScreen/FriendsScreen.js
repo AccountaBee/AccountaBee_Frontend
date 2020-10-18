@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Text, View, TextInput, Button } from "react-native";
 import styles from "./styles";
 import { connect } from "react-redux";
+import { getSentRequests } from "../../../redux/reducers/sentRequests";
 import { getRequests } from "../../../redux/reducers/requests";
 import { firebase } from "../../firebase/config";
 import instance from "../../../redux/axios";
@@ -16,6 +17,7 @@ class FriendsScreen extends React.Component {
 
 	async componentDidMount() {
 		const token = await firebase.auth().currentUser.getIdToken();
+		this.props.getSentRequests(token);
 		this.props.getRequests(token);
 	}
 
@@ -28,7 +30,7 @@ class FriendsScreen extends React.Component {
 		const token = await firebase.auth().currentUser.getIdToken();
 		try {
 			const res = await instance.post("/friends/request", { token, email });
-			this.props.getRequests(token);
+			this.props.getSentRequests(token);
 		} catch (error) {
 			alert(error);
 		}
@@ -36,6 +38,7 @@ class FriendsScreen extends React.Component {
 
 	render() {
 		const { navigation } = this.props;
+		const { sentRequests } = this.props || [];
 		const { requests } = this.props || [];
 		return (
 			<View style={styles.container}>
@@ -51,9 +54,17 @@ class FriendsScreen extends React.Component {
 				/>
 				<Button title="Send Friend Request" onPress={() => this.onRequestPress()} />
 				<Button title="Return to Settings" onPress={() => navigation.navigate("Settings")} />
-				<Text>Sent Requests</Text>
+				<Text>Friend Requests</Text>
 				<View>
 					{requests.map(request => (
+						<Text key={request.uid}>
+							{request.firstName} {request.email}
+						</Text>
+					))}
+				</View>
+				<Text>Sent Requests</Text>
+				<View>
+					{sentRequests.map(request => (
 						<Text key={request.uid}>
 							{request.firstName} {request.email}
 						</Text>
@@ -65,10 +76,12 @@ class FriendsScreen extends React.Component {
 }
 
 const mapState = state => ({
+	sentRequests: state.sentRequests,
 	requests: state.requests
 });
 
 const mapDispatch = dispatch => ({
+	getSentRequests: token => dispatch(getSentRequests(token)),
 	getRequests: token => dispatch(getRequests(token))
 });
 
