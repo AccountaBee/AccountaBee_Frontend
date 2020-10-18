@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, TextInput, Button } from "react-native";
 import styles from "./styles";
 import { connect } from "react-redux";
-import { sendRequest } from "../../../redux/reducers/requests";
+import { getRequests } from "../../../redux/reducers/requests";
 import { firebase } from "../../firebase/config";
 import instance from "../../../redux/axios";
 
@@ -15,12 +15,13 @@ function FriendsScreen(props) {
 		const token = await firebase.auth().currentUser.getIdToken();
 		try {
 			const res = await instance.post("/friends/request", { token, email });
-			console.log(res.data);
+			props.getRequests(token);
 		} catch (error) {
 			alert(error);
 		}
 	};
 
+	console.log(props);
 	return (
 		<View style={styles.container}>
 			<Text style={styles.header}>My Friends</Text>
@@ -35,12 +36,25 @@ function FriendsScreen(props) {
 			/>
 			<Button title="Send Friend Request" onPress={() => onRequestPress()} />
 			<Button title="Return to Settings" onPress={() => navigation.navigate("Settings")} />
+			<Text>Sent Requests</Text>
+			<View>
+				{props.requests &&
+					props.requests.map(request => (
+						<Text>
+							{request.firstName} {request.email}
+						</Text>
+					))}
+			</View>
 		</View>
 	);
 }
 
-const mapDispatch = dispatch => ({
-	sendRequest: (token, email) => dispatch(sendRequest(token, email))
+const mapState = state => ({
+	requests: state.requests
 });
 
-export default connect(null, mapDispatch)(FriendsScreen);
+const mapDispatch = dispatch => ({
+	getRequests: token => dispatch(getRequests(token))
+});
+
+export default connect(mapState, mapDispatch)(FriendsScreen);

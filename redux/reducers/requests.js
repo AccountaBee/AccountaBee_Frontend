@@ -21,7 +21,8 @@ export const sendRequest = (token, email) => async dispatch => {
 
 export const getRequests = token => async dispatch => {
 	try {
-		const { data } = await instance.get("/request", token);
+		const { data } = await instance.post("/friends/sent", { token });
+		console.log("DATA", data);
 		dispatch(setRequests(data));
 	} catch (error) {
 		console.log(error);
