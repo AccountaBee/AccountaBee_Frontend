@@ -10,7 +10,7 @@ const setGoals = (goals) => ({ type: SET_GOALS, goals });
 export const gotGoals = (goals) => ({ type: GOT_GOALS, goals });
 
 const instance = axios.create({
-	baseURL: 'https://accountabee.herokuapp.com/api/goals/allGoals',
+	baseURL: 'https://accountabee.herokuapp.com/api/goals',
 });
 
 export const setGoalsThunk = (goals) => async (dispatch) => {

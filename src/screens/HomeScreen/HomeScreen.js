@@ -12,8 +12,8 @@ function HomeScreen(props) {
 		async function fetchData() {
 			await props.getGoals();
 			setGoals(props.goals);
-			console.log('allGoals from redux thunk: ', allGoals);
-			console.log('props.goals from redux thunk: ', props.goals);
+			// 	console.log('allGoals from redux thunk: ', allGoals);
+			// 	console.log('props.goals from redux thunk: ', props.goals);
 		}
 		fetchData();
 	}, []);
@@ -24,8 +24,8 @@ function HomeScreen(props) {
 				<Text style={styles.headline}>My Goals</Text>
 			</View>
 			<View>
-				{props.user.goals &&
-					props.user.goals.map((goal) => {
+				{props.goals &&
+					props.goals.map((goal) => {
 						if (goal.status === 'active') {
 							return <GoalPieChart key={goal.id} goal={goal} />;
 						}
