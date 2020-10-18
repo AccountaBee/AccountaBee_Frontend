@@ -19,7 +19,23 @@ export default StyleSheet.create({
 });
 
 export const pieStyle = StyleSheet.create({
-	pie: {
-		textAlign: 'right',
+	textContainer: {
+		marginTop: '9%',
+		marginLeft: '8%',
+		maxWidth: '44%',
+	},
+	container: {
+		justifyContent: 'space-between',
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		borderColor: 'red',
+		borderWidth: 2,
+	},
+	goalName: {
+		fontSize: 20,
+		paddingBottom: 15,
+	},
+	subhead: {
+		fontSize: 16,
 	},
 });
