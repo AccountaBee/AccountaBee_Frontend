@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import GoalPieChart from './PieChart';
 import { connect } from 'react-redux';
@@ -6,15 +6,27 @@ import { getGoalsThunk } from '../../../redux/reducers/goals';
 import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 
-function HomeScreen(props) {
-	// const [allGoals, setGoals] = useState([]);
+const pieCalculations = (completedDays, frequency) => {
+	const pieData = [],
+		graphicColor = [];
+	let colorComplete = completedDays;
+	for (let i = 1; i <= frequency; i++) {
+		let objStr = { x: i, y: 1 };
+		pieData.push(objStr);
+		if (colorComplete) {
+			graphicColor.push('#8688BC');
+			colorComplete--;
+		} else {
+			graphicColor.push('#DCDCDC');
+		}
+	}
+	return [pieData, graphicColor];
+};
 
+function HomeScreen(props) {
 	useEffect(() => {
 		async function fetchData() {
 			await props.getGoals();
-			// setGoals(props.goals);
-			// 	console.log('allGoals from redux thunk: ', allGoals);
-			// 	console.log('props.goals from redux thunk: ', props.goals);
 		}
 		fetchData();
 	}, []);
@@ -29,8 +41,14 @@ function HomeScreen(props) {
 					{props.goals &&
 						props.goals.map((goal) => {
 							if (goal.status === 'active') {
+								const [data, graphicColor] = pieCalculations(
+									goal.completedDays,
+									goal.frequency
+								);
 								return (
 									<GoalPieChart
+										graphicColor={graphicColor}
+										data={data}
 										key={goal.id}
 										goal={goal}
 										navigation={props.navigation}
