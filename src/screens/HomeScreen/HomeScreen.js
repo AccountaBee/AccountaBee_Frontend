@@ -24,7 +24,7 @@ function HomeScreen(props) {
 
 	return (
 		<>
-			<View style={stylesx.container}>
+			<View style={styles.container}>
 				<Text style={styles.headline}>My Goals</Text>
 			</View>
 			<View>
