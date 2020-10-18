@@ -4,12 +4,14 @@ import styles from "./styles";
 import { connect } from "react-redux";
 import { getSentRequests } from "../../../redux/reducers/sentRequests";
 import { getRequests } from "../../../redux/reducers/requests";
+import { getFriends } from "../../../redux/reducers/friends";
 import { firebase } from "../../firebase/config";
 import instance from "../../../redux/axios";
 
 //TODO - add loading icon because it takes a second to load requests
 //TODO - make confirm/deny buttons nice icons
 //TODO - better error handling messages on backend
+//TODO - let user's uploas photo???
 
 class FriendsScreen extends React.Component {
 	constructor(props) {
@@ -23,6 +25,7 @@ class FriendsScreen extends React.Component {
 		const token = await firebase.auth().currentUser.getIdToken();
 		this.props.getSentRequests(token);
 		this.props.getRequests(token);
+		this.props.getFriends(token);
 	}
 
 	handleChange = email => {
@@ -57,6 +60,8 @@ class FriendsScreen extends React.Component {
 		const { navigation } = this.props;
 		const { sentRequests } = this.props || [];
 		const { requests } = this.props || [];
+		const { friends } = this.props || [];
+		console.log(this.props.friends);
 		return (
 			<View style={styles.container}>
 				<Text style={styles.header}>My Friends</Text>
@@ -71,8 +76,16 @@ class FriendsScreen extends React.Component {
 				/>
 				<Button title="Send Friend Request" onPress={() => this.onRequestPress()} />
 				<Button title="Return to Settings" onPress={() => navigation.navigate("Settings")} />
-				<Text>Friend Requests</Text>
 				<>
+					<Text>My Friends</Text>
+					{friends.map(friend => (
+						<View key={friend.uid}>
+							<Text>{friend.firstName}</Text>
+						</View>
+					))}
+				</>
+				<>
+					<Text>Friend Requests</Text>
 					{requests.map(request => (
 						<View key={request.uid}>
 							<Text>
@@ -83,14 +96,18 @@ class FriendsScreen extends React.Component {
 						</View>
 					))}
 				</>
-				<Text>Sent Requests</Text>
-				<View>
+
+				<>
+					<Text>Sent Requests</Text>
 					{sentRequests.map(request => (
-						<Text key={request.uid}>
-							{request.firstName} {request.email}
-						</Text>
+						<View key={request.uid}>
+							<Text>
+								{request.firstName} {request.email}
+							</Text>
+							<Button title="Delete Request" />
+						</View>
 					))}
-				</View>
+				</>
 			</View>
 		);
 	}
@@ -98,12 +115,14 @@ class FriendsScreen extends React.Component {
 
 const mapState = state => ({
 	sentRequests: state.sentRequests,
-	requests: state.requests
+	requests: state.requests,
+	friends: state.friends
 });
 
 const mapDispatch = dispatch => ({
 	getSentRequests: token => dispatch(getSentRequests(token)),
-	getRequests: token => dispatch(getRequests(token))
+	getRequests: token => dispatch(getRequests(token)),
+	getFriends: token => dispatch(getFriends(token))
 });
 
 export default connect(mapState, mapDispatch)(FriendsScreen);

@@ -7,9 +7,9 @@ const setFriends = friends => ({ type: SET_FRIENDS, friends });
 export const getFriends = token => async dispatch => {
 	try {
 		// should return an array of friends
-		const { data } = await instance.post("ROUTE HERE", token);
+		const { data } = await instance.post("/friends", { token });
 		console.log("DATA", data);
-		dispatch(setFriends());
+		dispatch(setFriends(data));
 	} catch (error) {
 		console.log(error);
 	}
