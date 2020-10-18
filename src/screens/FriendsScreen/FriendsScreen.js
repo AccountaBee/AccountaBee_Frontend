@@ -4,6 +4,7 @@ import styles from "./styles";
 import { connect } from "react-redux";
 import { sendRequest } from "../../../redux/reducers/requests";
 import { firebase } from "../../firebase/config";
+import instance from "../../../redux/axios";
 
 function FriendsScreen(props) {
 	const { navigation } = props;
@@ -12,8 +13,12 @@ function FriendsScreen(props) {
 
 	const onRequestPress = async () => {
 		const token = await firebase.auth().currentUser.getIdToken();
-		console.log(token);
-		props.sendRequest(token, email);
+		try {
+			const res = await instance.post("/friends/request", { token, email });
+			console.log(res.data);
+		} catch (error) {
+			alert(error);
+		}
 	};
 
 	return (
