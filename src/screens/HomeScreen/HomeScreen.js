@@ -6,21 +6,17 @@ import { getGoalsThunk } from '../../../redux/reducers/goals';
 import styles from './styles';
 
 function HomeScreen(props) {
-	const [allGoals, setGoals] = useState('');
+	const [allGoals, setGoals] = useState([]);
 
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		// if (props.goals) {
-	// 		// 	setGoals(props.goals);
-	// 		// 	console.log('allGoals from redux: ', allGoals);
-	// 		// } else {
-	// 		await props.getGoals();
-	// 		setGoals(props.goals);
-	// 		console.log('allGoals from redux thunk: ', allGoals);
-	// 		// }
-	// 	}
-	// 	fetchData();
-	// }, []);
+	useEffect(() => {
+		async function fetchData() {
+			await props.getGoals();
+			setGoals(props.goals);
+			console.log('allGoals from redux thunk: ', allGoals);
+			console.log('props.goals from redux thunk: ', props.goals);
+		}
+		fetchData();
+	}, []);
 
 	return (
 		<>
