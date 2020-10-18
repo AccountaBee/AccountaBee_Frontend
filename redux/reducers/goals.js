@@ -6,11 +6,11 @@ const GOT_GOALS = 'GOT_GOALS';
 const SET_GOALS = 'SET_GOALS';
 
 // ---------- ACTION CREATORS ---------- //
-const setGoals = (goals) => ({ type: SET_GOALS, goals });
-const gotGoals = (goals) => ({ type: GOT_GOALS, goals });
+export const setGoals = (goals) => ({ type: SET_GOALS, goals });
+export const gotGoals = (goals) => ({ type: GOT_GOALS, goals });
 
 const instance = axios.create({
-	baseURL: 'https://accountabee.herokuapp.com/api/goals',
+	baseURL: 'https://accountabee.herokuapp.com/api/goals/allGoals',
 });
 
 export const setGoalsThunk = (goals) => async (dispatch) => {
@@ -62,7 +62,7 @@ export const completedDaysThunk = (goalId) => async (dispatch) => {
 export const getGoalsThunk = () => async (dispatch) => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		const res = await instance.get(`/`, { token });
+		const res = await instance.post(`/`, { token });
 		dispatch(gotGoals(res.data));
 	} catch (error) {
 		console.log(error);

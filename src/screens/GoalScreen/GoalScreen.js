@@ -25,8 +25,8 @@ function GoalScreen(props, { navigation }) {
 	};
 
 	const handleGoalDel = (title, id) => {
-    setAllGoals(allGoals.filter((goal) => goal.title !== title));
-    removeGoal(id)
+		setAllGoals(allGoals.filter((goal) => goal.title !== title));
+		props.removeGoal(id);
 	};
 
 	const nextPage = async () => {
@@ -80,7 +80,9 @@ function GoalScreen(props, { navigation }) {
 							<Text style={styles.goals}>
 								{idx + 1}. {goal.title}
 							</Text>
-							<CustomDelButton onPress={() => handleGoalDel(goal.title, goal.id)} />
+							<CustomDelButton
+								onPress={() => handleGoalDel(goal.title, goal.id)}
+							/>
 						</View>
 					</View>
 				))}
@@ -103,8 +105,8 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-  setGoals: (goals) => dispatch(gotGoals(goals)), 
-  removeGoal: (id) => dispatch(deletedGoalThunk(id))
+	setGoals: (goals) => dispatch(gotGoals(goals)),
+	removeGoal: (id) => dispatch(deletedGoalThunk(id)),
 });
 
 export default connect(mapState, mapDispatch)(GoalScreen);

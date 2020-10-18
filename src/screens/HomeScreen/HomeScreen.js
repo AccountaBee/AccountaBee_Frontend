@@ -24,7 +24,12 @@ function HomeScreen(props) {
 				<Text style={styles.headline}>My Goals</Text>
 			</View>
 			<View>
-				<GoalPieChart />
+				{props.user.goals &&
+					props.user.goals.map((goal) => {
+						if (goal.status === 'active') {
+							return <GoalPieChart key={goal.id} goal={goal} />;
+						}
+					})}
 			</View>
 		</>
 	);
