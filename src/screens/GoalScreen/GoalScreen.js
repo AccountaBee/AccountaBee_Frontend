@@ -29,9 +29,9 @@ function GoalScreen(props, { navigation }) {
 		props.removeGoal(id);
 	};
 
-	const nextPage = async () => {
+	const nextPage = () => {
 		if (allGoals.length > 0) {
-			await props.setGoals(allGoals);
+			props.setGoals(allGoals);
 			props.navigation.navigate('Goals2');
 		} else {
 			alert('Please add at least one goal.');
