@@ -9,13 +9,16 @@ import Toast from 'react-native-toast-message'
 import { completedDaysThunk } from '../../../redux/reducers/goals'
 import { connect } from 'react-redux';
 
-function SingleGoalScreen(props) {
-    const user = useSession();
+function  SingleGoalScreen(props) {
+    const goal = props.route.params.goal
+    console.log('GOAL', goal.title)
     const [isCompleted, setIsCompleted] = useState(false)
+    
     const toggleItem = () =>{
         setIsCompleted(!isCompleted)
-        updateSingleGoalFreq('1')
+        await updateSingleGoalFreq()
     }
+    
     Toast.show({
         text1: 'Congratulations!',
         text2: 'You completed your goal! 👋',
@@ -26,7 +29,7 @@ function SingleGoalScreen(props) {
 	return (
         <View>
             <View style={styles.headcontainer}>
-                <Text style={styles.headline}> {`${props.goals[0]}`} </Text>
+                <Text style={styles.headline}> {goal.title} </Text>
             </View>
             <View style={styles.container}>                
                 <TouchableOpacity onPress={toggleItem}>
