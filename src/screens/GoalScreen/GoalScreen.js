@@ -24,9 +24,12 @@ function GoalScreen(props, { navigation }) {
 		}
 	};
 
-	const handleGoalDel = (title, id) => {
+	const handleGoalDel = (title, goal) => {
     setAllGoals(allGoals.filter((goal) => goal.title !== title));
-    removeGoal(id)
+    console.log(' GOAL in deletion: ', goal)
+    if (goal.id) {
+      props.removeGoal(goal.id)
+    }
 	};
 
 	const nextPage = () => {
@@ -80,7 +83,7 @@ function GoalScreen(props, { navigation }) {
 							<Text style={styles.goals}>
 								{idx + 1}. {goal.title}
 							</Text>
-							<CustomDelButton onPress={() => handleGoalDel(goal.title, goal.id)} />
+							<CustomDelButton onPress={() => handleGoalDel(goal.title, goal)} />
 						</View>
 					</View>
 				))}
