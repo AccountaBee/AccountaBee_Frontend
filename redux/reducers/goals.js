@@ -2,12 +2,13 @@ import instance from "../axios";
 import { firebase } from "../../src/firebase/config";
 
 // ---------- ACTION TYPES ---------- //
+
 const GOT_GOALS = "GOT_GOALS";
 const SET_GOALS = "SET_GOALS";
 
 // ---------- ACTION CREATORS ---------- //
 const setGoals = goals => ({ type: SET_GOALS, goals });
-const gotGoals = goals => ({ type: GOT_GOALS, goals });
+export const gotGoals = goals => ({ type: GOT_GOALS, goals });
 
 export const setGoalsThunk = goals => async dispatch => {
 	try {
@@ -39,28 +40,28 @@ export const deleteGoalThunk = goalId => async () => {
 	}
 };
 //updates the goal with completed days after user marks day off
+
 export const completedDaysThunk = goalId => async dispatch => {
 	try {
-		const res = await instance.put(`/goals/${goalId}`);
 		let token = await firebase.auth().currentUser.getIdToken();
-		const allGoals = await instance.get(`/`, { token });
-		const singleGoal = res.data;
-		const oldGoals = allGoals.filter(goal => {
-			goal.title !== singleGoal.title;
-		});
-		const oldGoalsWithUpdatedGoal = oldGoals.push(singleGoal);
-		console.log("OLDGoalsWithUpdatedGoal:", oldGoalsWithUpdatedGoal);
-		dispatch(gotGoals(oldGoalsWithUpdatedGoal));
+		await instance.put(`/${goalId}`);
+		const allGoals = await instance.post(`/goals/allGoals`, { token });
+		// const updatedGoal = res.data
+		// const oldGoals = allGoals.filter(goal => {
+		//   goal.title !== updatedGoal.title
+		// })
+		// const oldGoalsWithUpdatedGoal = oldGoals.push(singleGoal)
+		// console.log('OLDGoalsWithUpdatedGoal:', oldGoalsWithUpdatedGoal)
+		dispatch(gotGoals(allGoals));
 	} catch (error) {
 		console.log(error);
 	}
 };
 
-//think thru logic, look at params
 export const getGoalsThunk = () => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		const res = await instance.get(`/goals`, { token });
+		const res = await instance.post(`/goals/allGoals`, { token });
 		dispatch(gotGoals(res.data));
 	} catch (error) {
 		console.log(error);
@@ -77,10 +78,11 @@ export const getGoalsThunk = () => async dispatch => {
 // }
 
 //think thru logic
+
 export const resetGoalsThunk = () => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		const res = await instance.put(`/goals/reset`, { token });
+		const res = await instance.put(`goals/reset`, { token });
 		dispatch(gotGoals(res.data));
 	} catch (error) {
 		console.log(error);
