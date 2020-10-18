@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput } from 'react-native';
 import CustomDelButton from '../CustomDelButton';
 import CustomButton from '../CustomButton';
 import styles from './style';
 import { connect } from 'react-redux';
-import { gotGoals, deletedGoalThunk } from '../../../redux/reducers/goals';
+import {
+	gotGoals,
+	deletedGoalThunk,
+	getGoalsThunk,
+} from '../../../redux/reducers/goals';
 
 function GoalScreen(props, { navigation }) {
 	const [newGoal, setGoal] = useState('');
 	const [allGoals, setAllGoals] = useState([]);
 
+	useEffect(() => {
+		async function fetchData() {
+			await props.getGoals();
+		}
+		fetchData();
+		const currentGoals = props.goals;
+		setAllGoals(currentGoals);
+	}, []);
+
 	const addGoalHander = () => {
-		if (allGoals.length < 3) {
+		if (allGoals && allGoals.length < 3) {
 			let newGoalObj = {
 				title: newGoal.trim(),
 				frequency: 3,
@@ -25,14 +38,14 @@ function GoalScreen(props, { navigation }) {
 	};
 
 	const handleGoalDel = (title, id) => {
-    setAllGoals(allGoals.filter((goal) => goal.title !== title));
-    removeGoal(id)
+		setAllGoals(allGoals.filter((goal) => goal.title !== title));
+		props.removeGoal(id);
 	};
 
 	const nextPage = () => {
-		if (allGoals.length > 0) {
+		if (allGoals && allGoals.length > 0) {
 			props.setGoals(allGoals);
-			props.navigation.navigate('Goals2');
+			props.navigation.navigate('Goals2', { goals: allGoals });
 		} else {
 			alert('Please add at least one goal.');
 		}
@@ -80,7 +93,9 @@ function GoalScreen(props, { navigation }) {
 							<Text style={styles.goals}>
 								{idx + 1}. {goal.title}
 							</Text>
-							<CustomDelButton onPress={() => handleGoalDel(goal.title, goal.id)} />
+							<CustomDelButton
+								onPress={() => handleGoalDel(goal.title, goal.id)}
+							/>
 						</View>
 					</View>
 				))}
@@ -100,11 +115,13 @@ function GoalScreen(props, { navigation }) {
 
 const mapState = (state) => ({
 	username: state.user.firstName,
+	goals: state.goals,
 });
 
 const mapDispatch = (dispatch) => ({
-  setGoals: (goals) => dispatch(gotGoals(goals)), 
-  removeGoal: (id) => dispatch(deletedGoalThunk(id))
+	getGoals: () => dispatch(getGoalsThunk()),
+	setGoals: (goals) => dispatch(gotGoals(goals)),
+	removeGoal: (id) => dispatch(deletedGoalThunk(id)),
 });
 
 export default connect(mapState, mapDispatch)(GoalScreen);

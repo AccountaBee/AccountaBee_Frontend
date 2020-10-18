@@ -6,8 +6,8 @@ const GOT_GOALS = 'GOT_GOALS';
 const SET_GOALS = 'SET_GOALS';
 
 // ---------- ACTION CREATORS ---------- //
-const setGoals = goals => ({type: SET_GOALS, goals})
-export const gotGoals = goals => ({type: GOT_GOALS, goals})
+const setGoals = (goals) => ({ type: SET_GOALS, goals });
+export const gotGoals = (goals) => ({ type: GOT_GOALS, goals });
 
 const instance = axios.create({
 	baseURL: 'https://accountabee.herokuapp.com/api/goals',
@@ -43,32 +43,32 @@ export const deleteGoalThunk = (goalId) => async () => {
 	}
 };
 //updates the goal with completed days after user marks day off
-export const completedDaysThunk = (goalId) => async dispatch => {
-  try {
-    let token = await firebase.auth().currentUser.getIdToken();
-    await instance.put(`/${goalId}`)
-    const allGoals = await instance.post(`/allGoals`, { token })
-    // const updatedGoal = res.data
-    // const oldGoals = allGoals.filter(goal => {
-    //   goal.title !== updatedGoal.title
-    // })
-    // const oldGoalsWithUpdatedGoal = oldGoals.push(singleGoal)
-    // console.log('OLDGoalsWithUpdatedGoal:', oldGoalsWithUpdatedGoal)
-    dispatch(gotGoals(allGoals))
-  } catch (error) {
-    console.log(error)
-  }
-}
+export const completedDaysThunk = (goalId) => async (dispatch) => {
+	try {
+		let token = await firebase.auth().currentUser.getIdToken();
+		await instance.put(`/${goalId}`);
+		const allGoals = await instance.post(`/allGoals`, { token });
+		// const updatedGoal = res.data
+		// const oldGoals = allGoals.filter(goal => {
+		//   goal.title !== updatedGoal.title
+		// })
+		// const oldGoalsWithUpdatedGoal = oldGoals.push(singleGoal)
+		// console.log('OLDGoalsWithUpdatedGoal:', oldGoalsWithUpdatedGoal)
+		dispatch(gotGoals(allGoals));
+	} catch (error) {
+		console.log(error);
+	}
+};
 
-export const getGoalsThunk = () => async dispatch => {
-  try {
-    let token = await firebase.auth().currentUser.getIdToken();
-    const res = await instance.post(`/allGoals`, { token })
-    dispatch(gotGoals(res.data))
-  } catch (error) {
-    console.log(error)
-  }
-}
+export const getGoalsThunk = () => async (dispatch) => {
+	try {
+		let token = await firebase.auth().currentUser.getIdToken();
+		const res = await instance.post(`/allGoals`, { token });
+		dispatch(gotGoals(res.data));
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 // export const getSingleGoalThunk = (goalId) => async dispatch => {
 //   try {
