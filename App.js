@@ -19,7 +19,7 @@ import {
 	GoalScreen,
 	GoalScreen2,
 	SingleGoalScreen,
-	AddFriendsScreen
+	FriendsScreen
 } from "./src/screens";
 import { decode, encode } from "base-64";
 import { useAuth, userContext } from "./src/context";
@@ -65,7 +65,7 @@ const SettingsScreenNav = () => (
 		<SettingsStack.Screen name="Settings" component={SettingsScreen} />
 		<SettingsStack.Screen
 			name="Friends"
-			component={AddFriendsScreen}
+			component={FriendsScreen}
 			options={{
 				animationEnabled: false,
 				headerShown: false

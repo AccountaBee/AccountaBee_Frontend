@@ -1,7 +1,6 @@
-import axios from "axios";
+import instance from "../axios";
 
 const SET_FRIENDS = "SET_FRIENDS";
-const SET_FRIEND = "SET_FRIEND";
 
 const setFriends = friends => ({ type: SET_FRIENDS, friends });
 

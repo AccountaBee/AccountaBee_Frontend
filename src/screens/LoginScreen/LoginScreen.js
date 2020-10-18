@@ -7,7 +7,6 @@ import { firebase } from "../../firebase/config";
 import { login } from "../../../redux/reducers/users";
 import { connect } from "react-redux";
 
-
 function LoginScreen(props, { navigation }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -21,15 +20,15 @@ function LoginScreen(props, { navigation }) {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then(async response => {
-        let token = await firebase.auth().currentUser.getIdToken();
-        const body = {
+				const token = await firebase.auth().currentUser.getIdToken();
+				const body = {
 					token
 				};
-        await props.gotUser(body);
-        props.navigation.navigate("Home")
-      })
-      .catch(() => {
-				alert('Sorry your email or password are incorrect. Please check again!');
+				await props.gotUser(body);
+				props.navigation.navigate("Home");
+			})
+			.catch(() => {
+				alert("Sorry your email or password are incorrect. Please check again!");
 			});
 	};
 
@@ -58,10 +57,7 @@ function LoginScreen(props, { navigation }) {
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
-        <CustomButton 
-          title="LOG IN" 
-          style={styles.button} 
-          onPress={() => onLoginPress()} />
+				<CustomButton title="LOG IN" style={styles.button} onPress={() => onLoginPress()} />
 				<View style={styles.footerView}>
 					<Text style={styles.footerText}>
 						Don't have an account?{" "}
