@@ -55,7 +55,7 @@ class FriendsScreen extends React.Component {
 						</View>
 					))}
 				</>
-				<Text>Add a Friend! Search your friend's email to add them</Text>
+				<Text>Add a Friend! Search your friend's email to send a request</Text>
 				<TextInput
 					onChangeText={email => this.handleChange(email)}
 					style={styles.input}
