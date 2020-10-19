@@ -45,8 +45,8 @@ export const deleteGoalThunk = (title) => async () => {
 //updates the goal with completed days after user marks day off
 export const completedDaysThunk = (goalId) => async (dispatch) => {
 	try {
+    await instance.put(`/${goalId}`);
 		let token = await firebase.auth().currentUser.getIdToken();
-		await instance.put(`/${goalId}`);
 		const { data } = await instance.post(`/allGoals`, { token });
 		// const updatedGoal = res.data
 		// const oldGoals = allGoals.filter(goal => {

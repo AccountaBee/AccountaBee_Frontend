@@ -9,12 +9,12 @@ import { completedDaysThunk } from '../../../redux/reducers/goals'
 import { connect } from 'react-redux';
 
 function SingleGoalScreen(props) {
-    const goal = props.route.params.goal
+    const goal = props.goal
     const [isCompleted, setIsCompleted] = useState(false)
     
-    const toggleItem = async (goalId) =>{
+    const incrementDay = async (goalId, day) => {
         setIsCompleted(!isCompleted)
-        await props.updateSingleGoalFreq(goalId)
+        await props.updateSingleGoalFreq(goalId, day)
     }
     
     Toast.show({
@@ -23,29 +23,44 @@ function SingleGoalScreen(props) {
         position: 'bottom | top',
    })
 
-	return (
-        <View>
-            <View style={styles.headcontainer}>
-                <Text style={styles.headline}> {goal.title} </Text>
-            </View>
-            <View style={styles.container}>                
-                <TouchableOpacity onPress={() => toggleItem(goal.id)}>
-                    <View style = {[styles.circle, isCompleted ? styles.completeCircle : styles.incompleteCircle]}></View>
-                </TouchableOpacity>
-                <Text style = {[styles.text, isCompleted ? styles.strikeText : styles.unstrikeText]}>
-                    Day 1
-                </Text>
-            </View>
-        </View>
-	);
+  const arrayDays = []
+
+  for (let i = 1; i <= goal.frequency; i++) {
+      arrayDays.push(i)               
+  }
+
+  console.log('111111111 goal.completedDays', goal.completedDays)
+
+
+  return (
+    <View>
+      <View style={styles.headcontainer}>
+        <Text style={styles.headline}> {goal.title} </Text>
+      </View>
+      <View style={styles.container}>
+        {arrayDays.map((day) => (
+          <View key={day} style={styles.day}> 
+            <TouchableOpacity onPress={() => incrementDay(goal.id, day)}>
+              <View style = {[styles.circle, +goal.completedDays >= day ? styles.completeCircle : styles.incompleteCircle]}></View>
+            </TouchableOpacity>
+            <Text style = {[styles.text, +goal.completedDays >= day ? styles.strikeText : styles.unstrikeText]}>
+              Day {day}
+            </Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
 }
 
-const mapState = state => ({
-	goals: state.goals
-});
+const mapState = (state, props) => {
+  return ({
+    goal:  state.goals.find(goal => goal.id === props.route.params.goal.id)
+  })
+};
 
 const mapDispatch = dispatch => ({
-	updateSingleGoalFreq: goalId => dispatch(completedDaysThunk(goalId))
+	updateSingleGoalFreq: (goalId, day) => dispatch(completedDaysThunk(goalId, day))
 });
 
 export default connect(mapState, mapDispatch)(SingleGoalScreen);

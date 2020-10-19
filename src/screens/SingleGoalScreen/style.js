@@ -21,9 +21,10 @@ export default StyleSheet.create({
         paddingBottom : 20,
         borderBottomColor: '#bbb',
         borderBottomWidth: StyleSheet.hairlineWidth,
-        flexDirection: 'row',
-        alignItems: 'center',
-      },
+    },
+    day: {
+      flexDirection: 'row',
+    },
     card: {
         backgroundColor: '#fff',
         paddingTop : 20,
@@ -34,7 +35,9 @@ export default StyleSheet.create({
     text: {
         fontWeight: '500',
         fontSize: 18,
-        marginVertical: 20
+        marginVertical: 20,
+        position: "relative",
+        bottom: "5%",
       },
     circle: {
         width: 30,
