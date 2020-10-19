@@ -39,8 +39,8 @@ class FriendsScreen extends React.Component {
 
 	onReplyPress = async (status, senderId) => {
 		this.props.confirmRequest(status, senderId);
-		if (status === "confirmed") Alert.alert("You are now buddies!");
-		if (status === "denied") Alert.alert("Buddy request was deleted successfully");
+		if (status === "confirmed") Alert.alert("You are now friends!");
+		if (status === "denied") Alert.alert("Friend request was deleted successfully");
 	};
 
 	render() {
