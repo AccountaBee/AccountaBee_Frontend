@@ -29,9 +29,6 @@ function SingleGoalScreen(props) {
       arrayDays.push(i)               
   }
 
-  console.log('111111111 goal.completedDays', goal.completedDays)
-
-
   return (
     <View>
       <View style={styles.headcontainer}>
@@ -39,14 +36,14 @@ function SingleGoalScreen(props) {
       </View>
       <View style={styles.container}>
         {arrayDays.map((day) => (
-          <View key={day} style={styles.day}> 
-            <TouchableOpacity onPress={() => incrementDay(goal.id, day)}>
-              <View style = {[styles.circle, +goal.completedDays >= day ? styles.completeCircle : styles.incompleteCircle]}></View>
-            </TouchableOpacity>
-            <Text style = {[styles.text, +goal.completedDays >= day ? styles.strikeText : styles.unstrikeText]}>
-              Day {day}
-            </Text>
-          </View>
+          <TouchableOpacity key={day} onPress={() => incrementDay(goal.id, day)}>
+            <View style={styles.day}> 
+              <View style = {[styles.circle, goal.completedDays >= day ? styles.completeCircle : styles.incompleteCircle]}></View>
+                <Text style = {[styles.text, goal.completedDays >= day ? styles.strikeText : styles.unstrikeText]}>
+                  Day {day}
+                </Text>
+              </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
