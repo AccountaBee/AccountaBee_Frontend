@@ -12,7 +12,9 @@ export const getUser = () => async dispatch => {
 		const token = await firebase.auth().currentUser.getIdToken();
 		const { data } = await instance.post("/users/login", { token });
 		dispatch(gotUser(data));
-	} catch (error) {}
+	} catch (error) {
+		alert("Sorry, there was a problem signing in. Please try again.");
+	}
 };
 
 export const registerNewUser = user => async dispatch => {
@@ -23,15 +25,6 @@ export const registerNewUser = user => async dispatch => {
 		console.log(error);
 	}
 };
-
-// export const login = token => async dispatch => {
-// 	try {
-// 		const { data } = await instance.post("/users/login", token);
-// 		dispatch(gotUser(data));
-// 	} catch (authError) {
-// 		console.error(authError);
-// 	}
-// };
 
 export const logout = () => dispatch => {
 	try {
