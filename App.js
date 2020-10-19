@@ -20,7 +20,7 @@ import {
 	SingleGoalScreen,
 	FriendsScreen
 } from "./src/screens";
-import FriendsTab from "./src/screens/FriendsScreen/FriendsTab";
+import FriendsIcon from "./src/screens/FriendsScreen/FriendsIcon";
 import { decode, encode } from "base-64";
 import { useAuth, userContext } from "./src/context";
 
@@ -103,8 +103,9 @@ const TabsScreen = () => (
 				tabBarIcon: ({ focused, color }) => {
 					color = focused ? "#9FC78A" : "#8688BC";
 					return (
+						// STYLE & PLACEMENT ON ICON WILL BE IMPROVED
 						<>
-							<FriendsTab />
+							<FriendsIcon />
 							<Feather name="users" size={20} color={color} />
 						</>
 					);
@@ -116,8 +117,6 @@ const TabsScreen = () => (
 );
 
 export default function App() {
-	//const [loading, setLoading] = useState(true)
-	//const [user, setUser] = useState(null)
 	const { initializing, user } = useAuth();
 
 	if (initializing) {

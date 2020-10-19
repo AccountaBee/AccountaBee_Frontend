@@ -1,6 +1,7 @@
 import instance from "../axios";
 import { firebase } from "../../src/firebase/config";
 
+// ---------- ACTION TYPES ---------- //
 const SET_FRIENDS = "SET_FRIENDS";
 
 const setFriends = friends => ({ type: SET_FRIENDS, friends });

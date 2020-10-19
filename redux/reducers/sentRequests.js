@@ -12,7 +12,28 @@ export const getSentRequests = () => async dispatch => {
 		console.log("DATA", data);
 		dispatch(setSentRequests(data));
 	} catch (error) {
-		console.log(error);
+		alert(error);
+	}
+};
+
+export const sendRequest = email => async dispatch => {
+	try {
+		const token = await firebase.auth().currentUser.getIdToken();
+		await instance.post("/friends/request", { token, email });
+		dispatch(getSentRequests(token));
+	} catch (error) {
+		alert(error);
+	}
+};
+
+onRequestPress = async () => {
+	const email = this.state.email;
+	try {
+		const token = await firebase.auth().currentUser.getIdToken();
+		const res = await instance.post("/friends/request", { token, email });
+		this.props.getSentRequests(token);
+	} catch (error) {
+		alert(error);
 	}
 };
 

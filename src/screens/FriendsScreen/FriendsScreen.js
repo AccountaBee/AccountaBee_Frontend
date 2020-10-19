@@ -2,11 +2,9 @@ import React from "react";
 import { Text, View, TextInput, Button } from "react-native";
 import styles from "./styles";
 import { connect } from "react-redux";
-import { getSentRequests } from "../../../redux/reducers/sentRequests";
-import { getRequests } from "../../../redux/reducers/requests";
+import { getSentRequests, sendRequest } from "../../../redux/reducers/sentRequests";
+import { confirmRequest, getRequests } from "../../../redux/reducers/requests";
 import { getFriends } from "../../../redux/reducers/friends";
-import { firebase } from "../../firebase/config";
-import instance from "../../../redux/axios";
 import { Feather } from "@expo/vector-icons";
 
 //TODO - add loading icon because it takes a second to load requests
@@ -35,27 +33,11 @@ class FriendsScreen extends React.Component {
 
 	onRequestPress = async () => {
 		const email = this.state.email;
-		try {
-			const token = await firebase.auth().currentUser.getIdToken();
-			const res = await instance.post("/friends/request", { token, email });
-			this.props.getSentRequests(token);
-		} catch (error) {
-			alert(error);
-		}
+		this.props.sendRequest(email);
 	};
 
 	onReplyPress = async (status, senderId) => {
-		//need friend id
-		console.log(status, senderId);
-		try {
-			const token = await firebase.auth().currentUser.getIdToken();
-			const res = await instance.put("/friends/reply", { token, senderId, status });
-			console.log(res.data);
-			this.props.getRequests(token);
-			this.props.getFriends(token);
-		} catch (error) {
-			alert(error);
-		}
+		this.props.confirmRequest(status, senderId);
 	};
 
 	render() {
@@ -73,7 +55,7 @@ class FriendsScreen extends React.Component {
 						</View>
 					))}
 				</>
-				<Text>Add a Friend! Search your friend's email to add them</Text>
+				<Text>Add a Friend! Search your friend's email to send a request</Text>
 				<TextInput
 					onChangeText={email => this.handleChange(email)}
 					style={styles.input}
@@ -132,7 +114,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
 	getSentRequests: () => dispatch(getSentRequests()),
 	getRequests: () => dispatch(getRequests()),
-	getFriends: () => dispatch(getFriends())
+	getFriends: () => dispatch(getFriends()),
+	sendRequest: email => dispatch(sendRequest(email)),
+	confirmRequest: (status, senderId) => dispatch(confirmRequest(status, senderId))
 });
 
 export default connect(mapState, mapDispatch)(FriendsScreen);
