@@ -1,49 +1,50 @@
-import axios from 'axios';
-import { firebase } from '../../src/firebase/config';
-
-// ---------- ACTION TYPES ---------- //
-const GOT_GOALS = 'GOT_GOALS';
-const SET_GOALS = 'SET_GOALS';
-
-// ---------- ACTION CREATORS ---------- //
-const setGoals = (goals) => ({ type: SET_GOALS, goals });
-export const gotGoals = (goals) => ({ type: GOT_GOALS, goals });
+import axios from "axios";
+import { firebase } from "../../src/firebase/config";
 
 const instance = axios.create({
-	baseURL: 'https://accountabee.herokuapp.com/api/goals',
+	baseURL: "https://accountabee.herokuapp.com/api/goals"
 });
 
-export const setGoalsThunk = (goals) => async (dispatch) => {
+// ---------- ACTION TYPES ---------- //
+
+const GOT_GOALS = "GOT_GOALS";
+const SET_GOALS = "SET_GOALS";
+
+// ---------- ACTION CREATORS ---------- //
+const setGoals = goals => ({ type: SET_GOALS, goals });
+export const gotGoals = goals => ({ type: GOT_GOALS, goals });
+
+export const setGoalsThunk = goals => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		let { data, status } = await instance.post('/', { goals, token });
+		let { data, status } = await instance.post("/", { goals, token });
 		if (status === 200) {
 			dispatch(setGoals(data));
 		} else {
-			console.log('error setting goals in database, status error: ', status);
+			console.log("error setting goals in database, status error: ", status);
 		}
 	} catch (error) {
 		console.error(error);
 	}
 };
 
-export const deleteGoalThunk = (goalId) => async () => {
+export const deleteGoalThunk = goalId => async () => {
 	try {
-		console.log('in deletedGoalThunk');
+		console.log("in deletedGoalThunk");
 		let { data, status } = await instance.delete(`/${goalId}`);
-		console.log('status is: ', status);
-		console.log('data is:', data);
+		console.log("status is: ", status);
+		console.log("data is:", data);
 		if (status === 200) {
-			console.log('goal successfully deleted');
+			console.log("goal successfully deleted");
 		} else {
-			console.log('error deleting goals in database, status error: ', status);
+			console.log("error deleting goals in database, status error: ", status);
 		}
 	} catch (error) {
 		console.error(error);
 	}
 };
 //updates the goal with completed days after user marks day off
-export const completedDaysThunk = (goalId) => async (dispatch) => {
+export const completedDaysThunk = goalId => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		await instance.put(`/${goalId}`);
@@ -60,7 +61,7 @@ export const completedDaysThunk = (goalId) => async (dispatch) => {
 	}
 };
 
-export const getGoalsThunk = () => async (dispatch) => {
+export const getGoalsThunk = () => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		const res = await instance.post(`/allGoals`, { token });
@@ -80,10 +81,11 @@ export const getGoalsThunk = () => async (dispatch) => {
 // }
 
 //think thru logic
-export const resetGoalsThunk = () => async (dispatch) => {
+
+export const resetGoalsThunk = () => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		const res = await instance.put(`/reset`, { token });
+		const res = await instance.put(`goals/reset`, { token });
 		dispatch(gotGoals(res.data));
 	} catch (error) {
 		console.log(error);

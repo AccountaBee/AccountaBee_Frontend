@@ -1,17 +1,16 @@
 import instance from "../axios";
 import { firebase } from "../../src/firebase/config";
 
-const SET_FRIENDS = "SET_FRIENDS";
+const SET_REQUESTS = "SET_REQUESTS";
 
-const setFriends = friends => ({ type: SET_FRIENDS, friends });
+const setRequests = requests => ({ type: SET_REQUESTS, requests });
 
-export const getFriends = () => async dispatch => {
+export const getRequests = () => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
-		// should return an array of friends
-		const { data } = await instance.post("/friends", { token });
+		const { data } = await instance.post("/friends/invites", { token });
 		console.log("DATA", data);
-		dispatch(setFriends(data));
+		dispatch(setRequests(data));
 	} catch (error) {
 		console.log(error);
 	}
@@ -19,8 +18,8 @@ export const getFriends = () => async dispatch => {
 
 export default function (state = [], action) {
 	switch (action.type) {
-		case SET_FRIENDS:
-			return action.friends;
+		case SET_REQUESTS:
+			return action.requests;
 		default:
 			return state;
 	}
