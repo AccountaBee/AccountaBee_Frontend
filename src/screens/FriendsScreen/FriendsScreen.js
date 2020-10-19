@@ -7,11 +7,13 @@ import { getRequests } from "../../../redux/reducers/requests";
 import { getFriends } from "../../../redux/reducers/friends";
 import { firebase } from "../../firebase/config";
 import instance from "../../../redux/axios";
+import { Feather } from "@expo/vector-icons";
 
 //TODO - add loading icon because it takes a second to load requests
 //TODO - make confirm/deny buttons nice icons
 //TODO - better error handling messages on backend
-//TODO - let user's uploas photo???
+//TODO - let users upload photo???
+//TODO - style
 
 class FriendsScreen extends React.Component {
 	constructor(props) {
@@ -22,10 +24,9 @@ class FriendsScreen extends React.Component {
 	}
 
 	async componentDidMount() {
-		const token = await firebase.auth().currentUser.getIdToken();
-		this.props.getSentRequests(token);
-		this.props.getRequests(token);
-		this.props.getFriends(token);
+		this.props.getSentRequests();
+		this.props.getRequests();
+		this.props.getFriends();
 	}
 
 	handleChange = email => {
@@ -51,20 +52,27 @@ class FriendsScreen extends React.Component {
 			const res = await instance.put("/friends/reply", { token, senderId, status });
 			console.log(res.data);
 			this.props.getRequests(token);
+			this.props.getFriends(token);
 		} catch (error) {
 			alert(error);
 		}
 	};
 
 	render() {
-		const { navigation } = this.props;
 		const { sentRequests } = this.props || [];
 		const { requests } = this.props || [];
 		const { friends } = this.props || [];
-		console.log(this.props.friends);
+
 		return (
 			<View style={styles.container}>
 				<Text style={styles.header}>My Friends</Text>
+				<>
+					{friends.map(friend => (
+						<View key={friend.uid}>
+							<Text>{friend.firstName}</Text>
+						</View>
+					))}
+				</>
 				<Text>Add a Friend! Search your friend's email to add them</Text>
 				<TextInput
 					onChangeText={email => this.handleChange(email)}
@@ -74,16 +82,8 @@ class FriendsScreen extends React.Component {
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
-				<Button title="Send Friend Request" onPress={() => this.onRequestPress()} />
-				<Button title="Return to Settings" onPress={() => navigation.navigate("Settings")} />
-				<>
-					<Text>My Friends</Text>
-					{friends.map(friend => (
-						<View key={friend.uid}>
-							<Text>{friend.firstName}</Text>
-						</View>
-					))}
-				</>
+				<Button title="Send" onPress={() => this.onRequestPress()} />
+
 				<>
 					<Text>Friend Requests</Text>
 					{requests.map(request => (
@@ -91,12 +91,21 @@ class FriendsScreen extends React.Component {
 							<Text>
 								{request.firstName} {request.email}
 							</Text>
-							<Button title="YES" onPress={() => this.onReplyPress("confirmed", request.uid)} />
-							<Button title="NO" onPress={() => this.onReplyPress("denied", request.uid)} />
+							<Feather
+								name="check"
+								size={24}
+								color="black"
+								onPress={() => this.onReplyPress("confirmed", request.uid)}
+							/>
+							<Feather
+								name="x"
+								size={24}
+								color="black"
+								onPress={() => this.onReplyPress("denied", request.uid)}
+							/>
 						</View>
 					))}
 				</>
-
 				<>
 					<Text>Sent Requests</Text>
 					{sentRequests.map(request => (
@@ -116,13 +125,14 @@ class FriendsScreen extends React.Component {
 const mapState = state => ({
 	sentRequests: state.sentRequests,
 	requests: state.requests,
-	friends: state.friends
+	friends: state.friends,
+	user: state.user
 });
 
 const mapDispatch = dispatch => ({
-	getSentRequests: token => dispatch(getSentRequests(token)),
-	getRequests: token => dispatch(getRequests(token)),
-	getFriends: token => dispatch(getFriends(token))
+	getSentRequests: () => dispatch(getSentRequests()),
+	getRequests: () => dispatch(getRequests()),
+	getFriends: () => dispatch(getFriends())
 });
 
 export default connect(mapState, mapDispatch)(FriendsScreen);

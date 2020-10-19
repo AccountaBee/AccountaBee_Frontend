@@ -1,11 +1,13 @@
 import instance from "../axios";
+import { firebase } from "../../src/firebase/config";
 
 const SET_FRIENDS = "SET_FRIENDS";
 
 const setFriends = friends => ({ type: SET_FRIENDS, friends });
 
-export const getFriends = token => async dispatch => {
+export const getFriends = () => async dispatch => {
 	try {
+		const token = await firebase.auth().currentUser.getIdToken();
 		// should return an array of friends
 		const { data } = await instance.post("/friends", { token });
 		console.log("DATA", data);

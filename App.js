@@ -9,7 +9,6 @@ import { Feather } from "@expo/vector-icons";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import Toast from "react-native-toast-message";
-
 import {
 	LoginScreen,
 	HomeScreen,
@@ -21,6 +20,7 @@ import {
 	SingleGoalScreen,
 	FriendsScreen
 } from "./src/screens";
+import FriendsTab from "./src/screens/FriendsScreen/FriendsTab";
 import { decode, encode } from "base-64";
 import { useAuth, userContext } from "./src/context";
 
@@ -34,7 +34,6 @@ if (!global.atob) {
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 const GoalStack = createStackNavigator();
-const SettingsStack = createStackNavigator();
 
 // Goal-setting stack (will likely ultimately be part of the settings screen stack, but for dev purposes using a separate stack)
 const GoalScreenNav = () => (
@@ -59,21 +58,6 @@ const GoalScreenNav = () => (
 	</GoalStack.Navigator>
 );
 
-// creating a seperate stack so that the bottom tabs stay on the add friends screen
-const SettingsScreenNav = () => (
-	<SettingsStack.Navigator>
-		<SettingsStack.Screen name="Settings" component={SettingsScreen} />
-		<SettingsStack.Screen
-			name="Friends"
-			component={FriendsScreen}
-			options={{
-				animationEnabled: false,
-				headerShown: false
-			}}
-		/>
-	</SettingsStack.Navigator>
-);
-
 // Bottom of page tab navigator
 const TabsScreen = () => (
 	<Tabs.Navigator
@@ -90,6 +74,8 @@ const TabsScreen = () => (
 					iconName = "target";
 				} else if (route.name === "Single Goal") {
 					iconName = "check-circle";
+				} else if (route.name === "Friends") {
+					iconName = "users";
 				}
 				color = focused ? "#9FC78A" : "#8688BC";
 				return <Feather name={iconName} size={20} color={color} />;
@@ -110,7 +96,22 @@ const TabsScreen = () => (
 		/>
 		<Tabs.Screen name="Single Goal" component={SingleGoalScreen} />
 		<Tabs.Screen name="Feed" component={FeedScreen} />
-		<Tabs.Screen name="Settings" component={SettingsScreenNav} />
+		<Tabs.Screen
+			name="Friends"
+			component={FriendsScreen}
+			options={{
+				tabBarIcon: ({ focused, color }) => {
+					color = focused ? "#9FC78A" : "#8688BC";
+					return (
+						<>
+							<FriendsTab />
+							<Feather name="users" size={20} color={color} />
+						</>
+					);
+				}
+			}}
+		/>
+		<Tabs.Screen name="Settings" component={SettingsScreen} />
 	</Tabs.Navigator>
 );
 
@@ -150,6 +151,7 @@ export default function App() {
 										headerShown: false
 									}}
 								/>
+
 								<Stack.Screen
 									name="Tabs"
 									component={TabsScreen}

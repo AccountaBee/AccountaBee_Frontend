@@ -1,5 +1,9 @@
-import instance from "../axios";
+import axios from "axios";
 import { firebase } from "../../src/firebase/config";
+
+const instance = axios.create({
+	baseURL: "https://accountabee.herokuapp.com/api/goals"
+});
 
 // ---------- ACTION TYPES ---------- //
 
@@ -13,7 +17,7 @@ export const gotGoals = goals => ({ type: GOT_GOALS, goals });
 export const setGoalsThunk = goals => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		let { data, status } = await instance.post("/goals", { goals, token });
+		let { data, status } = await instance.post("/", { goals, token });
 		if (status === 200) {
 			dispatch(setGoals(data));
 		} else {
@@ -27,7 +31,7 @@ export const setGoalsThunk = goals => async dispatch => {
 export const deleteGoalThunk = goalId => async () => {
 	try {
 		console.log("in deletedGoalThunk");
-		let { data, status } = await instance.delete(`/goals/${goalId}`);
+		let { data, status } = await instance.delete(`/${goalId}`);
 		console.log("status is: ", status);
 		console.log("data is:", data);
 		if (status === 200) {
@@ -40,12 +44,11 @@ export const deleteGoalThunk = goalId => async () => {
 	}
 };
 //updates the goal with completed days after user marks day off
-
 export const completedDaysThunk = goalId => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		await instance.put(`/${goalId}`);
-		const allGoals = await instance.post(`/goals/allGoals`, { token });
+		const allGoals = await instance.post(`/allGoals`, { token });
 		// const updatedGoal = res.data
 		// const oldGoals = allGoals.filter(goal => {
 		//   goal.title !== updatedGoal.title
@@ -61,7 +64,7 @@ export const completedDaysThunk = goalId => async dispatch => {
 export const getGoalsThunk = () => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		const res = await instance.post(`/goals/allGoals`, { token });
+		const res = await instance.post(`/allGoals`, { token });
 		dispatch(gotGoals(res.data));
 	} catch (error) {
 		console.log(error);

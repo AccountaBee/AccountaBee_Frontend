@@ -19,12 +19,9 @@ function LoginScreen(props, { navigation }) {
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then(async response => {
-				const token = await firebase.auth().currentUser.getIdToken();
-				const body = {
-					token
-				};
-				await props.gotUser(body);
+			.then(async () => {
+				let token = await firebase.auth().currentUser.getIdToken();
+				await props.gotUser({ token });
 				props.navigation.navigate("Home");
 			})
 			.catch(() => {
