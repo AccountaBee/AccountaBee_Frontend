@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput } from 'react-native';
-import CustomDelButton from '../CustomDelButton';
-import CustomButton from '../CustomButton';
-import styles from './style';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { Text, View, TextInput } from "react-native";
+import CustomDelButton from "../CustomDelButton";
+import CustomButton from "../CustomButton";
+import styles from "./style";
+import { connect } from "react-redux";
 import {
 	gotGoals,
 	deleteGoalThunk,
@@ -11,7 +11,7 @@ import {
 } from '../../../redux/reducers/goals';
 
 function GoalScreen(props) {
-	const [newGoal, setGoal] = useState('');
+	const [newGoal, setGoal] = useState("");
 	const [allGoals, setAllGoals] = useState([]);
 
   useEffect(() => {
@@ -23,12 +23,12 @@ function GoalScreen(props) {
 		if (allGoals && allGoals.length < 3) {
 			let newGoalObj = {
 				title: newGoal.trim(),
-				frequency: 3,
+				frequency: 3
 			};
 			setAllGoals([...allGoals, newGoalObj]);
-			setGoal('');
+			setGoal("");
 		} else {
-			setGoal('');
+			setGoal("");
 			alert("Don't burn yourself out!\nStick to three goals at once.");
 		}
 	};
@@ -44,9 +44,9 @@ function GoalScreen(props) {
 	const nextPage = () => {
 		if (allGoals && allGoals.length > 0) {
 			props.setGoals(allGoals);
-			props.navigation.navigate('Goals2', { goals: allGoals });
+			props.navigation.navigate("Goals2", { goals: allGoals });
 		} else {
-			alert('Please add at least one goal.');
+			alert("Please add at least one goal.");
 		}
 	};
 
@@ -54,25 +54,21 @@ function GoalScreen(props) {
 		<>
 			<View style={styles.container}>
 				<Text style={[styles.headline, styles.bigger]}>
-					Hello{props.username ? ' ' + props.username : ''}!
+					Hello{props.username ? " " + props.username : ""}!
 				</Text>
 				<Text style={styles.headline}>
-					What goals do you have that will {'\n'}help you to have a healthy,
-					{'\n'}productive week?
+					What goals do you have that will {"\n"}help you to have a healthy,
+					{"\n"}productive week?
 				</Text>
 				<Text style={styles.headline}>Please enter up to 3 goals.</Text>
 				<View style={[styles.flex]}>
 					<TextInput
 						style={[styles.textInput, styles.breakBot]}
 						placeholder="Please enter a goal"
-						onChangeText={(text) => setGoal(text)}
+						onChangeText={text => setGoal(text)}
 						value={newGoal}
 					/>
-					<CustomButton
-						title="Add"
-						style={styles.button}
-						onPress={addGoalHander}
-					/>
+					<CustomButton title="Add" style={styles.button} onPress={addGoalHander} />
 				</View>
 			</View>
 			<View>
@@ -85,7 +81,6 @@ function GoalScreen(props) {
 					]}
 				>
 					{allGoals.length ? 'Your Goals:' : ''}
-          {console.log('allgoals:', allGoals)}
 				</Text>
 				{allGoals.map((goal, idx) => (
 					<View key={idx + 1}>
@@ -98,25 +93,20 @@ function GoalScreen(props) {
 					</View>
 				))}
 				<Text style={styles.subheader}>
-					Once you're happy with these goals,{'\n'}let's set their weekly
-					frequency.
+					Once you're happy with these goals,{"\n"}let's set their weekly frequency.
 				</Text>
-				<CustomButton
-					style={styles.nextButton}
-					title="NEXT"
-					onPress={() => nextPage()}
-				/>
+				<CustomButton style={styles.nextButton} title="NEXT" onPress={() => nextPage()} />
 			</View>
 		</>
 	);
 }
 
-const mapState = (state) => ({
+const mapState = state => ({
 	username: state.user.firstName,
-	goals: state.goals,
+	goals: state.goals
 });
 
-const mapDispatch = (dispatch) => ({
+const mapDispatch = dispatch => ({
 	getGoals: () => dispatch(getGoalsThunk()),
 	setGoals: goals => dispatch(gotGoals(goals)),
   deleteGoal: (goalId, goals) => dispatch(deleteGoalThunk(goalId, goals))
