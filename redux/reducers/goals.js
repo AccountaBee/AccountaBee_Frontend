@@ -27,7 +27,7 @@ export const setGoalsThunk = (goals) => async (dispatch) => {
 	}
 };
 
-export const deleteGoalThunk = (goalId) => async () => {
+export const deleteGoalThunk = (title) => async () => {
 	try {
 		console.log('in deletedGoalThunk');
 		let { data, status } = await instance.delete(`/${goalId}`);
