@@ -4,15 +4,13 @@ import CustomButton from "../CustomButton";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
 
+// This page will be converted to a drawer navigator
+
 export default function SettingsScreen(props) {
 	const { navigation } = props;
 
 	const onGoalsPress = () => {
 		navigation.navigate("Goals");
-	};
-
-	const onFriendsPress = () => {
-		navigation.navigate("Friends");
 	};
 
 	const signout = () => {
