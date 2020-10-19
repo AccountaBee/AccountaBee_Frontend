@@ -14,7 +14,8 @@ function SingleGoalScreen(props) {
     
     const incrementDay = async (goalId, day) => {
         setIsCompleted(!isCompleted)
-        await props.updateSingleGoalFreq(goalId, day)
+        console.log('DAY:', day)
+        await props.updateSingleGoalFreq(goalId)
     }
     
     Toast.show({
@@ -57,7 +58,7 @@ const mapState = (state, props) => {
 };
 
 const mapDispatch = dispatch => ({
-	updateSingleGoalFreq: (goalId, day) => dispatch(completedDaysThunk(goalId, day))
+	updateSingleGoalFreq: (goalId) => dispatch(completedDaysThunk(goalId))
 });
 
 export default connect(mapState, mapDispatch)(SingleGoalScreen);
