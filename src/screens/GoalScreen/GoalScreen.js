@@ -7,22 +7,17 @@ import { connect } from "react-redux";
 import {
 	gotGoals,
 	deleteGoalThunk,
-	getGoalsThunk,
-	setGoalInactiveThunk
-} from "../../../redux/reducers/goals";
+  getGoalsThunk
+} from '../../../redux/reducers/goals';
 
 function GoalScreen(props) {
 	const [newGoal, setGoal] = useState("");
 	const [allGoals, setAllGoals] = useState([]);
 
-	useEffect(() => {
-		async function fetchData() {
-			await props.getGoals();
-		}
-		fetchData();
-		const currentGoals = props.goals;
-		setAllGoals(currentGoals);
-	}, []);
+  useEffect(() => {
+    const currentGoals = props.goals;
+    setAllGoals(currentGoals);
+  }, [props.goals]);
 
 	const addGoalHander = () => {
 		if (allGoals && allGoals.length < 3) {
@@ -38,19 +33,13 @@ function GoalScreen(props) {
 		}
 	};
 
-	const handleGoalDel = async (title, goal, reduxGoal) => {
-		setAllGoals(allGoals.filter(goal => goal.title !== title));
-		console.log(" GOAL in deletion: ", reduxGoal);
-		if (reduxGoal.id) {
-			//if goal being deleted was in db, check if goal was successfully
-			//completed and add to inactive. if unsuccessfully completed then deleted
-			if (reduxGoal.completedDays === reduxGoal.frequency) {
-				await props.inactivateGoal(reduxGoal.id);
-			} else if (reduxGoal.completedDays !== reduxGoal.frequency) {
-				await props.deleteGoal(reduxGoal.id);
-			}
-		}
-	};
+	const handleGoalDel = async (title, goal) => {
+      if (!goal.id) { 
+        setAllGoals(allGoals.filter((goal) => goal.title !== title));
+      } else {
+        await props.deleteGoal(goal.id, props.goals)
+      }
+  }
 
 	const nextPage = () => {
 		if (allGoals && allGoals.length > 0) {
@@ -83,16 +72,23 @@ function GoalScreen(props) {
 				</View>
 			</View>
 			<View>
-				<Text style={[styles.goals, styles.goalHeader, styles.breakTop, styles.breakBot]}>
-					{allGoals.length ? "Your Goals:" : ""}
+				<Text
+					style={[
+						styles.goals,
+						styles.goalHeader,
+						styles.breakTop,
+						styles.breakBot,
+					]}
+				>
+					{allGoals.length ? 'Your Goals:' : ''}
 				</Text>
 				{allGoals.map((goal, idx) => (
 					<View key={idx + 1}>
 						<View style={styles.flex}>
 							<Text style={styles.goals}>
 								{idx + 1}. {goal.title}
-							</Text>
-							<CustomDelButton onPress={() => handleGoalDel(goal.title, goal, props.goals)} />
+							</Text> 
+              <CustomDelButton onPress={() => handleGoalDel(goal.title, goal, props.goals)} />
 						</View>
 					</View>
 				))}
@@ -113,8 +109,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
 	getGoals: () => dispatch(getGoalsThunk()),
 	setGoals: goals => dispatch(gotGoals(goals)),
-	deleteGoal: goalId => dispatch(deleteGoalThunk(goalId)),
-	inactivateGoal: goalId => dispatch(setGoalInactiveThunk(goalId))
+  deleteGoal: (goalId, goals) => dispatch(deleteGoalThunk(goalId, goals))
 });
 
 export default connect(mapState, mapDispatch)(GoalScreen);
