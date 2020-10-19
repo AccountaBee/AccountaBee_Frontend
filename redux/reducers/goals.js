@@ -27,14 +27,14 @@ export const setGoalsThunk = (goals) => async (dispatch) => {
 	}
 };
 
-export const deleteGoalThunk = (title) => async () => {
+export const deleteGoalThunk = (goalId) => async () => {
 	try {
-		console.log('in deletedGoalThunk');
-		let { data, status } = await instance.delete(`/${goalId}`);
+    console.log('in deletedGoalThunk');
+    let { data, status } = await instance.delete(`/delete/${goalId}`);
 		console.log('status is: ', status);
 		console.log('data is:', data);
 		if (status === 200) {
-			console.log('goal successfully deleted');
+      console.log('goal successfully deleted');
 		} else {
 			console.log('error deleting goals in database, status error: ', status);
 		}
@@ -42,6 +42,23 @@ export const deleteGoalThunk = (title) => async () => {
 		console.error(error);
 	}
 };
+
+export const setGoalInactiveThunk = (goalId) => async () => {
+	try {
+    console.log('in inactive Goal thunk');
+    let { data, status } = await instance.delete(`/inactivate/${goalId}`);
+		console.log('status is: ', status);
+		console.log('data is:', data);
+		if (status === 200) {
+      console.log('goal successfully saved in goal history');
+		} else {
+			console.log('error saving goal in database as inactive, status error: ', status);
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+
 
 //updates the goal with completed days after user marks day off
 export const completedDaysThunk = (goalId) => async (dispatch) => {

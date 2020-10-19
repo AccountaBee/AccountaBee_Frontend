@@ -15,15 +15,19 @@ function GoalScreen2(props) {
 	}, []);
 
 	const setFrequency = (value, title) => {
-		const newGoals = allGoals.map((goal) => {
-			if (goal.title === title) {
-				goal.frequency = value;
-				return goal;
-			} else {
-				return goal;
-			}
-		});
-		setAllGoals(newGoals);
+    if (allGoals) {
+      const newGoals = allGoals.map((goal) => {
+        if (goal.title === title) {
+          goal.frequency = value;
+          return goal;
+        } else {
+          return goal;
+        }
+      });
+      setAllGoals(newGoals);
+    } else {
+      console.log('no goals set yet')
+    }
 	};
 
 	const setGoalsPress = async () => {
