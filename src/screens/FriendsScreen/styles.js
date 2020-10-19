@@ -1,8 +1,51 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+	headline_container: {
+		paddingTop: 50,
+		paddingLeft: 20,
+		paddingRight: 20,
+		backgroundColor: "#8688BC",
+
+		marginBottom: 10
+	},
 	container: {
-		flex: 1
+		display: "flex"
+	},
+	headline: {
+		marginTop: 10,
+		color: "white",
+		fontSize: 26,
+		textAlign: "center",
+		marginBottom: 20
+	},
+	input_container: {
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center"
+	},
+	request_container: {
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "flex-end"
+	},
+	name: {
+		fontSize: 20,
+		marginRight: 5,
+		fontWeight: "bold",
+		padding: 10
+	},
+	email: {
+		fontSize: 20,
+		padding: 10
+	},
+	icon: {
+		padding: 10
+	},
+	photo: {
+		height: 30,
+		width: 30,
+		marginBottom: 7
 	},
 	header: {
 		fontFamily: "Avenir",
@@ -13,20 +56,10 @@ export default StyleSheet.create({
 		marginTop: 60
 	},
 	button: {
-		marginLeft: 30,
-		marginRight: 30,
-		marginTop: 20,
-		height: 48,
-		borderRadius: 5,
-		alignItems: "center",
-		justifyContent: "center",
-		padding: 10
+		marginBottom: 10,
+		color: "red"
 	},
-	buttonTitle: {
-		color: "white",
-		fontSize: 16,
-		fontWeight: "bold"
-	},
+
 	input: {
 		height: 48,
 		borderRadius: 5,
@@ -35,7 +68,8 @@ export default StyleSheet.create({
 		marginTop: 10,
 		marginBottom: 10,
 		marginLeft: 30,
-		marginRight: 30,
-		paddingLeft: 16
+		marginRight: 10,
+		paddingLeft: 16,
+		width: 300
 	}
 });
