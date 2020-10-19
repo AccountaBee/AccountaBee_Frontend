@@ -1,5 +1,5 @@
 import { firebase } from "../../src/firebase/config";
-import instance from "axios";
+import instance from "../axios";
 
 const GOT_GOALS = "GOT_GOALS";
 const SET_GOALS = "SET_GOALS";

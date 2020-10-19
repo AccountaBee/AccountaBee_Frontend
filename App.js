@@ -20,7 +20,7 @@ import {
 	SingleGoalScreen,
 	FriendsScreen
 } from "./src/screens";
-import FriendsTab from "./src/screens/FriendsScreen/FriendsIcon";
+import FriendsIcon from "./src/screens/FriendsScreen/FriendsIcon";
 import { decode, encode } from "base-64";
 import { useAuth, userContext } from "./src/context";
 

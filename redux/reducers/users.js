@@ -1,4 +1,4 @@
-import instance from "axios";
+import instance from "../axios";
 
 const GOT_USER = "GOT_USER";
 const REMOVE_USER = "REMOVE_USER";
