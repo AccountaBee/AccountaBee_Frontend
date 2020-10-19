@@ -105,8 +105,7 @@ const TabsScreen = () => (
 					return (
 						// STYLE & PLACEMENT ON ICON WILL BE IMPROVED
 						<>
-							<FriendsIcon />
-							<Feather name="users" size={20} color={color} />
+							<FriendsIcon focused={focused} />
 						</>
 					);
 				}
