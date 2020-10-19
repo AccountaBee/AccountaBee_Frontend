@@ -23,12 +23,12 @@ export const setGoalsThunk = goals => async dispatch => {
 
 export const deleteGoalThunk = goalId => async () => {
 	try {
-		console.log("in deletedGoalThunk");
-		let { data, status } = await instance.delete(`/goals/${goalId}`);
-		console.log("status is: ", status);
-		console.log("data is:", data);
+    console.log('in deletedGoalThunk');
+    let { data, status } = await instance.delete(`/goals/delete/${goalId}`);
+		console.log('status is: ', status);
+		console.log('data is:', data);
 		if (status === 200) {
-			console.log("goal successfully deleted");
+      console.log('goal successfully deleted');
 		} else {
 			console.log("error deleting goals in database, status error: ", status);
 		}
@@ -36,19 +36,31 @@ export const deleteGoalThunk = goalId => async () => {
 		console.error(error);
 	}
 };
+
+export const setGoalInactiveThunk = (goalId) => async () => {
+	try {
+    console.log('in inactive Goal thunk');
+    let { data, status } = await instance.delete(`/goals/inactivate/${goalId}`);
+		console.log('status is: ', status);
+		console.log('data is:', data);
+		if (status === 200) {
+      console.log('goal successfully saved in goal history');
+		} else {
+			console.log('error saving goal in database as inactive, status error: ', status);
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+
 //updates the goal with completed days after user marks day off
 export const completedDaysThunk = goalId => async dispatch => {
 	try {
+    await instance.put(`/${goalId}`);
 		let token = await firebase.auth().currentUser.getIdToken();
-		await instance.put(`/${goalId}`);
-		const allGoals = await instance.post(`/goals/allGoals`, { token });
-		// const updatedGoal = res.data
-		// const oldGoals = allGoals.filter(goal => {
-		//   goal.title !== updatedGoal.title
-		// })
-		// const oldGoalsWithUpdatedGoal = oldGoals.push(singleGoal)
-		// console.log('OLDGoalsWithUpdatedGoal:', oldGoalsWithUpdatedGoal)
-		dispatch(gotGoals(allGoals));
+		const { data } = await instance.post(`/goals/allGoals`, { token });
+		dispatch(gotGoals(data));
 	} catch (error) {
 		console.log(error);
 	}
@@ -63,15 +75,6 @@ export const getGoalsThunk = () => async dispatch => {
 		console.log(error);
 	}
 };
-
-// export const getSingleGoalThunk = (goalId) => async dispatch => {
-//   try {
-//     const res = await instance.get(`/${goalId}`)
-//     dispatch(gotGoals(res.data))
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 
 //think thru logic
 
