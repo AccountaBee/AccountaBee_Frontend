@@ -37,9 +37,9 @@ function GoalScreen(props) {
 		}
 	};
 
-	const handleGoalDel = (title, id) => {
+	const handleGoalDel = async (title, id) => {
 		setAllGoals(allGoals.filter((goal) => goal.title !== title));
-		props.removeGoal(id);
+		await props.removeGoal(id);
 	};
 
 	const nextPage = () => {

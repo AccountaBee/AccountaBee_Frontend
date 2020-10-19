@@ -3,20 +3,18 @@ import { Text,
          View,
          TouchableOpacity,
          } from 'react-native';
-import { useSession } from '../../context';
 import styles from './style';
 import Toast from 'react-native-toast-message'
 import { completedDaysThunk } from '../../../redux/reducers/goals'
 import { connect } from 'react-redux';
 
-function  SingleGoalScreen(props) {
+function SingleGoalScreen(props) {
     const goal = props.route.params.goal
-    console.log('GOAL', goal.title)
     const [isCompleted, setIsCompleted] = useState(false)
     
-    const toggleItem = () =>{
+    const toggleItem = async (goalId) =>{
         setIsCompleted(!isCompleted)
-        await updateSingleGoalFreq()
+        await props.updateSingleGoalFreq(goalId)
     }
     
     Toast.show({
@@ -24,15 +22,14 @@ function  SingleGoalScreen(props) {
         text2: 'You completed your goal! 👋',
         position: 'bottom | top',
    })
-   //props.navigation.route.params should be an object with goal as key and title of goal as value
-   //in navigation.navigate
+
 	return (
         <View>
             <View style={styles.headcontainer}>
                 <Text style={styles.headline}> {goal.title} </Text>
             </View>
             <View style={styles.container}>                
-                <TouchableOpacity onPress={toggleItem}>
+                <TouchableOpacity onPress={() => toggleItem(goal.id)}>
                     <View style = {[styles.circle, isCompleted ? styles.completeCircle : styles.incompleteCircle]}></View>
                 </TouchableOpacity>
                 <Text style = {[styles.text, isCompleted ? styles.strikeText : styles.unstrikeText]}>

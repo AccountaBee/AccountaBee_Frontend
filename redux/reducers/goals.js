@@ -47,14 +47,14 @@ export const completedDaysThunk = (goalId) => async (dispatch) => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		await instance.put(`/${goalId}`);
-		const allGoals = await instance.post(`/allGoals`, { token });
+		const { data } = await instance.post(`/allGoals`, { token });
 		// const updatedGoal = res.data
 		// const oldGoals = allGoals.filter(goal => {
 		//   goal.title !== updatedGoal.title
 		// })
 		// const oldGoalsWithUpdatedGoal = oldGoals.push(singleGoal)
 		// console.log('OLDGoalsWithUpdatedGoal:', oldGoalsWithUpdatedGoal)
-		dispatch(gotGoals(allGoals));
+		dispatch(gotGoals(data));
 	} catch (error) {
 		console.log(error);
 	}
@@ -64,7 +64,7 @@ export const getGoalsThunk = () => async (dispatch) => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		const res = await instance.post(`/allGoals`, { token });
-		dispatch(gotGoals(res.data));
+    dispatch(gotGoals(res.data));
 	} catch (error) {
 		console.log(error);
 	}
