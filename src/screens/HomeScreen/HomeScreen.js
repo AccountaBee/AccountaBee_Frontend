@@ -38,24 +38,30 @@ function HomeScreen(props) {
 			</View>
 			<View>
 				<ScrollView>
-					{props.goals &&
-						props.goals.map((goal) => {
-							if (goal.status === 'active') {
-								const [data, graphicColor] = pieCalculations(
-									goal.completedDays,
-									goal.frequency
-								);
-								return (
-									<GoalPieChart
-										graphicColor={graphicColor}
-										data={data}
-										key={goal.id}
-										goal={goal}
-										navigation={props.navigation}
-									/>
-								);
-							}
-						})}
+        {props.goals.length ? (
+          props.goals.map((goal) => {
+            if (goal.status === 'active') {
+              const [data, graphicColor] = pieCalculations(
+                goal.completedDays,
+                  goal.frequency
+              );
+                return (
+                  <GoalPieChart
+                    graphicColor={graphicColor}
+                    data={data}
+                    key={goal.id}
+                    goal={goal}
+                    navigation={props.navigation}
+                  />
+                );
+              }
+            })
+          ) : (
+          <Text style={styles.noGoals}>
+              You don’t have any goals set!{'\n\n'}Head over to Settings{'\n'}to
+              create some goals and{'\n'}start achieving them.
+          </Text>
+        )}
 				</ScrollView>
 			</View>
 		</>

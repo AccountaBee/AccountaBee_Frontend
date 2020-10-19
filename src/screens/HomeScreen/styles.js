@@ -15,7 +15,15 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
-	},
+  },
+  noGoals: {
+    color: '#424347',
+    fontSize: 20,
+    marginTop: '40%',
+    textAlign: 'center',
+    maxWidth: '80%',
+    alignSelf: 'center'
+  }
 });
 
 export const pieStyle = StyleSheet.create({
