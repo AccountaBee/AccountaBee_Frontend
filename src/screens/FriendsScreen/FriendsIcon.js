@@ -1,23 +1,34 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { getRequests } from "../../../redux/reducers/requests";
-
-//TODO - STYLE ICON
+import IconBadge from "react-native-icon-badge";
+import { Feather } from "@expo/vector-icons";
 
 class FriendsIcon extends React.Component {
+	componentDidMount() {
+		this.props.getRequests();
+		console.log("DISPATCH");
+	}
 	render() {
 		const { requests } = this.props;
 		const badgeCount = requests.length;
+
+		const color = this.props.focused ? "#9FC78A" : "#8688BC";
 		return (
 			<View>
-				<View
-					style={{
+				<IconBadge
+					MainElement={<Feather name="users" size={20} color={color} />}
+					BadgeElement={<Text style={{ color: "#FFFFFF" }}>{badgeCount}</Text>}
+					IconBadgeStyle={{
+						width: 15,
+						height: 20,
 						backgroundColor: "red",
-						padding: 3
-					}}>
-					<Text style={{ color: "white", fontSize: 10, fontWeight: "bold" }}>{badgeCount}</Text>
-				</View>
+						left: 8,
+						bottom: 20
+					}}
+					Hidden={badgeCount == 0}
+				/>
 			</View>
 		);
 	}

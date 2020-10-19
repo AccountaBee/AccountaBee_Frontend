@@ -22,7 +22,7 @@ export const sendRequest = email => async dispatch => {
 		await instance.post("/friends/request", { token, email });
 		dispatch(getSentRequests(token));
 	} catch (error) {
-		alert(error);
+		alert("Sorry, there was a problem. Are you sure that person is registered with Accountabee?");
 	}
 };
 
