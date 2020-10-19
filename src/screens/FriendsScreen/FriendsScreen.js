@@ -49,71 +49,72 @@ class FriendsScreen extends React.Component {
 		const { friends } = this.props || [];
 
 		return (
-			<>
+			<View style={styles.page}>
 				<View style={styles.headline_container}>
 					<Text style={styles.headline}>Manage Friends</Text>
 				</View>
-				<View>
-					<>
-						{friends.map(friend => (
-							<View key={friend.uid}>
-								<Text>{friend.firstName}</Text>
+				{/* <View style={styles.button_container}>
+					<TouchableOpacity>
+						<Text style={styles.friends_button}>View My Friends</Text>
+					</TouchableOpacity>
+				</View> */}
+				{requests && requests.length ? (
+					<View style={styles.sub_container}>
+						<Text style={styles.subheading}>Friend Requests</Text>
+						{requests.map(request => (
+							<View style={styles.request_container} key={request.uid}>
+								<View style={styles.request_top}>
+									<Image
+										style={styles.photo}
+										source={require("../../../assets/blank-profile.png")}
+									/>
+									<Feather
+										name="check"
+										size={30}
+										style={styles.icon}
+										color="black"
+										onPress={() => this.onReplyPress("confirmed", request.uid)}
+									/>
+									<Feather
+										style={styles.icon}
+										name="x"
+										size={30}
+										color="black"
+										onPress={() => this.onReplyPress("denied", request.uid)}
+									/>
+								</View>
+								<View style={styles.request_bottom}>
+									<Text style={styles.name}>{request.firstName}</Text>
+									<Text style={styles.email}>{request.email}</Text>
+								</View>
 							</View>
 						))}
-					</>
-					<Text>Add an accountability buddy! Type in your friend's email to add them</Text>
+					</View>
+				) : null}
+
+				<View style={styles.sub_container}>
+					{/* <Text style={styles.subheading}>Add A Friend</Text> */}
+					<Text style={styles.instructions}>
+						Add a buddy to hold yourself accountable! Type in your friend's email to send a request.
+						Once they approve, you will be able to congratulate each other when you complete goals!
+					</Text>
 					<View style={styles.input_container}>
 						<TextInput
 							onChangeText={email => this.handleChange(email)}
 							style={styles.input}
-							placeholder="email"
+							placeholder="Email"
 							placeholderTextColor="#aaaaaa"
 							underlineColorAndroid="transparent"
 							autoCapitalize="none"
 						/>
-						<Button title="Send" style={styles.button} onPress={() => this.onRequestPress()} />
+						<View style={styles.button_container}>
+							<TouchableOpacity onPress={() => this.onRequestPress()}>
+								<Text style={styles.send}>SEND</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
-
-					<>
-						<Text>Friend Requests</Text>
-						{requests.map(request => (
-							<View style={styles.request_container} key={request.uid}>
-								<Image style={styles.photo} source={require("../../../assets/blank-profile.png")} />
-								<Text style={styles.name}>{request.firstName}</Text>
-								<Text style={styles.email}>{request.email}</Text>
-								<Feather
-									name="check"
-									size={24}
-									style={styles.icon}
-									color="black"
-									onPress={() => this.onReplyPress("confirmed", request.uid)}
-								/>
-								<Feather
-									style={styles.icon}
-									name="x"
-									size={24}
-									color="black"
-									onPress={() => this.onReplyPress("denied", request.uid)}
-								/>
-							</View>
-						))}
-					</>
-					<>
-						<Text>Sent Requests</Text>
-						{sentRequests.map(request => (
-							<View key={request.uid}>
-								<Text>
-									{request.firstName} {request.email}
-								</Text>
-								<Button title="Delete Request" />
-							</View>
-						))}
-					</>
-					<TouchableOpacity>
-						<Text>View All My Friends</Text>
-					</TouchableOpacity>
 				</View>
-			</>
+			</View>
 		);
 	}
 }

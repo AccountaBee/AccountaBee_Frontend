@@ -1,17 +1,35 @@
 import { StyleSheet } from "react-native";
 
+//"#9FC78A" : "#8688BC"
+
 export default StyleSheet.create({
 	headline_container: {
 		paddingTop: 50,
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: "#8688BC",
-
-		marginBottom: 10
+		borderBottomRightRadius: 15,
+		marginRight: 15
 	},
 	container: {
 		display: "flex"
 	},
+	sub_container: {
+		display: "flex"
+	},
+	subheading: {
+		fontSize: 20,
+		padding: 15,
+		color: "#424347"
+	},
+	instructions: {
+		margin: 15,
+		fontSize: 25,
+		textAlign: "center",
+		padding: 10,
+		color: "#424347"
+	},
+
 	headline: {
 		marginTop: 10,
 		color: "white",
@@ -19,33 +37,42 @@ export default StyleSheet.create({
 		textAlign: "center",
 		marginBottom: 20
 	},
-	input_container: {
-		display: "flex",
-		flexDirection: "row",
-		alignItems: "center"
-	},
 	request_container: {
 		display: "flex",
-		flexDirection: "row",
-		alignItems: "flex-end"
+		borderWidth: 2,
+		marginBottom: 10,
+		marginHorizontal: 15,
+		borderColor: "#9FC78A"
+	},
+	request_top: {
+		display: "flex",
+		flexDirection: "row"
+	},
+	request_bottom: {
+		display: "flex",
+		flexDirection: "row"
 	},
 	name: {
 		fontSize: 20,
-		marginRight: 5,
 		fontWeight: "bold",
-		padding: 10
+		margin: 10,
+		color: "#424347"
 	},
 	email: {
 		fontSize: 20,
-		padding: 10
+		padding: 10,
+		color: "#424347"
 	},
 	icon: {
-		padding: 10
+		padding: 10,
+		marginLeft: 20,
+		color: "#424347"
 	},
 	photo: {
-		height: 30,
-		width: 30,
-		marginBottom: 7
+		height: 40,
+		width: 40,
+		marginLeft: 10,
+		marginTop: 10
 	},
 	header: {
 		fontFamily: "Avenir",
@@ -55,21 +82,32 @@ export default StyleSheet.create({
 		textAlign: "center",
 		marginTop: 60
 	},
-	button: {
-		marginBottom: 10,
-		color: "red"
+	send: {
+		fontWeight: "bold",
+		color: "white",
+		fontSize: 18,
+		textAlign: "center"
 	},
-
+	button_container: {
+		marginHorizontal: 15,
+		marginTop: 10,
+		backgroundColor: "#9FC78A",
+		paddingVertical: 12,
+		borderRadius: 10
+	},
+	friends_button: {
+		fontSize: 20,
+		padding: 10,
+		color: "white"
+	},
 	input: {
 		height: 48,
 		borderRadius: 5,
 		overflow: "hidden",
 		backgroundColor: "white",
-		marginTop: 10,
-		marginBottom: 10,
-		marginLeft: 30,
-		marginRight: 10,
-		paddingLeft: 16,
-		width: 300
+		fontSize: 20,
+		marginHorizontal: 15,
+		// width: 305,
+		paddingLeft: 10
 	}
 });
