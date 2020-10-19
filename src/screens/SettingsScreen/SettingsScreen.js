@@ -1,51 +1,33 @@
-import React from 'react';
-import { Text, View, Button } from 'react-native';
-import CustomButton from '../CustomButton';
-import styles from './styles';
+import React from "react";
+import { Text, View, Button } from "react-native";
+import CustomButton from "../CustomButton";
+import styles from "./styles";
+import { firebase } from "../../firebase/config";
+
+// This page will be converted to a drawer navigator
 
 export default function SettingsScreen(props) {
 	const { navigation } = props;
 
 	const onGoalsPress = () => {
-		navigation.navigate('Goals');
+		navigation.navigate("Goals");
 	};
 
-	const onFriendsPress = () => {
-		navigation.navigate('AddFriends');
+	const signout = () => {
+		return firebase
+			.auth()
+			.signOut()
+			.then(() => {
+				console.log("You are signed out");
+			});
 	};
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.header}>Settings</Text>
-			<CustomButton
-				style={styles.button}
-				title="Change My Goals"
-				onPress={() => onGoalsPress()}
-			/>
-			<CustomButton
-				style={styles.button}
-				title="Add Friends"
-				onPress={() => onFriendsPress()}
-			/>
-			<CustomButton style={styles.button} title="Update Profile" />
+			<CustomButton style={styles.button} title="Change My Goals" onPress={() => onGoalsPress()} />
+			<CustomButton style={styles.button} title="Profile" />
+			<Button title="Sign Out" onPress={() => signout()} />
 		</View>
 	);
 }
-
-// need button to route to goal screen
-
-// button for adding a friend
-
-// code to logout:
-
-// const signout = () => {
-// 	  firebase
-// 		  .auth()
-// 		  .signOut()
-// 		  .then(() => {
-// 	  props.removeUser()
-// 		  });
-//   };
-//   const mapDispatch = (dispatch) => ({
-// 	removeUser: () => dispatch(logout()),
-// });

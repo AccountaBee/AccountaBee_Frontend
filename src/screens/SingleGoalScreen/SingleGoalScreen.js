@@ -4,8 +4,8 @@ import { Text,
          TouchableOpacity,
          } from 'react-native';
 import styles from './style';
-import Toast from 'react-native-toast-message'
-import { completedDaysThunk } from '../../../redux/reducers/goals'
+import Toast from 'react-native-toast-message';
+import { completedDaysThunk } from '../../../redux/reducers/goals';
 import { connect } from 'react-redux';
 
 function SingleGoalScreen(props) {
@@ -61,9 +61,3 @@ const mapDispatch = dispatch => ({
 });
 
 export default connect(mapState, mapDispatch)(SingleGoalScreen);
-
-
-
-
-
-

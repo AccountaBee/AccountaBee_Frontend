@@ -10,7 +10,7 @@ export default StyleSheet.create({
 		fontSize: 28,
 		color: "#845cab",
 		textAlign: "center",
-		marginTop: 15
+		marginTop: 60
 	},
 	button: {
 		marginLeft: 30,
