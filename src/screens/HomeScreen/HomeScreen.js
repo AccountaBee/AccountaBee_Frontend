@@ -26,35 +26,30 @@ const pieCalculations = (completedDays, frequency) => {
 
 function HomeScreen(props) {
 	useEffect(() => {
-
 		async function fetchData() {
 			await props.getGoals();
       await props.getUser();
 		}
     fetchData();
-  }, [])
-;
+  }, []);
   
-function ResetFunction() {
   useEffect(() => {
-
     if (props.user.uid) {
       async function reset(uid) {
         const date = new Date();
         const dayOfWeek = date.getDay();
         const hourOfDay = date.getHours()
         const minOfDay = date.getMinutes()
-    
       // if (dayOfWeek === 1 & hourOfDay === 1) {
         if (minOfDay === 4) {
           console.log('HOLAAAAAAAA! UID', uid)
           await props.resetGoals(uid)
         }
       }
-      reset();
+      reset(props.user.uid);
     }
   }, [props.user.uid])
-};
+
   
 	return (
 		<>
@@ -63,8 +58,6 @@ function ResetFunction() {
 			</View>
 			<View>
 				<ScrollView>
-          {console.log('PROPS.USER IN RETURN', props.user)}
-          {props.user ? reset(props.user.uid) : ''}
 					{props.goals.length ? (
 						props.goals.map(goal => {
 							
