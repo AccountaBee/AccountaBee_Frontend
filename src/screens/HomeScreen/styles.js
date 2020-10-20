@@ -27,7 +27,13 @@ export default StyleSheet.create({
 		marginTop: 20,
 		backgroundColor: '#8688BC',
 		alignSelf: 'center',
+		marginBottom: '30%',
 	},
+	// fullScreen: {
+	// 	borderColor: 'red',
+	// 	borderWidth: 1,
+	// 	paddingBottom: '30%',
+	// },
 });
 
 export const pieStyle = StyleSheet.create({
