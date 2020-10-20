@@ -7,7 +7,7 @@ export default StyleSheet.create({
 		paddingTop: 71,
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC',
+		backgroundColor:'#8688BC',
 	},
 	headline: {
 		color: 'white',
@@ -100,7 +100,7 @@ export default StyleSheet.create({
 		flex: 1,
 		width: '100%',
 		maxHeight: deviceHeight * 0.6,
-		backgroundColor: 'lightgrey',
+		backgroundColor: '#8688BC',
 		opacity: 0.9,
 		borderTopStartRadius: 20,
 		borderTopEndRadius: 20,
@@ -118,7 +118,7 @@ export default StyleSheet.create({
 		textAlign: 'center',
 	},
 	modalText: {
-		marginTop: 20,
+		marginTop: 25,
 		marginBottom: 15,
 		textAlign: 'center',
 		color: 'white',
@@ -129,14 +129,24 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		color: 'white',
 		fontSize: 20,
+		marginTop:10
 	},
 	xbutton: {
 		marginTop: 20,
 	},
 	nextButton: {
 		alignSelf: 'center',
-		backgroundColor: '#8688BC',
-		width: '80%',
-		padding: 50,
+		backgroundColor: '#9FC78A',
+		width: '90%',
+		padding: 70,
+		marginLeft: 30,
+		marginRight: 30,
+		marginTop: 20,
+		height: 48,
+		borderRadius: 5,
+		justifyContent: 'center',
 	},
+	buttonContainer: {
+		marginTop: 60
+	}
 });
