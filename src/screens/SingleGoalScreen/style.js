@@ -7,7 +7,7 @@ export default StyleSheet.create({
 		paddingTop: 71,
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC',
+		backgroundColor:'#8688BC',
 	},
 	headline: {
 		color: 'white',
@@ -100,7 +100,7 @@ export default StyleSheet.create({
 		flex: 1,
 		width: '100%',
 		maxHeight: deviceHeight * 0.6,
-		backgroundColor: 'lightgrey',
+		backgroundColor: '#8688BC',
 		opacity: 0.9,
 		borderTopStartRadius: 20,
 		borderTopEndRadius: 20,
@@ -135,7 +135,7 @@ export default StyleSheet.create({
 	},
 	nextButton: {
 		alignSelf: 'center',
-		backgroundColor: '#8688BC',
+		backgroundColor: '#9FC78A',
 		width: '80%',
 		padding: 50,
 	},

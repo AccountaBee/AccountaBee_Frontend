@@ -19,10 +19,13 @@ function SingleGoalScreen(props) {
 	
     const incrementDay = async (goalId, day) => {
 
-        setIsCompleted(!isCompleted)
-		await props.updateSingleGoalFreq(goalId)
-
-		if(goal.completedDays < goal.frequency-1){
+		if( goal.completedDays > goal.frequency - 1 ){
+			//do nothing
+		}
+		// onPress={() => incrementDay(goal.id, day)}
+		else if( goal.completedDays < goal.frequency - 1 ){
+			setIsCompleted(!isCompleted)
+			await props.updateSingleGoalFreq(goalId)
 			Toast.show({
 				text1: 'Congratulations!',
 				text2: 'You are one step closer ! 👋',
@@ -34,10 +37,11 @@ function SingleGoalScreen(props) {
 		   })
 		}
 
-		if(goal.completedDays === goal.frequency){
+		if( goal.completedDays === goal.frequency - 1 ){
+			setIsCompleted(!isCompleted)
+			await props.updateSingleGoalFreq(goalId)
 			setModalVisible(!modalVisible)
 		}
-
 	}
 	
 	const arrayDays = []
@@ -62,15 +66,16 @@ function SingleGoalScreen(props) {
 
 		
 		{arrayDays.map((day, idx) => (
+			
 			<View style={styles.container} key={idx}>
-			<TouchableOpacity onPress={() => incrementDay(goal.id, day)}>
-				<View style={styles.day}> 
-				<View style = {[styles.circle, goal.completedDays >= day ? styles.completeCircle : styles.incompleteCircle]}></View>
-					<Text style = {[styles.text, goal.completedDays >= day ? styles.strikeText : styles.unstrikeText]}>
-					Day {day}
-					</Text>
-				</View>
-			</TouchableOpacity>
+				<TouchableOpacity onPress={() => day === goal.completedDays+1? (incrementDay(goal.id, day)):(<View></View>)} >
+					<View style={styles.day}> 
+					<View style = {[styles.circle, goal.completedDays >= day ? styles.completeCircle : styles.incompleteCircle]}></View>
+						<Text style = {[styles.text, goal.completedDays >= day ? styles.strikeText : styles.unstrikeText]}>
+						Day {day}
+						</Text>
+					</View>
+				</TouchableOpacity>
 			</View>
 		))}
 		
