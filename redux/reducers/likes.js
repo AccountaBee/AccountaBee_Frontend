@@ -4,7 +4,6 @@ import { firebase } from "../../src/firebase/config";
 const SET_UNSEEN_LIKES = "SET_UNSEEN_LIKES";
 const setUnseenLikes = likes => ({ type: SET_UNSEEN_LIKES, likes });
 
-// getting posts for feed
 export const getUnseenLikes = () => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
