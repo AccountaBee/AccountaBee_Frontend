@@ -137,6 +137,7 @@ export default StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: '#9FC78A',
 		width: '80%',
-		padding: 50,
+		padding: 70,
 	},
+
 });

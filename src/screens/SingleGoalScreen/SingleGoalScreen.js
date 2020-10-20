@@ -11,6 +11,7 @@ import Toast from 'react-native-toast-message';
 import { completedDaysThunk } from '../../../redux/reducers/goals';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
+import style from './style';
 
 function SingleGoalScreen(props) {
     const goal = props.goal
@@ -22,8 +23,7 @@ function SingleGoalScreen(props) {
 		if( goal.completedDays > goal.frequency - 1 ){
 			//do nothing
 		}
-		// onPress={() => incrementDay(goal.id, day)}
-		else if( goal.completedDays < goal.frequency - 1 ){
+		if( goal.completedDays < goal.frequency - 1 ){
 			setIsCompleted(!isCompleted)
 			await props.updateSingleGoalFreq(goalId)
 			Toast.show({
@@ -52,10 +52,12 @@ function SingleGoalScreen(props) {
 
 	const backToGoals = () => {
 		props.navigation.navigate('Home');
+		setModalVisible(!modalVisible);
 	};
 
 	const viewPost = () => {
 		props.navigation.navigate('Feed');
+		setModalVisible(!modalVisible);
 	};
   
   	return (
@@ -88,19 +90,9 @@ function SingleGoalScreen(props) {
 						>
 							<View style={styles.centeredView}>
 								<View style={styles.modalView}>
-									<TouchableHighlight>
-										<AntDesign 
-											name="closecircleo" 
-											size={24} 
-											color="white" 
-											style={styles.xbutton}
-											onPress={() => {
-												setModalVisible(!modalVisible);
-											}} /
-										>
-									</TouchableHighlight>
 									<Text style={styles.modalText}>Congratulations,{'\n'} You made it !</Text>
 									<Text style={styles.modalInnerText}>You completed your goal "{goal.title}" !</Text>
+									
 									<CustomButton
 										style={styles.nextButton}
 										title="VIEW POST"
@@ -111,6 +103,7 @@ function SingleGoalScreen(props) {
 										title="BACK TO GOALS"
 										onPress={() => backToGoals()}
 									/>
+									
 								</View>
 							</View>
 						</Modal>
