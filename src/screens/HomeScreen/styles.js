@@ -2,13 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 50,
+		paddingTop: 70,
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
-		borderBottomRightRadius: 15,
-		marginRight: 15,
-		opacity : 0.8,
 	},
 	headline: {
 		marginTop: 10,
@@ -16,15 +13,21 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
-  },
-  noGoals: {
-    color: '#424347',
-    fontSize: 20,
-    marginTop: '40%',
-    textAlign: 'center',
-    maxWidth: '80%',
-    alignSelf: 'center'
-  }
+	},
+	noGoals: {
+		color: '#424347',
+		fontSize: 20,
+		marginTop: '40%',
+		textAlign: 'center',
+		maxWidth: '80%',
+		alignSelf: 'center',
+	},
+	button: {
+		width: '50%',
+		marginTop: 20,
+		backgroundColor: '#8688BC',
+		alignSelf: 'center',
+	},
 });
 
 export const pieStyle = StyleSheet.create({
