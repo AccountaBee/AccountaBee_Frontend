@@ -6,19 +6,21 @@ const deviceHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
 	headcontainer: {
-        width: width,
-		paddingTop: 60,
+		paddingTop: 50,
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC',
-		opacity : 0.8
+		backgroundColor: "#8688BC",
+		borderBottomRightRadius: 15,
+		marginRight: 15,
+		opacity : 0.8,
 	},
 
 	headline: {
 		color: 'white',
-		fontSize: 30,
-		textAlign: 'left',
-		marginBottom: 5,
+		fontSize: 26,
+		textAlign: 'center',
+		marginTop: 10,
+		marginBottom: 20
 	},
 
     container: {
