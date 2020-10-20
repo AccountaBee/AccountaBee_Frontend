@@ -59,11 +59,15 @@ export const getGoalsThunk = () => async dispatch => {
 };
 
 //think thru logic
-export const resetGoalsThunk = () => async dispatch => {
+export const resetGoalsThunk = (uid) => async dispatch => {
 	try {
-		let token = await firebase.auth().currentUser.getIdToken();
-		const res = await instance.put(`/goals/reset`, { token });
-		dispatch(gotGoals(res.data));
+    console.log('IN RESET THUNK')
+    // let uid = await firebase.auth().currentUser.getIdToken();
+    console.log('UID in thunk:', uid)
+    const res = await instance.put(`/goals/reset`, { uid });
+    console.log('RESPONSE IN THUNK', res.data)
+    dispatch(gotGoals(res.data));
+    
 	} catch (error) {
 		console.log(error);
 	}

@@ -12,9 +12,8 @@ function SingleGoalScreen(props) {
     const goal = props.goal
     const [isCompleted, setIsCompleted] = useState(false)
     
-    const incrementDay = async (goalId, day) => {
+    const incrementDay = async (goalId) => {
         setIsCompleted(!isCompleted)
-        console.log('DAY:', day)
         await props.updateSingleGoalFreq(goalId)
     }
     
@@ -37,7 +36,7 @@ function SingleGoalScreen(props) {
       </View>
       <View style={styles.container}>
         {arrayDays.map((day) => (
-          <TouchableOpacity key={day} onPress={() => incrementDay(goal.id, day)}>
+          <TouchableOpacity key={day} onPress={() => incrementDay(goal.id)}>
             <View style={styles.day}> 
               <View style = {[styles.circle, goal.completedDays >= day ? styles.completeCircle : styles.incompleteCircle]}></View>
                 <Text style = {[styles.text, goal.completedDays >= day ? styles.strikeText : styles.unstrikeText]}>

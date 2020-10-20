@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import GoalPieChart from "./PieChart";
 import { connect } from "react-redux";
-import { getGoalsThunk } from "../../../redux/reducers/goals";
+import { getGoalsThunk, resetGoalsThunk } from "../../../redux/reducers/goals";
 import styles from "./styles";
 import { ScrollView } from "react-native-gesture-handler";
 import { getUser } from "../../../redux/reducers/users";
@@ -22,17 +22,39 @@ const pieCalculations = (completedDays, frequency) => {
 		}
 	}
 	return [pieData, graphicColor];
-};
 
 function HomeScreen(props) {
 	useEffect(() => {
+
 		async function fetchData() {
 			await props.getGoals();
-			await props.getUser();
+      await props.getUser();
 		}
-		fetchData();
-	}, []);
+    fetchData();
+  }, [])
+};
+  
+function ResetFunction() {
+  useEffect(() => {
 
+    if (props.user.uid) {
+      async function reset(uid) {
+        const date = new Date();
+        const dayOfWeek = date.getDay();
+        const hourOfDay = date.getHours()
+        const minOfDay = date.getMinutes()
+    
+      // if (dayOfWeek === 1 & hourOfDay === 1) {
+        if (minOfDay === 4) {
+          console.log('HOLAAAAAAAA! UID', uid)
+          await props.resetGoals(uid)
+        }
+      }
+      reset();
+    }
+  }, [props.user.uid])
+};
+  
 	return (
 		<>
 			<View style={styles.container}>
@@ -40,9 +62,11 @@ function HomeScreen(props) {
 			</View>
 			<View>
 				<ScrollView>
+          {console.log('PROPS.USER IN RETURN', props.user)}
+          {props.user ? reset(props.user.uid) : ''}
 					{props.goals.length ? (
 						props.goals.map(goal => {
-							if (goal.status === "active") {
+							
 								const [data, graphicColor] = pieCalculations(goal.completedDays, goal.frequency);
 								return (
 									<GoalPieChart
@@ -53,7 +77,7 @@ function HomeScreen(props) {
 										navigation={props.navigation}
 									/>
 								);
-							}
+							
 						})
 					) : (
 						<Text style={styles.noGoals}>
@@ -74,7 +98,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
 	getGoals: () => dispatch(getGoalsThunk()),
-	getUser: () => dispatch(getUser())
+  getUser: () => dispatch(getUser()),
+  resetGoals: (uid) => dispatch(resetGoalsThunk(uid))
 });
 
 export default connect(mapState, mapDispatch)(HomeScreen);
