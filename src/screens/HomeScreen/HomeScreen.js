@@ -25,14 +25,14 @@ const pieCalculations = (completedDays, frequency) => {
 	return [pieData, graphicColor];
 };
 const successMessages = [
-	"You achieved all your goals\nfor the week!\nYou're an absolute rockstar!",
-	'You achieved all your goals\nfor the week!\nAmazing!',
-	'You achieved all your goals\nfor the week!\nBask in the glory of your empty to-do list.',
-	'You achieved all your goals\nfor the week!\nGreat work!',
-	'You achieved all your goals\nfor the week!\nYou should be really proud of yourself!',
-	"You achieved all your goals\nfor the week!\nYou're unstoppable!",
-	'You achieved all your goals\nfor the week!\nLook at you go!',
-	'You achieved all your goals\nfor the week!\nAwesome work staying on task!',
+	"You achieved all your goals\nfor the week!\n\nYou're an absolute rockstar!",
+	'You achieved all your goals\nfor the week!\n\nAmazing!',
+	'You achieved all your goals\nfor the week!\n\nBask in the glory of your empty to-do list.',
+	'You achieved all your goals\nfor the week!\n\nGreat work!',
+	'You achieved all your goals\nfor the week!\n\nYou should be really proud of yourself!',
+	"You achieved all your goals\nfor the week!\n\nYou're unstoppable!",
+	'You achieved all your goals\nfor the week!\n\nLook at you go!',
+	'You achieved all your goals\nfor the week!\n\nAwesome work staying on task!',
 ];
 
 const messageGenerator = () => {

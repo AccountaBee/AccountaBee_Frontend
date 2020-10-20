@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import {
-	Text,
-	View,
-	Modal,
-	TouchableOpacity,
-	TouchableHighlight,
-} from 'react-native';
+import { Text, View, Modal, TouchableOpacity } from 'react-native';
 import styles from './style';
-import { AntDesign } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { completedDaysThunk } from '../../../redux/reducers/goals';
 import { connect } from 'react-redux';
@@ -19,10 +12,12 @@ function SingleGoalScreen(props) {
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const incrementDay = async (goalId) => {
-		setIsCompleted(!isCompleted);
-		await props.updateSingleGoalFreq(goalId);
-
+		if (goal.completedDays > goal.frequency - 1) {
+			return;
+		}
 		if (goal.completedDays < goal.frequency - 1) {
+			setIsCompleted(!isCompleted);
+			await props.updateSingleGoalFreq(goalId);
 			Toast.show({
 				text1: 'Congratulations!',
 				text2: 'You are one step closer! 👋',
@@ -31,10 +26,12 @@ function SingleGoalScreen(props) {
 				autoHide: true,
 				topOffset: 30,
 				bottomOffset: 40,
+				visibilityTime: 1000,
 			});
 		}
-
-		if (goal.completedDays === goal.frequency) {
+		if (goal.completedDays === goal.frequency - 1) {
+			setIsCompleted(!isCompleted);
+			await props.updateSingleGoalFreq(goalId);
 			setModalVisible(!modalVisible);
 		}
 	};
@@ -47,10 +44,12 @@ function SingleGoalScreen(props) {
 
 	const backToGoals = () => {
 		props.navigation.navigate('Home');
+		setModalVisible(!modalVisible);
 	};
 
 	const viewPost = () => {
 		props.navigation.navigate('Feed');
+		setModalVisible(!modalVisible);
 	};
 
 	return (
@@ -61,7 +60,11 @@ function SingleGoalScreen(props) {
 
 			{arrayDays.map((day, idx) => (
 				<View style={styles.container} key={idx}>
-					<TouchableOpacity onPress={() => incrementDay(goal.id)}>
+					<TouchableOpacity
+						onPress={() =>
+							day === goal.completedDays + 1 && incrementDay(goal.id)
+						}
+					>
 						<View style={styles.day}>
 							<View
 								style={[
@@ -70,7 +73,7 @@ function SingleGoalScreen(props) {
 										? styles.completeCircle
 										: styles.incompleteCircle,
 								]}
-							/>
+							></View>
 							<Text
 								style={[
 									styles.text,
@@ -90,33 +93,24 @@ function SingleGoalScreen(props) {
 				<Modal animationType="slide" transparent={true} visible={modalVisible}>
 					<View style={styles.centeredView}>
 						<View style={styles.modalView}>
-							<TouchableHighlight>
-								<AntDesign
-									name="closecircleo"
-									size={24}
-									color="white"
-									style={styles.xbutton}
-									onPress={() => {
-										setModalVisible(!modalVisible);
-									}}
-								/>
-							</TouchableHighlight>
 							<Text style={styles.modalText}>
-								Congratulations,{'\n'} You made it!
+								Congratulations,{'\n'} you made it!
 							</Text>
 							<Text style={styles.modalInnerText}>
 								You completed your goal "{goal.title}"!
 							</Text>
-							<CustomButton
-								style={styles.nextButton}
-								title="VIEW POST"
-								onPress={() => viewPost()}
-							/>
-							<CustomButton
-								style={styles.nextButton}
-								title="BACK TO GOALS"
-								onPress={() => backToGoals()}
-							/>
+							<View style={styles.buttonContainer}>
+								<CustomButton
+									style={styles.nextButton}
+									title="VIEW POST"
+									onPress={() => viewPost()}
+								/>
+								<CustomButton
+									style={styles.nextButton}
+									title="BACK TO GOALS"
+									onPress={() => backToGoals()}
+								/>
+							</View>
 						</View>
 					</View>
 				</Modal>
@@ -125,11 +119,9 @@ function SingleGoalScreen(props) {
 	);
 }
 
-const mapState = (state, props) => {
-	return {
-		goal: state.goals.find((goal) => goal.id === props.route.params.goal.id),
-	};
-};
+const mapState = (state, props) => ({
+	goal: state.goals.find((goal) => goal.id === props.route.params.goal.id),
+});
 
 const mapDispatch = (dispatch) => ({
 	updateSingleGoalFreq: (goalId) => dispatch(completedDaysThunk(goalId)),
