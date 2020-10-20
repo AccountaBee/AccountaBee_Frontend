@@ -22,6 +22,7 @@ const pieCalculations = (completedDays, frequency) => {
 		}
 	}
 	return [pieData, graphicColor];
+}
 
 function HomeScreen(props) {
 	useEffect(() => {
@@ -32,7 +33,7 @@ function HomeScreen(props) {
 		}
     fetchData();
   }, [])
-};
+;
   
 function ResetFunction() {
   useEffect(() => {
