@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import styles from "./styles";
 import CustomButton from "../CustomButton";
 import { firebase } from "../../firebase/config";
-import { login } from "../../../redux/reducers/users";
+import { getUser } from "../../../redux/reducers/users";
 import { connect } from "react-redux";
 
 function LoginScreen(props, { navigation }) {
@@ -20,8 +20,7 @@ function LoginScreen(props, { navigation }) {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then(async () => {
-				let token = await firebase.auth().currentUser.getIdToken();
-				await props.gotUser({ token });
+				await props.getUser();
 				props.navigation.navigate("Home");
 			})
 			.catch(() => {
@@ -73,7 +72,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-	gotUser: body => dispatch(login(body))
+	getUser: () => dispatch(getUser())
 });
 
 export default connect(mapState, mapDispatch)(LoginScreen);
