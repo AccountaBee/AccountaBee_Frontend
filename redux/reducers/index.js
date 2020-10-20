@@ -4,4 +4,5 @@ export { default as user } from "./users";
 export { default as requests } from "./requests";
 export { default as sentRequests } from "./sentRequests";
 export { default as goals } from "./goals";
-// export posts from './posts'
+export { default as posts } from "./posts";
+export { default as singlePost } from "./singlePost";
