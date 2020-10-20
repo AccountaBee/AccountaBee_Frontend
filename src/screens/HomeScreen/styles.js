@@ -6,6 +6,7 @@ export default StyleSheet.create({
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
+		zIndex: -1,
 	},
 	headline: {
 		marginTop: 10,
@@ -29,11 +30,36 @@ export default StyleSheet.create({
 		alignSelf: 'center',
 		marginBottom: '30%',
 	},
-	// fullScreen: {
-	// 	borderColor: 'red',
-	// 	borderWidth: 1,
-	// 	paddingBottom: '30%',
-	// },
+	fullScreen: {
+		paddingBottom: 120,
+	},
+	centeredView: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 22,
+	},
+	modalView: {
+		margin: 40,
+		backgroundColor: 'white',
+		borderRadius: 10,
+		padding: 35,
+		alignItems: 'center',
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84,
+		elevation: 5,
+	},
+	modalText: {
+		color: '#424347',
+		fontSize: 18,
+		marginBottom: 15,
+		textAlign: 'center',
+	},
 });
 
 export const pieStyle = StyleSheet.create({
