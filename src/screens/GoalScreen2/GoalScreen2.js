@@ -15,19 +15,19 @@ function GoalScreen2(props) {
 	}, []);
 
 	const setFrequency = (value, title) => {
-    if (allGoals) {
-      const newGoals = allGoals.map((goal) => {
-        if (goal.title === title) {
-          goal.frequency = value;
-          return goal;
-        } else {
-          return goal;
-        }
-      });
-      setAllGoals(newGoals);
-    } else {
-      console.log('no goals set yet')
-    }
+		if (allGoals) {
+			const newGoals = allGoals.map((goal) => {
+				if (goal.title === title) {
+					goal.frequency = value;
+					return goal;
+				} else {
+					return goal;
+				}
+			});
+			setAllGoals(newGoals);
+		} else {
+			console.log('no goals set yet');
+		}
 	};
 
 	const setGoalsPress = async () => {
@@ -68,6 +68,9 @@ function GoalScreen2(props) {
 						</View>
 					</View>
 				))}
+			<Text style={styles.subheader}>
+				You can edit these goals at any point{'\n'} from your Goals dashboard.
+			</Text>
 			<CustomButton
 				style={styles.nextButton}
 				title="SET GOALS"

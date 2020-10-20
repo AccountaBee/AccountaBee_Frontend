@@ -2,13 +2,17 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 50,
+		paddingTop: 80,
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
-		borderBottomRightRadius: 15,
-		marginRight: 15,
-		opacity : 0.8,
+	},
+	headline: {
+		marginTop: 10,
+		color: 'white',
+		fontSize: 20,
+		textAlign: 'center',
+		marginBottom: 15,
 	},
 	nextButton: {
 		alignSelf: 'center',
@@ -26,6 +30,7 @@ export default StyleSheet.create({
 	},
 	subheader: {
 		color: '#424347',
+		fontSize: 16,
 		marginLeft: 20,
 		marginTop: 25,
 	},
@@ -40,16 +45,9 @@ export default StyleSheet.create({
 		fontSize: 18,
 		color: '#424347',
 	},
-	headline: {
-		marginTop: 10,
-		color: 'white',
-		fontSize: 20,
-		textAlign: 'center',
-		marginBottom: 15,
-	},
 	goals: {
 		width: '60%',
-		paddingTop: 10,
+		paddingTop: 20,
 		fontSize: 18,
 		marginLeft: 0,
 		color: '#424347',
