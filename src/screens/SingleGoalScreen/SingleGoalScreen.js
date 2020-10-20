@@ -5,15 +5,14 @@ import Toast from "react-native-toast-message";
 import { completedDaysThunk } from "../../../redux/reducers/goals";
 import { connect } from "react-redux";
 import CustomButton from "../CustomButton";
-import style from "./style";
 import { newPost } from "../../../redux/reducers/singlePost";
 
 function SingleGoalScreen(props) {
-	const goal = props.goal;
+	const goal = props.goal || {};
 	const [isCompleted, setIsCompleted] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
 
-	const incrementDay = async (goalID, day) => {
+	const incrementDay = async (goalId, day) => {
 		if (goal.completedDays > goal.frequency - 1) {
 			//do nothing
 		}
@@ -31,12 +30,14 @@ function SingleGoalScreen(props) {
 				bottomOffset: 40,
 				visibilityTime: 1000
 			});
+			props.newPost(goal.title, goal.completedDays + 1, false);
 		}
 
 		if (goal.completedDays === goal.frequency - 1) {
 			setIsCompleted(!isCompleted);
 			await props.updateSingleGoalFreq(goalId);
 			setModalVisible(!modalVisible);
+			props.newPost(goal.title, goal.completedDays + 1, true);
 		}
 	};
 

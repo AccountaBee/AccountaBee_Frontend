@@ -9,7 +9,6 @@ const setPost = post => ({ type: SET_POST, post });
 
 export const newPost = (title, completedDays, targetDaysMet) => async dispatch => {
 	try {
-		console.log("IN NEWPOST");
 		const token = await firebase.auth().currentUser.getIdToken();
 		const { data } = await instance.post("/posts/newPost", {
 			title,
@@ -17,8 +16,8 @@ export const newPost = (title, completedDays, targetDaysMet) => async dispatch =
 			targetDaysMet,
 			token
 		});
-		// the user just be redirected to feed right? we aren't adding the ability for them to add stuff to their post right now?
 		dispatch(setPost(data));
+		dispatch(getPosts());
 	} catch (error) {
 		console.log(error);
 	}
