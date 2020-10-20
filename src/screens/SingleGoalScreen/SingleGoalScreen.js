@@ -34,7 +34,7 @@ function SingleGoalScreen(props) {
 		   })
 		}
 
-		if(goal.completedDays === goal.frequency-1){
+		if(goal.completedDays === goal.frequency){
 			setModalVisible(!modalVisible)
 		}
 
