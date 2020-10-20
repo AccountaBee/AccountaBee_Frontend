@@ -1,35 +1,37 @@
-import { firebase } from "../../src/firebase/config";
-import instance from "../axios";
+import { firebase } from '../../src/firebase/config';
+import instance from '../axios';
 
-const GOT_GOALS = "GOT_GOALS";
-const SET_GOALS = "SET_GOALS";
+const GOT_GOALS = 'GOT_GOALS';
+const SET_GOALS = 'SET_GOALS';
+const CLEAR_GOALS = 'CLEAR_GOALS';
 
-const setGoals = goals => ({ type: SET_GOALS, goals });
-export const gotGoals = goals => ({ type: GOT_GOALS, goals });
+const setGoals = (goals) => ({ type: SET_GOALS, goals });
+export const gotGoals = (goals) => ({ type: GOT_GOALS, goals });
+export const clearGoals = () => ({ type: CLEAR_GOALS });
 
-export const setGoalsThunk = goals => async dispatch => {
+export const setGoalsThunk = (goals) => async (dispatch) => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
-		let { data, status } = await instance.post("/goals", { goals, token });
+		let { data, status } = await instance.post('/goals', { goals, token });
 		if (status === 200) {
 			dispatch(setGoals(data));
 		} else {
-			console.log("error setting goals in database, status error: ", status);
+			console.log('error setting goals in database, status error: ', status);
 		}
 	} catch (error) {
 		console.error(error);
 	}
 };
 
-export const deleteGoalThunk = (goalId, goals) => async dispatch => {
+export const deleteGoalThunk = (goalId, goals) => async (dispatch) => {
 	try {
-    let { status } = await instance.delete(`/goals/${goalId}`);
+		let { status } = await instance.delete(`/goals/${goalId}`);
 		console.log('status is: ', status);
 		if (status === 200) {
-      console.log('goal successfully deleted');
-      dispatch(gotGoals(goals.filter(goal => goalId!== goal.id )))
+			console.log('goal successfully deleted');
+			dispatch(gotGoals(goals.filter((goal) => goalId !== goal.id)));
 		} else {
-			console.log("error deleting goals in database, status error: ", status);
+			console.log('error deleting goals in database, status error: ', status);
 		}
 	} catch (error) {
 		console.error(error);
@@ -37,9 +39,9 @@ export const deleteGoalThunk = (goalId, goals) => async dispatch => {
 };
 
 //updates the goal with completed days after user marks day off
-export const completedDaysThunk = goalId => async dispatch => {
+export const completedDaysThunk = (goalId) => async (dispatch) => {
 	try {
-    await instance.put(`goals/${goalId}`);
+		await instance.put(`goals/${goalId}`);
 		let token = await firebase.auth().currentUser.getIdToken();
 		const { data } = await instance.post(`/goals/allGoals`, { token });
 		dispatch(gotGoals(data));
@@ -48,7 +50,7 @@ export const completedDaysThunk = goalId => async dispatch => {
 	}
 };
 
-export const getGoalsThunk = () => async dispatch => {
+export const getGoalsThunk = () => async (dispatch) => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		const res = await instance.post(`/goals/allGoals`, { token });
@@ -79,6 +81,8 @@ export default function (state = [], action) {
 			return action.goals;
 		case GOT_GOALS:
 			return action.goals;
+		case CLEAR_GOALS:
+			return [];
 		default:
 			return state;
 	}

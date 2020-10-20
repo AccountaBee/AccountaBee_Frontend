@@ -2,12 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 50,
+		paddingTop: 70,
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
-		borderBottomRightRadius: 15,
-		marginRight: 15,
 	},
 	numberInput: {
 		marginTop: 15,
@@ -17,11 +15,11 @@ export default StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: '#8688BC',
 		width: '80%',
-		marginTop: 60,
+		marginTop: 20,
 	},
 	flex: {
 		width: '78%',
-		marginTop: 20,
+		marginTop: 30,
 		marginLeft: 40,
 		flexDirection: 'row',
 		justifyContent: 'space-around',
@@ -31,9 +29,10 @@ export default StyleSheet.create({
 		marginBottom: 20,
 	},
 	subheader: {
+		fontSize: 16,
 		color: '#424347',
-		marginLeft: 20,
-		marginTop: 25,
+		marginLeft: '10%',
+		marginTop: 50,
 	},
 	textInput: {
 		backgroundColor: 'white',
@@ -47,7 +46,7 @@ export default StyleSheet.create({
 		color: '#424347',
 	},
 	headline: {
-		marginTop: 10,
+		marginTop: 20,
 		color: 'white',
 		fontSize: 20,
 		textAlign: 'center',
@@ -74,9 +73,16 @@ export default StyleSheet.create({
 	breakTop2: {
 		marginTop: 40,
 	},
+	icon: {
+		marginTop: 100,
+	},
 	customHeader: {
 		textAlign: 'center',
 		fontSize: 20,
 		marginTop: 100,
+	},
+	back: {
+		color: 'white',
+		fontWeight: '600',
 	},
 });

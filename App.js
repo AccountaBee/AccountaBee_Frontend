@@ -1,28 +1,28 @@
 /* eslint-disable react/display-name */
-import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
-import { View, Text, LogBox} from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Feather } from "@expo/vector-icons";
-import { Provider } from "react-redux";
-import store from "./redux/store";
-import Toast from "react-native-toast-message";
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { View, Text, LogBox } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Feather } from '@expo/vector-icons';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import Toast from 'react-native-toast-message';
 import {
 	LoginScreen,
 	HomeScreen,
 	RegistrationScreen,
 	FeedScreen,
-	SettingsScreen,
+	LogOutScreen,
 	GoalScreen,
 	GoalScreen2,
 	SingleGoalScreen,
-	FriendsScreen
-} from "./src/screens";
-import FriendsIcon from "./src/screens/FriendsScreen/FriendsIcon";
-import { decode, encode } from "base-64";
-import { useAuth, userContext } from "./src/context";
+	FriendsScreen,
+} from './src/screens';
+import FriendsIcon from './src/screens/FriendsScreen/FriendsIcon';
+import { decode, encode } from 'base-64';
+import { useAuth, userContext } from './src/context';
 
 //LogBox.ignoreAllLogs();
 
@@ -37,25 +37,40 @@ const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 const GoalStack = createStackNavigator();
 
-// Goal-setting stack (will likely ultimately be part of the settings screen stack, but for dev purposes using a separate stack)
 const GoalScreenNav = () => (
-	<GoalStack.Navigator>
-		{/* Why is this in the tab nav?? */}
+	<GoalStack.Navigator
+		initialRouteName="Home"
+		screenOptions={{
+			title: '',
+			headerBackAllowFontScaling: true,
+			headerBackTitleStyle: {
+				fontSize: 16,
+			},
+			headerTransparent: true,
+			headerTintColor: 'white',
+		}}
+	>
 		<GoalStack.Screen
-			name="Goals1"
-			component={GoalScreen}
+			name="Home"
+			component={HomeScreen}
 			options={{
-				animationEnabled: false,
-				headerShown: false
+				title: '',
 			}}
 		/>
 		<GoalStack.Screen
-			name="Goals2"
+			name="Single Goal"
+			component={SingleGoalScreen}
+			options={{ title: '' }}
+		/>
+		<GoalStack.Screen
+			name="Set Goals"
+			component={GoalScreen}
+			options={{ title: '' }}
+		/>
+		<GoalStack.Screen
+			name="Set Frequency"
 			component={GoalScreen2}
-			options={{
-				animationEnabled: false,
-				headerShown: false
-			}}
+			options={{ title: '' }}
 		/>
 	</GoalStack.Navigator>
 );
@@ -66,54 +81,46 @@ const TabsScreen = () => (
 		screenOptions={({ route }) => ({
 			tabBarIcon: ({ focused, color }) => {
 				let iconName;
-				if (route.name === "Home") {
-					iconName = "pie-chart";
-				} else if (route.name === "Settings") {
-					iconName = "settings";
-				} else if (route.name === "Feed") {
-					iconName = "message-square";
-				} else if (route.name === "Goals") {
-					iconName = "target";
-				} else if (route.name === "Single Goal") {
-					iconName = "check-circle";
-				} else if (route.name === "Friends") {
-					iconName = "users";
+				if (route.name === 'Goals') {
+					iconName = 'check-circle';
+				} else if (route.name === 'Log Out') {
+					iconName = 'log-out';
+				} else if (route.name === 'Feed') {
+					iconName = 'message-square';
+				} else if (route.name === 'Friends') {
+					iconName = 'users';
 				}
-				color = focused ? "#9FC78A" : "#8688BC";
+				color = focused ? '#9FC78A' : '#8688BC';
 				return <Feather name={iconName} size={20} color={color} />;
-			}
+			},
 		})}
 		tabBarOptions={{
-			activeTintColor: "#9FC78A",
-			inactiveTintColor: "#8688BC"
-		}}>
-		<Tabs.Screen name="Home" component={HomeScreen} />
-		<Tabs.Screen
-			name="Goals"
-			component={GoalScreenNav}
-			options={{
-				animationEnabled: false,
-				headerShown: false
-			}}
-		/>
-		<Tabs.Screen name="Single Goal" component={SingleGoalScreen} />
+			activeTintColor: '#9FC78A',
+			inactiveTintColor: '#8688BC',
+		}}
+	>
+		<Tabs.Screen name="Goals" component={GoalScreenNav} />
 		<Tabs.Screen name="Feed" component={FeedScreen} />
 		<Tabs.Screen
 			name="Friends"
 			component={FriendsScreen}
 			options={{
 				tabBarIcon: ({ focused, color }) => {
-					color = focused ? "#9FC78A" : "#8688BC";
+					color = focused ? '#9FC78A' : '#8688BC';
 					return (
 						// STYLE & PLACEMENT ON ICON WILL BE IMPROVED
 						<>
 							<FriendsIcon focused={focused} />
 						</>
 					);
-				}
+				},
 			}}
 		/>
-		<Tabs.Screen name="Settings" component={SettingsScreen} />
+		<Tabs.Screen
+			name="Log Out"
+			component={LogOutScreen}
+			initialParams={{ logout: true }}
+		/>
 	</Tabs.Navigator>
 );
 
@@ -136,28 +143,11 @@ export default function App() {
 						{user ? (
 							<>
 								<Stack.Screen
-									name="Home"
-									component={TabsScreen}
-									options={{
-										animationEnabled: false,
-										headerShown: false
-									}}
-								/>
-								<Stack.Screen
-									name="Goals"
-									component={TabsScreen}
-									options={{
-										animationEnabled: false,
-										headerShown: false
-									}}
-								/>
-
-								<Stack.Screen
 									name="Tabs"
 									component={TabsScreen}
 									options={{
 										animationEnabled: false,
-										headerShown: false
+										headerShown: false,
 									}}
 								/>
 							</>
@@ -169,7 +159,7 @@ export default function App() {
 									title=""
 									options={{
 										animationEnabled: false,
-										headerShown: false
+										headerShown: false,
 									}}
 								/>
 								<Stack.Screen
@@ -177,7 +167,7 @@ export default function App() {
 									title=""
 									options={{
 										animationEnabled: false,
-										headerShown: false
+										headerShown: false,
 									}}
 									component={RegistrationScreen}
 								/>
@@ -185,7 +175,7 @@ export default function App() {
 						)}
 					</Stack.Navigator>
 				</NavigationContainer>
-				<Toast ref={ref => Toast.setRef(ref)} />
+				<Toast ref={(ref) => Toast.setRef(ref)} />
 			</userContext.Provider>
 		</Provider>
 	);

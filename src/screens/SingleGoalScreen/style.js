@@ -1,68 +1,59 @@
-import { StyleSheet } from 'react-native';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
-import { Dimensions } from 'react-native';
-
-const { height, width } = Dimensions.get('window');
+import { StyleSheet, Dimensions } from 'react-native';
+const { width } = Dimensions.get('window');
+const deviceHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
 	headcontainer: {
-        width: width,
-		paddingTop: 60,
+		paddingTop: 71,
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC',
-		opacity : 0.8
-    },
-
-    container: {
-        width: width-50,
-        paddingTop: 20,
-        paddingLeft: 35,
-        paddingBottom : 20,
-        borderBottomColor: '#bbb',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-    day: {
-      flexDirection: 'row',
-    },
-    card: {
-        backgroundColor: '#fff',
-        paddingTop : 20,
-        paddingBottom : 20,
-        paddingLeft : 20,
-        paddingRight : 20
-    },
-    text: {
-        fontWeight: '500',
-        fontSize: 18,
-        marginVertical: 20,
-        position: "relative",
-        bottom: "5%",
-      },
-    circle: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        borderColor: 'red',
-        borderWidth: 3,
-        marginRight: 20
-    },
-    completeCircle: {
-        borderColor: '#bbb'
-    },
-    incompleteCircle: {
-        borderColor: '#DA4453'
-    },
-    strikeText: {
-        color: '#bbb',
-        textDecorationLine: 'line-through',
-    },
-    unstrikeText: {
-        color: "#29323c"
-    },
-	flex: {
+		backgroundColor:'#8688BC',
+	},
+	headline: {
+		color: 'white',
+		fontSize: 26,
+		textAlign: 'center',
+		marginTop: 10,
+		marginBottom: 20,
+	},
+	container: {
+		width: width,
+		marginTop: 10,
+		paddingBottom: 5,
+		paddingLeft: 35,
+		borderBottomColor: '#bbb',
+		borderBottomWidth: StyleSheet.hairlineWidth,
+	},
+	day: {
 		flexDirection: 'row',
-		justifyContent: 'space-between',
+	},
+	text: {
+		fontWeight: '500',
+		fontSize: 18,
+		marginVertical: 20,
+		position: 'relative',
+		bottom: '5%',
+	},
+	circle: {
+		width: 30,
+		height: 30,
+		borderRadius: 15,
+		borderColor: 'red',
+		borderWidth: 3,
+		marginRight: 20,
+	},
+	completeCircle: {
+		borderColor: '#bbb',
+	},
+	incompleteCircle: {
+		borderColor: '#DA4453',
+	},
+	strikeText: {
+		color: '#bbb',
+		textDecorationLine: 'line-through',
+	},
+	unstrikeText: {
+		color: '#29323c',
 	},
 	textInput: {
 		backgroundColor: 'white',
@@ -74,12 +65,6 @@ export default StyleSheet.create({
 		borderWidth: 1,
 		fontSize: 18,
 		marginRight: 0,
-	},
-	headline: {
-		color: 'white',
-		fontSize: 30,
-		textAlign: 'left',
-		marginBottom: 5,
 	},
 	goals: {
 		paddingTop: 10,
@@ -106,5 +91,52 @@ export default StyleSheet.create({
 		marginTop: 0,
 		marginLeft: 0,
 		backgroundColor: '#9FC78A',
+	},
+	centeredView: {
+		flex: 1,
+		justifyContent: 'flex-end',
+	},
+	modalView: {
+		flex: 1,
+		width: '100%',
+		maxHeight: deviceHeight * 0.6,
+		backgroundColor: '#8688BC',
+		opacity: 0.9,
+		borderTopStartRadius: 20,
+		borderTopEndRadius: 20,
+		paddingHorizontal: 10,
+		alignItems: 'center',
+		justifyContent: 'flex-start',
+		shadowColor: '#000',
+		shadowOpacity: 0.5,
+		shadowRadius: 3.84,
+		elevation: 0,
+	},
+	textStyle: {
+		color: 'white',
+		fontWeight: 'bold',
+		textAlign: 'center',
+	},
+	modalText: {
+		marginTop: 20,
+		marginBottom: 15,
+		textAlign: 'center',
+		color: 'white',
+		fontSize: 40,
+	},
+	modalInnerText: {
+		marginBottom: 12,
+		textAlign: 'center',
+		color: 'white',
+		fontSize: 20,
+	},
+	xbutton: {
+		marginTop: 20,
+	},
+	nextButton: {
+		alignSelf: 'center',
+		backgroundColor: '#9FC78A',
+		width: '80%',
+		padding: 50,
 	},
 });

@@ -1,30 +1,31 @@
-import React, { useEffect } from "react";
-import { Text, View } from "react-native";
-import GoalPieChart from "./PieChart";
-import { connect } from "react-redux";
-import { getGoalsThunk, resetGoalsThunk } from "../../../redux/reducers/goals";
-import styles from "./styles";
-import { ScrollView } from "react-native-gesture-handler";
-import { getUser } from "../../../redux/reducers/users";
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import GoalPieChart from './PieChart';
+import { connect } from 'react-redux';
+import CustomButton from '../CustomButton';
+import { getGoalsThunk, resetGoalsThunk } from '../../../redux/reducers/goals';
+import styles from './styles';
+import { ScrollView } from 'react-native-gesture-handler';
+import { getUser } from '../../../redux/reducers/users';
 
 const pieCalculations = (completedDays, frequency) => {
 	const pieData = [],
 		graphicColor = [];
-	let colorComplete = completedDays;
 	for (let i = 1; i <= frequency; i++) {
-		let objStr = { x: i, y: 1 };
-		pieData.push(objStr);
-		if (colorComplete) {
-			graphicColor.push("#8688BC");
-			colorComplete--;
+		pieData.push({ x: i, y: 1 });
+		if (completedDays) {
+			graphicColor.push('#9FC78A');
+			completedDays--;
 		} else {
-			graphicColor.push("#DCDCDC");
+			graphicColor.push('#DCDCDC');
 		}
 	}
 	return [pieData, graphicColor];
 }
 
 function HomeScreen(props) {
+	const [pieGoals, setPieGoals] = useState([]);
+
 	useEffect(() => {
 		async function fetchData() {
 			await props.getGoals();
@@ -50,7 +51,10 @@ function HomeScreen(props) {
     }
   }, [props.user.uid])
 
-  
+	useEffect(() => {
+		setPieGoals(props.goals);
+	}, [props.goals]);
+
 	return (
 		<>
 			<View style={styles.container}>
@@ -59,9 +63,12 @@ function HomeScreen(props) {
 			<View>
 				<ScrollView>
 					{props.goals.length ? (
-						props.goals.map(goal => {
-							
-								const [data, graphicColor] = pieCalculations(goal.completedDays, goal.frequency);
+						props.goals.map((goal) => {
+							if (goal.status === 'active') {
+								const [data, graphicColor] = pieCalculations(
+									goal.completedDays,
+									goal.frequency
+								);
 								return (
 									<GoalPieChart
 										graphicColor={graphicColor}
@@ -75,22 +82,27 @@ function HomeScreen(props) {
 						})
 					) : (
 						<Text style={styles.noGoals}>
-							You don’t have any goals set!{"\n\n"}Head over to Settings{"\n"}to create some goals
-							and{"\n"}start achieving them.
+							You don’t have any goals set!{'\n\n'}Click the button below{'\n'}
+							to create some goals and{'\n'}start achieving them.
 						</Text>
 					)}
+					<CustomButton
+						title={pieGoals.length ? 'EDIT GOALS' : 'SET GOALS'}
+						style={styles.button}
+						onPress={() => props.navigation.push('Set Goals')}
+					/>
 				</ScrollView>
 			</View>
 		</>
 	);
 }
 
-const mapState = state => ({
+const mapState = (state) => ({
 	user: state.user,
-	goals: state.goals
+	goals: state.goals,
 });
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch) => ({
 	getGoals: () => dispatch(getGoalsThunk()),
   getUser: () => dispatch(getUser()),
   resetGoals: (uid) => dispatch(resetGoalsThunk(uid))
