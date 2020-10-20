@@ -1,37 +1,41 @@
 import { StyleSheet } from 'react-native';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
 import { Dimensions } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
+const deviceHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
 	headcontainer: {
-        width: width,
-		paddingTop: 60,
+		paddingTop: 50,
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC',
-		opacity : 0.8
-    },
+		backgroundColor: "#8688BC",
+		borderBottomRightRadius: 15,
+		marginRight: 15,
+		opacity : 0.8,
+	},
+
+	headline: {
+		color: 'white',
+		fontSize: 26,
+		textAlign: 'center',
+		marginTop: 10,
+		marginBottom: 20
+	},
 
     container: {
-        width: width-50,
-        paddingTop: 20,
-        paddingLeft: 35,
-        paddingBottom : 20,
+		width: width,
+		marginTop:10,
+		paddingBottom : 5,
+		paddingLeft: 35,
         borderBottomColor: '#bbb',
         borderBottomWidth: StyleSheet.hairlineWidth,
-    },
+	},
+	
     day: {
       flexDirection: 'row',
-    },
-    card: {
-        backgroundColor: '#fff',
-        paddingTop : 20,
-        paddingBottom : 20,
-        paddingLeft : 20,
-        paddingRight : 20
-    },
+	},
+	
     text: {
         fontWeight: '500',
         fontSize: 18,
@@ -60,10 +64,7 @@ export default StyleSheet.create({
     unstrikeText: {
         color: "#29323c"
     },
-	flex: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-	},
+	
 	textInput: {
 		backgroundColor: 'white',
 		width: '80%',
@@ -75,12 +76,7 @@ export default StyleSheet.create({
 		fontSize: 18,
 		marginRight: 0,
 	},
-	headline: {
-		color: 'white',
-		fontSize: 30,
-		textAlign: 'left',
-		marginBottom: 5,
-	},
+
 	goals: {
 		paddingTop: 10,
 		fontSize: 20,
@@ -106,5 +102,59 @@ export default StyleSheet.create({
 		marginTop: 0,
 		marginLeft: 0,
 		backgroundColor: '#9FC78A',
+	},
+	centeredView: {
+		flex: 1,
+		justifyContent: "flex-end",
+		// alignItems: "center",
+		// marginTop: 22
+	  },
+	  modalView: {
+		flex: 1,
+		width: '100%',
+		maxHeight: deviceHeight * 0.6,
+		backgroundColor: 'lightgrey',
+		opacity: 0.9,
+		borderTopStartRadius:20,
+		borderTopEndRadius : 20,
+		paddingHorizontal:10,
+		alignItems: "center",
+		justifyContent : "flex-start",
+		shadowColor: "#000",
+		shadowOpacity: 0.5,
+		shadowRadius: 3.84,
+		elevation: 0
+	  },
+
+	  textStyle: {
+		color: "white",
+		fontWeight: "bold",
+		textAlign: "center"
+	  },
+
+	  modalText: {
+		marginTop : 20,
+		marginBottom: 15,
+		textAlign: "center",
+		color: "white",
+		fontSize: 40,
+	  },
+
+	  modalInnerText: {
+		marginBottom: 12,
+		textAlign: "center",
+		color: "white",
+		fontSize: 20,
+	  },
+
+	  xbutton:{
+		  marginTop: 20,
+	  },
+
+	  nextButton: {
+		alignSelf: 'center',
+		backgroundColor: '#8688BC',
+		width: '80%',
+		padding: 50,
 	},
 });

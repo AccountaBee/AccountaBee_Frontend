@@ -8,7 +8,7 @@ export default StyleSheet.create({
 		fontFamily: "Avenir",
 		fontWeight: "500",
 		fontSize: 28,
-		color: "#845cab",
+		color: "#8688BC",
 		textAlign: "center",
 		marginTop: 15
 	},
@@ -20,7 +20,8 @@ export default StyleSheet.create({
 		borderRadius: 5,
 		alignItems: "center",
 		justifyContent: "center",
-		padding: 10
+		padding: 10,
+		backgroundColor : "#8688BC"
 	},
 	buttonTitle: {
 		color: "white",

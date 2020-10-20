@@ -9,7 +9,8 @@ export default StyleSheet.create({
 		paddingRight: 20,
 		backgroundColor: "#8688BC",
 		borderBottomRightRadius: 15,
-		marginRight: 15
+		marginRight: 15,
+		opacity : 0.8,
 	},
 	container: {
 		display: "flex"
@@ -24,7 +25,7 @@ export default StyleSheet.create({
 	},
 	instructions: {
 		margin: 15,
-		fontSize: 25,
+		fontSize: 20,
 		textAlign: "center",
 		padding: 10,
 		color: "#424347"

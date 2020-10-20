@@ -8,6 +8,7 @@ export default StyleSheet.create({
 		backgroundColor: '#8688BC',
 		borderBottomRightRadius: 15,
 		marginRight: 15,
+		opacity : 0.8,
 	},
 	numberInput: {
 		marginTop: 15,
