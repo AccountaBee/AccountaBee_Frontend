@@ -118,7 +118,7 @@ export default StyleSheet.create({
 		textAlign: 'center',
 	},
 	modalText: {
-		marginTop: 20,
+		marginTop: 25,
 		marginBottom: 15,
 		textAlign: 'center',
 		color: 'white',
@@ -129,6 +129,7 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		color: 'white',
 		fontSize: 20,
+		marginTop:10
 	},
 	xbutton: {
 		marginTop: 20,
@@ -136,7 +137,16 @@ export default StyleSheet.create({
 	nextButton: {
 		alignSelf: 'center',
 		backgroundColor: '#9FC78A',
-		width: '80%',
-		padding: 50,
+		width: '90%',
+		padding: 70,
+		marginLeft: 30,
+		marginRight: 30,
+		marginTop: 20,
+		height: 48,
+		borderRadius: 5,
+		justifyContent: 'center',
 	},
+	buttonContainer: {
+		marginTop: 60
+	}
 });
