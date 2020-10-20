@@ -29,6 +29,7 @@ export default function GoalPieChart(props) {
 				colorScale={props.graphicColor}
 				innerRadius={28}
 				labels={() => null}
+				animate={true}
 			/>
 		</TouchableOpacity>
 	);

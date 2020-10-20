@@ -16,7 +16,7 @@ export default StyleSheet.create({
 		fontFamily: 'Avenir',
 		fontWeight: '500',
 		fontSize: 28,
-		color: '#845cab',
+		color: "#8688BC",
 	},
 	input: {
 		height: 48,
@@ -37,6 +37,7 @@ export default StyleSheet.create({
 		borderRadius: 5,
 		alignItems: 'center',
 		justifyContent: 'center',
+		backgroundColor :"#8688BC",
 	},
 	buttonTitle: {
 		color: 'white',
@@ -53,7 +54,7 @@ export default StyleSheet.create({
 		color: '#2e2e2d',
 	},
 	footerLink: {
-		color: '#845cab',
+		color: "#8688BC",
 		fontWeight: 'bold',
 		fontSize: 16,
 	},
