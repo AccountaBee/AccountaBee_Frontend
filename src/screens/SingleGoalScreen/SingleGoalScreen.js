@@ -3,10 +3,8 @@ import { Text,
 		 View,
 		 Modal,
 		 TouchableOpacity,
-		 TouchableHighlight,
          } from 'react-native';
 import styles from './style';
-import { AntDesign } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { completedDaysThunk } from '../../../redux/reducers/goals';
 import { connect } from 'react-redux';
@@ -34,6 +32,7 @@ function SingleGoalScreen(props) {
 				autoHide : true,
 				topOffset:30,
 				bottomOffset : 40,
+				visibilityTime: 1000,
 		   })
 		}
 
@@ -92,7 +91,7 @@ function SingleGoalScreen(props) {
 								<View style={styles.modalView}>
 									<Text style={styles.modalText}>Congratulations,{'\n'} You made it !</Text>
 									<Text style={styles.modalInnerText}>You completed your goal "{goal.title}" !</Text>
-									
+									<View style={styles.buttonContainer}>
 									<CustomButton
 										style={styles.nextButton}
 										title="VIEW POST"
@@ -103,6 +102,7 @@ function SingleGoalScreen(props) {
 										title="BACK TO GOALS"
 										onPress={() => backToGoals()}
 									/>
+									</View>
 									
 								</View>
 							</View>
