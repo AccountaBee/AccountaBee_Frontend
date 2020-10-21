@@ -43,17 +43,22 @@ export default StyleSheet.create({
 		marginRight: 20,
 	},
 	completeCircle: {
-		borderColor: '#bbb',
+		borderColor: 'green',
+  },
+  activeCircle: {
+    borderColor: '#DA4453',
 	},
 	incompleteCircle: {
-		borderColor: '#DA4453',
+		borderColor: '#bbb',
 	},
-	strikeText: {
+	incompleteText: {
 		color: '#bbb',
-		textDecorationLine: 'line-through',
 	},
-	unstrikeText: {
+	activeText: {
 		color: '#29323c',
+  },
+  completeText: {
+		color: 'green',
 	},
 	textInput: {
 		backgroundColor: 'white',

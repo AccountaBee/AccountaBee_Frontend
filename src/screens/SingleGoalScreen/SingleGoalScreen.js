@@ -13,31 +13,40 @@ function SingleGoalScreen(props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const incrementDay = async (goalId) => {
+    if (goal.completedDays > goal.frequency - 1 ) {
+      //do nothing
+    }
+    // onPress={() => incrementDay(goal.id, day)}
+    else if (goal.completedDays < goal.frequency - 1 ) {
+      setIsCompleted(!isCompleted)
+      await props.updateSingleGoalFreq(goalId)
+      Toast.show({
+        text1: 'Congratulations!',
+        text2: 'You are one step closer ! 👋',
+        tpye:'success',
+        position: 'bottom | top',
+        autoHide : true,
+        topOffset:30,
+        bottomOffset : 40,
+        })
+    }
 
-  if( goal.completedDays > goal.frequency - 1 ) {
-    //do nothing
-  }
-  // onPress={() => incrementDay(goal.id, day)}
-  else if( goal.completedDays < goal.frequency - 1 ) {
-    setIsCompleted(!isCompleted)
-    await props.updateSingleGoalFreq(goalId)
-    Toast.show({
-      text1: 'Congratulations!',
-      text2: 'You are one step closer ! 👋',
-      tpye:'success',
-      position: 'bottom | top',
-      autoHide : true,
-      topOffset:30,
-      bottomOffset : 40,
-      })
+    if (goal.completedDays === goal.frequency - 1 ) {
+      setIsCompleted(!isCompleted)
+      await props.updateSingleGoalFreq(goalId)
+      setModalVisible(!modalVisible)
+    }
   }
 
-  if( goal.completedDays === goal.frequency - 1 ) {
-    setIsCompleted(!isCompleted)
-    await props.updateSingleGoalFreq(goalId)
-    setModalVisible(!modalVisible)
+  const getStatusStyles = (day) => {
+    if (goal.completedDays === day - 1) {
+      return [styles.activeCircle, styles.activeText]
+    } else if (goal.completedDays > day - 1) {
+      return [styles.completeCircle, styles.completeText]
+    } else {
+      return [styles.incompleteCircle, styles.incompleteText]
+    }
   }
-}
 
 const arrayDays = []
 
@@ -58,20 +67,22 @@ return (
   <View style={styles.headcontainer}>
     <Text style={styles.headline}> {goal.title} </Text>
   </View>
+  {arrayDays.map((day, idx) => {
+    const statusStyles = getStatusStyles(day)
 
-  {arrayDays.map((day, idx) => (
-    <View style={styles.container} key={idx}>
-      <TouchableOpacity onPress={() => day === goal.completedDays+1? (incrementDay(goal.id)):(<View></View>)} >
-        <View style={styles.day}> 
-        <View style = {[styles.circle, goal.completedDays >= day ? styles.completeCircle : styles.incompleteCircle]}></View>
-          <Text style = {[styles.text, goal.completedDays >= day ? styles.strikeText : styles.unstrikeText]}>
-          Day {day}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  ))}
-
+    return (
+      <View style={styles.container} key={idx}>
+        <TouchableOpacity onPress={() => day === goal.completedDays+1? (incrementDay(goal.id)):(<View></View>)} >
+          <View style={styles.day}> 
+          <View style = {[styles.circle, statusStyles[0]]}></View>
+            <Text style = {[styles.text, statusStyles[1]]}>
+            Day {day}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  })}
   <View>
       <Modal
       animationType="slide"
