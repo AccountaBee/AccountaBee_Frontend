@@ -6,6 +6,7 @@ import Toast from 'react-native-toast-message';
 import { completedDaysThunk } from '../../../redux/reducers/goals';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function SingleGoalScreen(props) {
   const goal = props.goal
@@ -13,17 +14,14 @@ function SingleGoalScreen(props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const incrementDay = async (goalId) => {
-    if (goal.completedDays > goal.frequency - 1 ) {
-      //do nothing
-    }
-    // onPress={() => incrementDay(goal.id, day)}
-    else if (goal.completedDays < goal.frequency - 1 ) {
+    if (goal.completedDays > goal.frequency - 1) {
+    } else if (goal.completedDays < goal.frequency - 1) {
       setIsCompleted(!isCompleted)
       await props.updateSingleGoalFreq(goalId)
       Toast.show({
         text1: 'Congratulations!',
         text2: 'You are one step closer ! 👋',
-        tpye:'success',
+        type:'success',
         position: 'bottom | top',
         autoHide : true,
         topOffset:30,
@@ -31,14 +29,14 @@ function SingleGoalScreen(props) {
         })
     }
 
-    if (goal.completedDays === goal.frequency - 1 ) {
+    if (goal.completedDays === goal.frequency - 1) {
       setIsCompleted(!isCompleted)
       await props.updateSingleGoalFreq(goalId)
       setModalVisible(!modalVisible)
     }
   }
 
-  const getStatusStyles = (day) => {
+  const getStatusStyles = day => {
     if (goal.completedDays === day - 1) {
       return [styles.activeCircle, styles.activeText]
     } else if (goal.completedDays > day - 1) {
@@ -64,25 +62,29 @@ const viewPost = () => {
 
 return (
   <View>
-  <View style={styles.headcontainer}>
-    <Text style={styles.headline}> {goal.title} </Text>
-  </View>
-  {arrayDays.map((day, idx) => {
-    const statusStyles = getStatusStyles(day)
+    <View style={styles.headcontainer}>
+      <Text style={styles.headline}> {goal.title} </Text>
+    </View>
+  <View>
+    <ScrollView>
+      {arrayDays.map((day, idx) => {
+        const statusStyles = getStatusStyles(day)
 
-    return (
-      <View style={styles.container} key={idx}>
-        <TouchableOpacity onPress={() => day === goal.completedDays+1? (incrementDay(goal.id)):(<View></View>)} >
-          <View style={styles.day}> 
-          <View style = {[styles.circle, statusStyles[0]]}></View>
-            <Text style = {[styles.text, statusStyles[1]]}>
-            Day {day}
-            </Text>
+        return (
+          <View style={styles.container} key={idx}>
+            <TouchableOpacity onPress={() => day === goal.completedDays + 1 ? (incrementDay(goal.id)):(<View></View>)} >
+              <View style={styles.day}> 
+              <View style = {[styles.circle, statusStyles[0]]}></View>
+                <Text style = {[styles.text, statusStyles[1]]}>
+                Day {day}
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-    )
-  })}
+        )
+      })}
+    </ScrollView>
+  </View>
   <View>
       <Modal
       animationType="slide"
@@ -99,11 +101,11 @@ return (
                 style={styles.xbutton}
                 onPress={() => {
                   setModalVisible(!modalVisible);
-                }} /
-              >
+                }} 
+              />
             </TouchableHighlight>
-            <Text style={styles.modalText}>Congratulations,{'\n'} You made it !</Text>
-            <Text style={styles.modalInnerText}>You completed your goal "{goal.title}" !</Text>
+            <Text style={styles.modalText}>Congratulations,{'\n'} You made it!</Text>
+            <Text style={styles.modalInnerText}>You completed your goal "{goal.title}"!</Text>
             <CustomButton
               style={styles.nextButton}
               title="VIEW POST"

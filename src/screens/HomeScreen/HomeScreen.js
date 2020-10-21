@@ -37,14 +37,14 @@ function HomeScreen(props) {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (props.user.uid) {
+      if (props.user && props.user.uid) {
         async function reset(uid) {
           let now = new Date();
           let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
           let lastSunday = new Date(today.setDate(today.getDate()-today.getDay()));
           const lastTimeUpdated = props.goals.map(goal => new Date(goal.updatedAt))
-          //change now to lastSunday below after demo
-          const oldGoalsCheck = lastTimeUpdated.some(time => time < now)
+          //change variable 'now' to 'lastSunday' after demo
+          const oldGoalsCheck = lastTimeUpdated.some(time => time < lastSunday)
           if (oldGoalsCheck) {
             await props.resetGoals(uid)
           }

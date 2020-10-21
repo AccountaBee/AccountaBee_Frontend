@@ -43,7 +43,7 @@ export default StyleSheet.create({
 		marginRight: 20,
 	},
 	completeCircle: {
-		borderColor: '#9FC78A',
+    borderColor: '#9FC78A',
   },
   activeCircle: {
     borderColor: '#DA4453',
@@ -55,10 +55,11 @@ export default StyleSheet.create({
 		color: '#bbb',
 	},
 	activeText: {
-		color: '#29323c',
+    color: '#29323c',
   },
   completeText: {
-		color: '#9FC78A',
+    color: '#9FC78A',
+		textDecorationLine: 'line-through',
 	},
 	textInput: {
 		backgroundColor: 'white',

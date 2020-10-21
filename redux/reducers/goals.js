@@ -5,8 +5,8 @@ const GOT_GOALS = 'GOT_GOALS';
 const SET_GOALS = 'SET_GOALS';
 const CLEAR_GOALS = 'CLEAR_GOALS';
 
-const setGoals = (goals) => ({ type: SET_GOALS, goals });
-export const gotGoals = (goals) => ({ type: GOT_GOALS, goals });
+export const setGoals = goals => ({ type: SET_GOALS, goals });
+export const gotGoals = goals => ({ type: GOT_GOALS, goals });
 export const clearGoals = () => ({ type: CLEAR_GOALS });
 
 export const setGoalsThunk = (goals) => async (dispatch) => {
@@ -38,7 +38,6 @@ export const deleteGoalThunk = (goalId, goals) => async (dispatch) => {
 	}
 };
 
-//updates the goal with completed days after user marks day off
 export const completedDaysThunk = (goalId) => async (dispatch) => {
 	try {
 		await instance.put(`goals/${goalId}`);
@@ -60,14 +59,9 @@ export const getGoalsThunk = () => async (dispatch) => {
 	}
 };
 
-//think thru logic
 export const resetGoalsThunk = (uid) => async dispatch => {
 	try {
-    console.log('IN RESET THUNK')
-    // let uid = await firebase.auth().currentUser.getIdToken();
-    console.log('UID in thunk:', uid)
     const res = await instance.put(`/goals/reset`, { uid });
-    console.log('RESPONSE IN THUNK', res.data)
     dispatch(gotGoals(res.data));
     
 	} catch (error) {
