@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Text, View, Modal, TouchableOpacity } from "react-native";
-import styles from "./style";
-import Toast from "react-native-toast-message";
-import { completedDaysThunk } from "../../../redux/reducers/goals";
-import { connect } from "react-redux";
-import CustomButton from "../CustomButton";
-import { newPost } from "../../../redux/reducers/singlePost";
+import React, { useState } from 'react';
+import { Text, View, Modal, TouchableOpacity } from 'react-native';
+import styles from './style';
+import Toast from 'react-native-toast-message';
+import { completedDaysThunk } from '../../../redux/reducers/goals';
+import { connect } from 'react-redux';
+import CustomButton from '../CustomButton';
+import { newPost } from '../../../redux/reducers/singlePost';
 
 function SingleGoalScreen(props) {
 	const goal = props.goal || {};
@@ -21,10 +21,10 @@ function SingleGoalScreen(props) {
 			setIsCompleted(!isCompleted);
 			await props.updateSingleGoalFreq(goalId);
 			Toast.show({
-				text1: "Congratulations!",
-				text2: "You are one step closer ! 👋",
-				tpye: "success",
-				position: "bottom | top",
+				text1: 'Congratulations!',
+				text2: 'You are one step closer! 👋',
+				tpye: 'success',
+				position: 'bottom | top',
 				autoHide: true,
 				topOffset: 30,
 				bottomOffset: 40,
@@ -48,12 +48,12 @@ function SingleGoalScreen(props) {
 	}
 
 	const backToGoals = () => {
-		props.navigation.navigate("Home");
+		props.navigation.navigate('Home');
 		setModalVisible(!modalVisible);
 	};
 
 	const viewPost = () => {
-		props.navigation.navigate("Feed");
+		props.navigation.navigate('Feed');
 		setModalVisible(!modalVisible);
 	};
 
@@ -86,20 +86,20 @@ function SingleGoalScreen(props) {
 				</View>
 			))}
 			<View>
-				<Modal animationType="slide" transparent={true} visible={modalVisible}>
+				<Modal animationType='slide' transparent={true} visible={modalVisible}>
 					<View style={styles.centeredView}>
 						<View style={styles.modalView}>
-							<Text style={styles.modalText}>Congratulations,{"\n"} You made it !</Text>
+							<Text style={styles.modalText}>Congratulations,{'\n'} You made it !</Text>
 							<Text style={styles.modalInnerText}>You completed your goal "{goal.title}" !</Text>
 							<View style={styles.buttonContainer}>
 								<CustomButton
 									style={styles.nextButton}
-									title="VIEW POST IN FEED"
+									title='VIEW POST IN FEED'
 									onPress={() => viewPost()}
 								/>
 								<CustomButton
 									style={styles.nextButton}
-									title="BACK TO GOALS"
+									title='BACK TO GOALS'
 									onPress={() => backToGoals()}
 								/>
 							</View>
