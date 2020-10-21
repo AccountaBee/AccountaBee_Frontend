@@ -171,6 +171,7 @@ function HomeScreen(props) {
 }
 
 const mapState = (state) => ({
+	user: state.user,
 	goals: state.goals,
 });
 
