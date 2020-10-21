@@ -14,8 +14,6 @@ export const getUnseenLikes = () => async dispatch => {
 
 		// filter likes before dispatch to only include likes that are not the current user - no one needs a notification that they liked their own post
 
-		console.log(data);
-
 		let filteredData = [];
 		for (let i = 0; i < data.length; i++) {
 			let newPost = data[i];
