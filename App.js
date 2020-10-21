@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -23,6 +23,8 @@ import {
 import FriendsIcon from './src/screens/FriendsScreen/FriendsIcon';
 import { decode, encode } from 'base-64';
 import { useAuth, userContext } from './src/context';
+
+LogBox.ignoreAllLogs();
 
 if (!global.btoa) {
 	global.btoa = encode;
