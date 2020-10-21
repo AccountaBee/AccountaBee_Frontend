@@ -19,8 +19,10 @@ import {
 	GoalScreen2,
 	SingleGoalScreen,
 	FriendsScreen,
+	FeedIcon,
+	FriendsIcon
 } from './src/screens';
-import FriendsIcon from './src/screens/FriendsScreen/FriendsIcon';
+
 import { decode, encode } from 'base-64';
 import { useAuth, userContext } from './src/context';
 
@@ -37,39 +39,26 @@ const GoalStack = createStackNavigator();
 
 const GoalScreenNav = () => (
 	<GoalStack.Navigator
-		initialRouteName="Home"
+		initialRouteName='Home'
 		screenOptions={{
 			title: '',
 			headerBackAllowFontScaling: true,
 			headerBackTitleStyle: {
-				fontSize: 16,
+				fontSize: 16
 			},
 			headerTransparent: true,
-			headerTintColor: 'white',
-		}}
-	>
+			headerTintColor: 'white'
+		}}>
 		<GoalStack.Screen
-			name="Home"
+			name='Home'
 			component={HomeScreen}
 			options={{
-				title: '',
+				title: ''
 			}}
 		/>
-		<GoalStack.Screen
-			name="Single Goal"
-			component={SingleGoalScreen}
-			options={{ title: '' }}
-		/>
-		<GoalStack.Screen
-			name="Set Goals"
-			component={GoalScreen}
-			options={{ title: '' }}
-		/>
-		<GoalStack.Screen
-			name="Set Frequency"
-			component={GoalScreen2}
-			options={{ title: '' }}
-		/>
+		<GoalStack.Screen name='Single Goal' component={SingleGoalScreen} options={{ title: '' }} />
+		<GoalStack.Screen name='Set Goals' component={GoalScreen} options={{ title: '' }} />
+		<GoalStack.Screen name='Set Frequency' component={GoalScreen2} options={{ title: '' }} />
 	</GoalStack.Navigator>
 );
 
@@ -90,35 +79,42 @@ const TabsScreen = () => (
 				}
 				color = focused ? '#9FC78A' : '#8688BC';
 				return <Feather name={iconName} size={20} color={color} />;
-			},
+			}
 		})}
 		tabBarOptions={{
 			activeTintColor: '#9FC78A',
-			inactiveTintColor: '#8688BC',
-		}}
-	>
-		<Tabs.Screen name="Goals" component={GoalScreenNav} />
-		<Tabs.Screen name="Feed" component={FeedScreen} />
+			inactiveTintColor: '#8688BC'
+		}}>
+		<Tabs.Screen name='Goals' component={GoalScreenNav} />
 		<Tabs.Screen
-			name="Friends"
+			name='Feed'
+			component={FeedScreen}
+			options={{
+				tabBarIcon: ({ focused, color }) => {
+					color = focused ? '#9FC78A' : '#8688BC';
+					return (
+						<>
+							<FeedIcon focused={focused} />
+						</>
+					);
+				}
+			}}
+		/>
+		<Tabs.Screen
+			name='Friends'
 			component={FriendsScreen}
 			options={{
 				tabBarIcon: ({ focused, color }) => {
 					color = focused ? '#9FC78A' : '#8688BC';
 					return (
-						// STYLE & PLACEMENT ON ICON WILL BE IMPROVED
 						<>
 							<FriendsIcon focused={focused} />
 						</>
 					);
-				},
+				}
 			}}
 		/>
-		<Tabs.Screen
-			name="Log Out"
-			component={LogOutScreen}
-			initialParams={{ logout: true }}
-		/>
+		<Tabs.Screen name='Log Out' component={LogOutScreen} initialParams={{ logout: true }} />
 	</Tabs.Navigator>
 );
 
@@ -141,31 +137,31 @@ export default function App() {
 						{user ? (
 							<>
 								<Stack.Screen
-									name="Tabs"
+									name='Tabs'
 									component={TabsScreen}
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 								/>
 							</>
 						) : (
 							<>
 								<Stack.Screen
-									name="Login"
+									name='Login'
 									component={LoginScreen}
-									title=""
+									title=''
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 								/>
 								<Stack.Screen
-									name="Registration"
-									title=""
+									name='Registration'
+									title=''
 									options={{
 										animationEnabled: false,
-										headerShown: false,
+										headerShown: false
 									}}
 									component={RegistrationScreen}
 								/>
@@ -173,7 +169,7 @@ export default function App() {
 						)}
 					</Stack.Navigator>
 				</NavigationContainer>
-				<Toast ref={(ref) => Toast.setRef(ref)} />
+				<Toast ref={ref => Toast.setRef(ref)} />
 			</userContext.Provider>
 		</Provider>
 	);

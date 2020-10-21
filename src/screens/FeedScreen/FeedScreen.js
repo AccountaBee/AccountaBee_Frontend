@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/likes';
+import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
 import { getPosts } from '../../../redux/reducers/posts';
 import { likePost } from '../../../redux/reducers/singlePost';
 
@@ -37,7 +37,7 @@ class FeedScreen extends React.Component {
 	};
 	render() {
 		const posts = this.props.posts || [];
-		const unseenLikes = this.props.likes || [];
+		const unseenLikes = this.props.unseenLikes || [];
 
 		posts.sort((a, b) => b.id - a.id);
 
@@ -78,7 +78,7 @@ class FeedScreen extends React.Component {
 const mapState = state => {
 	return {
 		posts: state.posts,
-		likes: state.likes
+		unseenLikes: state.unseenLikes
 	};
 };
 

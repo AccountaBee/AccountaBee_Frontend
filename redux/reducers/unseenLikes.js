@@ -2,7 +2,7 @@ import instance from '../axios';
 import { firebase } from '../../src/firebase/config';
 
 const SET_UNSEEN_LIKES = 'SET_UNSEEN_LIKES';
-const setUnseenLikes = likes => ({ type: SET_UNSEEN_LIKES, likes });
+const setUnseenLikes = unseenLikes => ({ type: SET_UNSEEN_LIKES, unseenLikes });
 
 export const getUnseenLikes = () => async dispatch => {
 	try {
@@ -19,15 +19,19 @@ export const getUnseenLikes = () => async dispatch => {
 //call this when user clicks on modal to close it
 export const updateLikesToSeen = postsWithLikes => async dispatch => {
 	try {
+		// console.log('POSTSWITHLIKES', postsWithLikes);
 		let likes = [];
 		// convert post object including likes to one array of only likes
 		for (let i = 0; i < postsWithLikes.length; i++) {
 			let post = postsWithLikes[i];
-			likes.concat(post.likes);
+			// console.log('POST', post.likes);
+			likes = likes.concat(post.likes);
+			console.log('LIKES ARRAY', likes);
 		}
 
 		const token = await firebase.auth().currentUser.getIdToken();
-		await instance.put('/likes/update', { token, likes });
+		const res = await instance.put('/likes/update', { token, likes });
+		console.log('RESPONSE', res.data);
 		dispatch(setUnseenLikes([]));
 	} catch (error) {
 		console.log(error);
@@ -37,7 +41,7 @@ export const updateLikesToSeen = postsWithLikes => async dispatch => {
 export default function (state = [], action) {
 	switch (action.type) {
 		case SET_UNSEEN_LIKES:
-			return action.likes;
+			return action.unseenLikes;
 		default:
 			return state;
 	}
