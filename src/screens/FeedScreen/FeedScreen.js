@@ -1,32 +1,39 @@
-
-import React, { Component } from "react";
-import { Text, View, Modal, ScrollView, Image, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
-import { connect } from "react-redux";
-import { getUnseenLikes, updateLikesToSeen } from "../../../redux/reducers/likes";
-import { getPosts } from "../../../redux/reducers/posts";
-import { likePost } from "../../../redux/reducers/singlePost";
+import React, { Component } from 'react';
+import { Text, View, Modal, Image, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
+import { connect } from 'react-redux';
+import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
+import { getPosts } from '../../../redux/reducers/posts';
+import { likePost } from '../../../redux/reducers/singlePost';
 import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
-import styles from './styles'
-
-
-// TODO - make notification icon
-// only send a limited number of posts
+import styles from './styles';
 
 class FeedScreen extends Component {
-	state = {
-		modalVisible : true
+	constructor(props) {
+		super(props);
+		this.state = {
+			modalVisible: false
+		};
 	}
 
 	componentDidMount() {
 		this.props.getPosts();
 		this.props.getUnseenLikes();
-		// need to connect unseen likes to modal to display as notifications
+		// only show modal if there are likes
+		if (this.props.unseenLikes.length > 0) {
+			this.setState({ modalVisible: true });
+		}
 	}
 
 	onLikePress = postId => {
 		this.props.likePost(postId);
+	};
+
+	onCloseModal = unseenLikes => {
+		this.setState({ modalVisible: false });
+
+		this.props.updateLikesToSeen(unseenLikes);
 	};
 
 	stringifyNotification = post => {
@@ -46,16 +53,13 @@ class FeedScreen extends Component {
 		return { id: post.id, text: text };
 	};
 
-	renderPost = post =>{
-		let { completedDays, title, targetDaysMet, createdAt} = post;
+	renderPost = post => {
+		let { completedDays, title, targetDaysMet, createdAt } = post;
 		let { firstName } = post.user;
-		
+
 		return (
-			<View style={styles.feedItem} key ={post.id}>
-				<Image
-					source={require('../../../assets/blank-profile.png')}
-					style={styles.userImage}
-				/>
+			<View style={styles.feedItem} key={post.id}>
+				<Image source={require('../../../assets/blank-profile.png')} style={styles.userImage} />
 				<View style={{ flex: 1 }}>
 					<View style={styles.feedContent}>
 						<View>
@@ -63,88 +67,93 @@ class FeedScreen extends Component {
 							<Text>{createdAt}</Text>
 						</View>
 					</View>
-						
-						<Text style={styles.post}>
-							{`${firstName} has completed ${targetDaysMet ? "ALL" : ""} ${completedDays} ${
-								completedDays === 1 ? "day" : "days"} of their ${title} goal!`}
-						</Text>
 
-						<TouchableOpacity 
-							activeOpacity={0.5} 
-							style={styles.clapButton}
-							onPress={() => this.onLikePress(post.id)}
-						>
-							<View style={{flexDirection:'row', marginTop:10}}>
-								<Image 
-									source={require('../../../assets/hand-clap-ol-2-512.png')} 
-									style={styles.clapImage}
-									title="ClapImage"
-								/>
+					<Text style={styles.post}>
+						{`${firstName} has completed ${targetDaysMet ? 'ALL' : ''} ${completedDays} ${
+							completedDays === 1 ? 'day' : 'days'
+						} of their ${title} goal!`}
+					</Text>
 
-								<EvilIcons name="comment" size={38} color="black" style={{marginTop:7, marginRight:1}} />
-							</View>
-						</TouchableOpacity>
+					<TouchableOpacity
+						activeOpacity={0.5}
+						style={styles.clapButton}
+						onPress={() => this.onLikePress(post.id)}>
+						<View style={{ flexDirection: 'row', marginTop: 10 }}>
+							<Image
+								source={require('../../../assets/hand-clap-ol-2-512.png')}
+								style={styles.clapImage}
+								title='ClapImage'
+							/>
 
-						{post.likes.length<=1?(<Text style={styles.clapNumber}>{post.likes.length} Clap</Text>):(<Text style={styles.clapNumber}>{post.likes.length} Claps</Text>)}
-						<Text style={styles.viewAllComments}>View all 9 comments</Text>
+							<EvilIcons
+								name='comment'
+								size={38}
+								color='black'
+								style={{ marginTop: 7, marginRight: 1 }}
+							/>
+						</View>
+					</TouchableOpacity>
+
+					{post.likes.length <= 1 ? (
+						<Text style={styles.clapNumber}>{post.likes.length} Clap</Text>
+					) : (
+						<Text style={styles.clapNumber}>{post.likes.length} Claps</Text>
+					)}
+					<Text style={styles.viewAllComments}>View all 9 comments</Text>
 				</View>
-				
 			</View>
-		)
-	}
+		);
+	};
 
 	render() {
 		const posts = this.props.posts || [];
 		const unseenLikes = this.props.unseenLikes || [];
 
 		posts.sort((a, b) => b.id - a.id);
+		unseenLikes.sort((a, b) => b.id - a.id);
 
 		return (
-			// need to add scrolling or paginaton or something
-
-			<View >
-				<View style={styles.container} >
+			<View>
+				<View style={styles.container}>
 					<Text style={styles.headline}>Feed</Text>
 				</View>
 
-				<FlatList 
+				<FlatList
 					style={styles.feed}
 					data={posts}
-					renderItem={({item})=>this.renderPost(item)}
-					keyExtractor ={item=>item.id}
+					renderItem={({ item }) => this.renderPost(item)}
+					keyExtractor={item => item.id.toString()}
 					showsVerticalScrollIndicator={false}
 				/>
-				
-
-				{/* THIS WILL BE IN THE MODAL */}
-				{/* <Text>Notifications</Text>
-				{unseenLikes.map(post => {
-					let object = this.stringifyNotification(post);
-					return <Text key={object.id}>{object.text}</Text>;
-				})} */}
 
 				<View>
-					
-					<Modal animationType="slide" transparent={true} visible={true}>
+					<Modal animationType='slide' transparent={true} visible={this.state.modalVisible}>
 						<View style={styles.centeredView}>
 							<View style={styles.modalView}>
-								<AntDesign name="close" size={24} color="white" onPress={()=>this.setState({modalVisible : false})} style={styles.xbutton} />
-								<Text style={styles.modalText}> Notification {"\n"} </Text>
-									<View style={styles.modalInnerTextContainer}>
+								<AntDesign
+									name='close'
+									size={24}
+									color='white'
+									onPress={() => this.onCloseModal(unseenLikes)}
+									style={styles.xbutton}
+								/>
+								<Text style={styles.modalText}> Notification {'\n'} </Text>
+								<View style={styles.modalInnerTextContainer}>
 									<ScrollView>
 										{unseenLikes.map(post => {
 											let object = this.stringifyNotification(post);
-												return <Text style={styles.modalInnerText} key={object.id}>{object.text}</Text>;
+											return (
+												<Text style={styles.modalInnerText} key={object.id}>
+													{object.text}
+												</Text>
+											);
 										})}
-										</ScrollView>
-									</View>
+									</ScrollView>
+								</View>
 							</View>
 						</View>
 					</Modal>
-					
 				</View>
-
-
 			</View>
 		);
 	}
