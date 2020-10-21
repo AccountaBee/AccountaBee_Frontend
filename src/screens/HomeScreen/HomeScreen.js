@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import GoalPieChart from './PieChart';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
+import { messageGenerator } from './MessageGenerator';
 import { getGoalsThunk } from '../../../redux/reducers/goals';
 import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -24,24 +25,10 @@ const pieCalculations = (completedDays, frequency) => {
 	}
 	return [pieData, graphicColor];
 };
-const successMessages = [
-	"You achieved all your goals\nfor the week!\n\nYou're an absolute rockstar!",
-	'You achieved all your goals\nfor the week!\n\nAmazing!',
-	'You achieved all your goals\nfor the week!\n\nBask in the glory of your empty to-do list.',
-	'You achieved all your goals\nfor the week!\n\nGreat work!',
-	'You achieved all your goals\nfor the week!\n\nYou should be really proud of yourself!',
-	"You achieved all your goals\nfor the week!\n\nYou're unstoppable!",
-	'You achieved all your goals\nfor the week!\n\nLook at you go!',
-	'You achieved all your goals\nfor the week!\n\nAwesome work staying on task!',
-];
-
-const messageGenerator = () => {
-	const num = Math.floor(Math.random() * (7 - 1));
-	return successMessages[num];
-};
 
 function HomeScreen(props) {
 	const [explode, setExplosion] = useState(false);
+	const [loaded, setLoaded] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [pieGoals, setPieGoals] = useState([]);
 
@@ -51,6 +38,7 @@ function HomeScreen(props) {
 			await props.getUser();
 		}
 		fetchData();
+		setLoaded(true);
 	}, []);
 
 	useEffect(() => {
@@ -70,83 +58,88 @@ function HomeScreen(props) {
 	useEffect(() => {
 		setPieGoals(props.goals);
 	}, [props.goals]);
-
-	return (
-		<>
-			<View style={styles.container}>
-				<Text style={styles.headline}>My Goals</Text>
-			</View>
-			<View>
-				<ScrollView>
-					{props.goals.length ? (
-						props.goals
-							.sort((a, b) => a.id - b.id)
-							.map((goal) => {
-								if (goal.status === 'active') {
-									const [data, graphicColor] = pieCalculations(
-										goal.completedDays,
-										goal.frequency
-									);
-									return (
-										<GoalPieChart
-											graphicColor={graphicColor}
-											data={data}
-											key={goal.id}
-											goal={goal}
-											navigation={props.navigation}
-										/>
-									);
-								}
-							})
-					) : (
-						<Text style={styles.noGoals}>
-							You don’t have any goals set!{'\n\n'}Click the button below{'\n'}
-							to create some goals and{'\n'}start achieving them.
-						</Text>
-					)}
-					<View style={styles.fullScreen}>
-						<CustomButton
-							title={pieGoals.length ? 'EDIT GOALS' : 'SET GOALS'}
-							style={styles.button}
-							onPress={() => props.navigation.push('Set Goals')}
-						/>
-					</View>
-					{explode && (
-						<ConfettiCannon
-							explosionSpeed={2000}
-							count={300}
-							origin={{ x: -100, y: -100 }}
-							fadeOut={true}
-						/>
-					)}
-					<View style={styles.centeredView}>
-						<Modal
-							animationType="slide"
-							transparent={true}
-							visible={modalVisible}
-						>
-							<View style={styles.centeredView}>
-								<View style={styles.modalView}>
-									<Text style={styles.modalText}>{messageGenerator()}</Text>
-									<TouchableHighlight>
-										<AntDesign
-											name="closecircleo"
-											size={24}
-											color="#8688BC"
-											style={styles.xbutton}
-											onPress={() => {
-												setModalVisible(!modalVisible);
-											}}
-										/>
-									</TouchableHighlight>
+	console.log('LOADED ------>', loaded);
+	if (!loaded) {
+		return null;
+	} else {
+		return (
+			<>
+				<View style={styles.container}>
+					<Text style={styles.headline}>My Goals</Text>
+				</View>
+				<View>
+					<ScrollView>
+						{props.goals.length ? (
+							props.goals
+								.sort((a, b) => a.id - b.id)
+								.map((goal) => {
+									if (goal.status === 'active') {
+										const [data, graphicColor] = pieCalculations(
+											goal.completedDays,
+											goal.frequency
+										);
+										return (
+											<GoalPieChart
+												graphicColor={graphicColor}
+												data={data}
+												key={goal.id}
+												goal={goal}
+												navigation={props.navigation}
+											/>
+										);
+									}
+								})
+						) : (
+							<Text style={styles.noGoals}>
+								You don’t have any goals set!{'\n\n'}Click the button below
+								{'\n'}
+								to create some goals and{'\n'}start achieving them.
+							</Text>
+						)}
+						<View style={styles.fullScreen}>
+							<CustomButton
+								title={pieGoals.length ? 'EDIT GOALS' : 'SET GOALS'}
+								style={styles.button}
+								onPress={() => props.navigation.push('Set Goals')}
+							/>
+						</View>
+						{explode && (
+							<ConfettiCannon
+								explosionSpeed={2000}
+								count={300}
+								origin={{ x: -100, y: -100 }}
+								fadeOut={true}
+							/>
+						)}
+						<View style={styles.centeredView}>
+							<Modal
+								animationType="slide"
+								transparent={true}
+								visible={modalVisible}
+							>
+								<View style={styles.centeredView}>
+									<View style={styles.modalView}>
+										<Text style={styles.modalText}>{messageGenerator()}</Text>
+										<TouchableHighlight>
+											<AntDesign
+												name="closecircleo"
+												size={24}
+												color="#8688BC"
+												style={styles.xbutton}
+												onPress={() => {
+													setModalVisible(!modalVisible);
+												}}
+											/>
+										</TouchableHighlight>
+									</View>
 								</View>
-							</View>
-						</Modal>
-					</View>
-				</ScrollView>
-			</View>
-		</>
-	);
+							</Modal>
+						</View>
+					</ScrollView>
+				</View>
+			</>
+		);
+	}
 }
 
 const mapState = (state) => ({
