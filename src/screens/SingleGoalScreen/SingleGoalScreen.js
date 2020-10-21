@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Text, View, Modal, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Text, View, Modal, TouchableOpacity } from 'react-native';
 import styles from './style';
-import { AntDesign } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { completedDaysThunk } from '../../../redux/reducers/goals';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
+import { newPost } from "../../../redux/reducers/singlePost";
 import { ScrollView } from 'react-native-gesture-handler';
 
 function SingleGoalScreen(props) {
-  const goal = props.goal
+	const goal = props.goal || {};
   const [isCompleted, setIsCompleted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -19,20 +19,23 @@ function SingleGoalScreen(props) {
       setIsCompleted(!isCompleted)
       await props.updateSingleGoalFreq(goalId)
       Toast.show({
-        text1: 'Congratulations!',
-        text2: 'You are one step closer ! 👋',
-        type:'success',
-        position: 'bottom | top',
-        autoHide : true,
-        topOffset:30,
-        bottomOffset : 40,
-        })
-    }
+				text1: "Congratulations!",
+				text2: "You are one step closer ! 👋",
+				type: "success",
+				position: "bottom | top",
+				autoHide: true,
+				topOffset: 30,
+				bottomOffset: 40,
+				visibilityTime: 1000
+			});
+			props.newPost(goal.title, goal.completedDays + 1, false);
+		}
 
     if (goal.completedDays === goal.frequency - 1) {
       setIsCompleted(!isCompleted)
       await props.updateSingleGoalFreq(goalId)
       setModalVisible(!modalVisible)
+      props.newPost(goal.title, goal.completedDays + 1, true);
     }
   }
 
@@ -54,10 +57,12 @@ for (let i = 1; i <= goal.frequency; i++) {
 
 const backToGoals = () => {
   props.navigation.navigate('Home');
+  setModalVisible(!modalVisible);
 };
 
 const viewPost = () => {
   props.navigation.navigate('Feed');
+  setModalVisible(!modalVisible);
 };
 
 return (
@@ -72,7 +77,7 @@ return (
 
         return (
           <View style={styles.container} key={idx}>
-            <TouchableOpacity onPress={() => day === goal.completedDays + 1 ? (incrementDay(goal.id)):(<View></View>)} >
+            <TouchableOpacity onPress={() => day === goal.completedDays + 1 ? (incrementDay(goal.id)):(<View></View>)}>
               <View style={styles.day}> 
               <View style = {[styles.circle, statusStyles[0]]}></View>
                 <Text style = {[styles.text, statusStyles[1]]}>
@@ -86,52 +91,41 @@ return (
     </ScrollView>
   </View>
   <View>
-      <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TouchableHighlight>
-              <AntDesign 
-                name="closecircleo" 
-                size={24} 
-                color="white" 
-                style={styles.xbutton}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }} 
-              />
-            </TouchableHighlight>
-            <Text style={styles.modalText}>Congratulations,{'\n'} You made it!</Text>
-            <Text style={styles.modalInnerText}>You completed your goal "{goal.title}"!</Text>
-            <CustomButton
-              style={styles.nextButton}
-              title="VIEW POST"
-              onPress={() => viewPost()}
-            />
-            <CustomButton
-              style={styles.nextButton}
-              title="BACK TO GOALS"
-              onPress={() => backToGoals()}
-            />
-          </View>
-        </View>
-      </Modal>
+  <Modal animationType="slide" transparent={true} visible={modalVisible}>
+					<View style={styles.centeredView}>
+						<View style={styles.modalView}>
+							<Text style={styles.modalText}>Congratulations,{"\n"} You made it !</Text>
+							<Text style={styles.modalInnerText}>You completed your goal "{goal.title}" !</Text>
+							<View style={styles.buttonContainer}>
+								<CustomButton
+									style={styles.nextButton}
+									title="VIEW POST IN FEED"
+									onPress={() => viewPost()}
+								/>
+								<CustomButton
+									style={styles.nextButton}
+									title="BACK TO GOALS"
+									onPress={() => backToGoals()}
+								/>
+							</View>
+						</View>
+					</View>
+				</Modal>
   </View>
   </View>
-  )
+  );
 }
 
 const mapState = (state, props) => {
-  return ({
-    goal:  state.goals.find(goal => goal.id === props.route.params.goal.id)
-  })
+	return {
+		goal: state.goals.find(goal => goal.id === props.route.params.goal.id)
+	};
 };
 
 const mapDispatch = dispatch => ({
-	updateSingleGoalFreq: (goalId) => dispatch(completedDaysThunk(goalId))
+	updateSingleGoalFreq: goalId => dispatch(completedDaysThunk(goalId)),
+	newPost: (title, completedDays, targetDaysMet) =>
+		dispatch(newPost(title, completedDays, targetDaysMet))
 });
 
 export default connect(mapState, mapDispatch)(SingleGoalScreen);
