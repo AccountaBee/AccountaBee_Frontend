@@ -7,6 +7,7 @@ import { getGoalsThunk, resetGoalsThunk } from '../../../redux/reducers/goals';
 import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getUser } from '../../../redux/reducers/users';
+import { useFocusEffect } from '@react-navigation/native';
 
 const pieCalculations = (completedDays, frequency) => {
 	const pieData = [],
@@ -33,23 +34,24 @@ function HomeScreen(props) {
 		}
     fetchData();
   }, []);
-  
-  useEffect(() => {
-    if (props.user.uid) {
-      async function reset(uid) {
-        const date = new Date();
-        const dayOfWeek = date.getDay();
-        const hourOfDay = date.getHours()
-        const minOfDay = date.getMinutes()
-      // if (dayOfWeek === 1 & hourOfDay === 1) {
-        if (minOfDay === 4) {
-          console.log('HOLAAAAAAAA! UID', uid)
-          await props.resetGoals(uid)
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (props.user.uid) {
+        async function reset(uid) {
+          let now = new Date();
+          let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          let lastSunday = new Date(today.setDate(today.getDate()-today.getDay()));
+          const lastTimeUpdated = props.goals.map(goal => new Date(goal.updatedAt))
+          //change now to lastSunday below after demo
+          const oldGoalsCheck = lastTimeUpdated.some(time => time < now)
+          if (oldGoalsCheck) {
+            await props.resetGoals(uid)
+          }
         }
+        reset(props.user.uid);
       }
-      reset(props.user.uid);
-    }
-  }, [props.user.uid])
+    }, [props.user.uid]))
 
 	useEffect(() => {
 		setPieGoals(props.goals);
@@ -78,7 +80,7 @@ function HomeScreen(props) {
 										navigation={props.navigation}
 									/>
 								);
-							
+              }
 						})
 					) : (
 						<Text style={styles.noGoals}>

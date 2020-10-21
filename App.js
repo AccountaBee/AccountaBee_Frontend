@@ -24,7 +24,7 @@ import FriendsIcon from './src/screens/FriendsScreen/FriendsIcon';
 import { decode, encode } from 'base-64';
 import { useAuth, userContext } from './src/context';
 
-//LogBox.ignoreAllLogs();
+LogBox.ignoreAllLogs();
 
 if (!global.btoa) {
 	global.btoa = encode;
