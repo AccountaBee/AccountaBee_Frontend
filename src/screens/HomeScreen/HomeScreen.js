@@ -95,13 +95,12 @@ function HomeScreen(props) {
 								to create some goals and{'\n'}start achieving them.
 							</Text>
 						)}
-						<View style={styles.fullScreen}>
-							<CustomButton
-								title={pieGoals.length ? 'EDIT GOALS' : 'SET GOALS'}
-								style={styles.button}
-								onPress={() => props.navigation.push('Set Goals')}
-							/>
-						</View>
+						<CustomButton
+							title={pieGoals.length ? 'EDIT GOALS' : 'SET GOALS'}
+							style={styles.button}
+							onPress={() => props.navigation.push('Set Goals')}
+						/>
+						<View style={styles.fullScreen} />
 						{celebration && !celebratedAlready && (
 							<>
 								<ConfettiCannon
@@ -111,11 +110,7 @@ function HomeScreen(props) {
 									fadeOut={true}
 								/>
 								<View style={styles.centeredView}>
-									<Modal
-										// animationType="slide"
-										transparent={true}
-										visible={celebration}
-									>
+									<Modal transparent={true}>
 										<View style={styles.centeredView}>
 											<View style={styles.modalView}>
 												<Text style={styles.modalText}>

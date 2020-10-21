@@ -14,7 +14,7 @@ import {
 	HomeScreen,
 	RegistrationScreen,
 	FeedScreen,
-	LogOutScreen,
+	ProfileScreen,
 	GoalScreen,
 	GoalScreen2,
 	SingleGoalScreen,
@@ -76,8 +76,8 @@ const TabsScreen = () => (
 				let iconName;
 				if (route.name === 'Goals') {
 					iconName = 'check-circle';
-				} else if (route.name === 'Log Out') {
-					iconName = 'log-out';
+				} else if (route.name === 'Profile') {
+					iconName = 'user';
 				} else if (route.name === 'Feed') {
 					iconName = 'message-square';
 				} else if (route.name === 'Friends') {
@@ -109,11 +109,7 @@ const TabsScreen = () => (
 				},
 			}}
 		/>
-		<Tabs.Screen
-			name="Log Out"
-			component={LogOutScreen}
-			initialParams={{ logout: true }}
-		/>
+		<Tabs.Screen name="Profile" component={ProfileScreen} />
 	</Tabs.Navigator>
 );
 
