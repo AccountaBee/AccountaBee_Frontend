@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { createLogger } from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { user, goals, friends, requests, sentRequests, posts, singlePost } from "./reducers";
+import { user, goals, friends, requests, sentRequests, posts, singlePost, likes } from "./reducers";
 
 const reducer = combineReducers({
 	user,
@@ -11,7 +11,8 @@ const reducer = combineReducers({
 	sentRequests,
 	requests,
 	posts,
-	singlePost
+	singlePost,
+	likes
 });
 
 const middleware = composeWithDevTools(

@@ -5,9 +5,10 @@ import Toast from 'react-native-toast-message';
 import { completedDaysThunk } from '../../../redux/reducers/goals';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
+import { newPost } from '../../../redux/reducers/singlePost';
 
 function SingleGoalScreen(props) {
-	const goal = props.goal;
+	const goal = props.goal || {};
 	const [isCompleted, setIsCompleted] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
 
@@ -21,18 +22,20 @@ function SingleGoalScreen(props) {
 			Toast.show({
 				text1: 'Congratulations!',
 				text2: 'You are one step closer! 👋',
-				tpye: 'success',
+				type: 'success',
 				position: 'bottom | top',
 				autoHide: true,
 				topOffset: 30,
 				bottomOffset: 40,
 				visibilityTime: 1000,
 			});
+			props.newPost(goal.title, goal.completedDays + 1, false);
 		}
 		if (goal.completedDays === goal.frequency - 1) {
 			setIsCompleted(!isCompleted);
 			await props.updateSingleGoalFreq(goalId);
 			setModalVisible(!modalVisible);
+			props.newPost(goal.title, goal.completedDays + 1, true);
 		}
 	};
 
@@ -57,12 +60,11 @@ function SingleGoalScreen(props) {
 			<View style={styles.headcontainer}>
 				<Text style={styles.headline}> {goal.title} </Text>
 			</View>
-
 			{arrayDays.map((day, idx) => (
 				<View style={styles.container} key={idx}>
 					<TouchableOpacity
 						onPress={() =>
-							day === goal.completedDays + 1 && incrementDay(goal.id)
+							day === goal.completedDays + 1 ? incrementDay(goal.id) : <View />
 						}
 					>
 						<View style={styles.day}>
@@ -88,13 +90,12 @@ function SingleGoalScreen(props) {
 					</TouchableOpacity>
 				</View>
 			))}
-
 			<View>
 				<Modal animationType="slide" transparent={true} visible={modalVisible}>
 					<View style={styles.centeredView}>
 						<View style={styles.modalView}>
 							<Text style={styles.modalText}>
-								Congratulations,{'\n'} you made it!
+								Congratulations,{'\n'} You made it!
 							</Text>
 							<Text style={styles.modalInnerText}>
 								You completed your goal "{goal.title}"!
@@ -102,7 +103,7 @@ function SingleGoalScreen(props) {
 							<View style={styles.buttonContainer}>
 								<CustomButton
 									style={styles.nextButton}
-									title="VIEW POST"
+									title="VIEW POST IN FEED"
 									onPress={() => viewPost()}
 								/>
 								<CustomButton
@@ -125,6 +126,8 @@ const mapState = (state, props) => ({
 
 const mapDispatch = (dispatch) => ({
 	updateSingleGoalFreq: (goalId) => dispatch(completedDaysThunk(goalId)),
+	newPost: (title, completedDays, targetDaysMet) =>
+		dispatch(newPost(title, completedDays, targetDaysMet)),
 });
 
 export default connect(mapState, mapDispatch)(SingleGoalScreen);

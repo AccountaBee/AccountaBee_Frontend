@@ -1,5 +1,6 @@
 import instance from "../axios";
 import { firebase } from "../../src/firebase/config";
+import { Alert } from "react-native";
 
 const SET_SENT_REQUESTS = "SET_SENT_REQUESTS";
 
@@ -21,6 +22,7 @@ export const sendRequest = email => async dispatch => {
 		const token = await firebase.auth().currentUser.getIdToken();
 		await instance.post("/friends/request", { token, email });
 		dispatch(getSentRequests(token));
+		Alert.alert(`You sent a friend request to ${email}`);
 	} catch (error) {
 		alert("Sorry, there was a problem. Are you sure that person is registered with Accountabee?");
 	}
@@ -33,7 +35,7 @@ onRequestPress = async () => {
 		const res = await instance.post("/friends/request", { token, email });
 		this.props.getSentRequests(token);
 	} catch (error) {
-		alert(error);
+		Alert.alert(error);
 	}
 };
 

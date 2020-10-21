@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Text, View, Modal, TouchableHighlight } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import GoalPieChart from './PieChart';
@@ -27,9 +28,9 @@ const pieCalculations = (completedDays, frequency) => {
 };
 
 function HomeScreen(props) {
-	const [explode, setExplosion] = useState(false);
+	const [celebration, setCelebration] = useState(false);
+	const [celebratedAlready, setCelebratedAlready] = useState(false);
 	const [loaded, setLoaded] = useState(false);
-	const [modalVisible, setModalVisible] = useState(false);
 	const [pieGoals, setPieGoals] = useState([]);
 
 	useEffect(() => {
@@ -43,22 +44,20 @@ function HomeScreen(props) {
 
 	useEffect(() => {
 		setPieGoals(props.goals);
-		if (
-			props.goals.length &&
-			props.goals.every((goal) => goal.completedDays >= goal.frequency) &&
-			!explode
-		) {
-			setExplosion(true);
-			setModalVisible(true);
-		} else {
-			setExplosion(false);
-		}
 	}, [props.goals]);
 
-	useEffect(() => {
-		setPieGoals(props.goals);
-	}, [props.goals]);
-	console.log('LOADED ------>', loaded);
+	useFocusEffect(
+		React.useCallback(() => {
+			if (
+				props.goals.length &&
+				props.goals.every((goal) => goal.completedDays >= goal.frequency) &&
+				!celebration
+			) {
+				setCelebration(true);
+			}
+		}, [props.goals])
+	);
+
 	if (!loaded) {
 		return null;
 	} else {
@@ -103,38 +102,40 @@ function HomeScreen(props) {
 								onPress={() => props.navigation.push('Set Goals')}
 							/>
 						</View>
-						{explode && (
-							<ConfettiCannon
-								explosionSpeed={2000}
-								count={300}
-								origin={{ x: -100, y: -100 }}
-								fadeOut={true}
-							/>
-						)}
-						<View style={styles.centeredView}>
-							<Modal
-								animationType="slide"
-								transparent={true}
-								visible={modalVisible}
-							>
+						{celebration && !celebratedAlready && (
+							<>
+								<ConfettiCannon
+									explosionSpeed={2000}
+									count={300}
+									origin={{ x: -100, y: -100 }}
+									fadeOut={true}
+								/>
 								<View style={styles.centeredView}>
-									<View style={styles.modalView}>
-										<Text style={styles.modalText}>{messageGenerator()}</Text>
-										<TouchableHighlight>
-											<AntDesign
-												name="closecircleo"
-												size={24}
-												color="#8688BC"
-												style={styles.xbutton}
-												onPress={() => {
-													setModalVisible(!modalVisible);
-												}}
-											/>
-										</TouchableHighlight>
-									</View>
+									<Modal
+										// animationType="slide"
+										transparent={true}
+										visible={celebration}
+									>
+										<View style={styles.centeredView}>
+											<View style={styles.modalView}>
+												<Text style={styles.modalText}>
+													{messageGenerator()}
+												</Text>
+												<TouchableHighlight>
+													<AntDesign
+														name="closecircleo"
+														size={24}
+														color="#8688BC"
+														style={styles.xbutton}
+														onPress={() => setCelebratedAlready(true)}
+													/>
+												</TouchableHighlight>
+											</View>
+										</View>
+									</Modal>
 								</View>
-							</Modal>
-						</View>
+							</>
+						)}
 					</ScrollView>
 				</View>
 			</>

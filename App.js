@@ -56,11 +56,6 @@ const GoalScreenNav = () => (
 			}}
 		/>
 		<GoalStack.Screen
-			name="Single Goal"
-			component={SingleGoalScreen}
-			options={{ title: '' }}
-		/>
-		<GoalStack.Screen
 			name="Set Goals"
 			component={GoalScreen}
 			options={{ title: '' }}
@@ -141,11 +136,24 @@ export default function App() {
 						{user ? (
 							<>
 								<Stack.Screen
-									name="Tabs"
+									name="All Goals"
 									component={TabsScreen}
 									options={{
 										animationEnabled: false,
 										headerShown: false,
+									}}
+								/>
+								<Stack.Screen
+									name="Single Goal"
+									component={SingleGoalScreen}
+									options={{
+										title: '',
+										headerBackAllowFontScaling: true,
+										headerBackTitleStyle: {
+											fontSize: 16,
+										},
+										headerTransparent: true,
+										headerTintColor: 'white',
 									}}
 								/>
 							</>
