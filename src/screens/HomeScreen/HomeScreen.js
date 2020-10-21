@@ -3,10 +3,11 @@ import { Text, View } from 'react-native';
 import GoalPieChart from './PieChart';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
-import { getGoalsThunk } from '../../../redux/reducers/goals';
+import { getGoalsThunk, resetGoalsThunk } from '../../../redux/reducers/goals';
 import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getUser } from '../../../redux/reducers/users';
+import { useFocusEffect } from '@react-navigation/native';
 
 const pieCalculations = (completedDays, frequency) => {
 	const pieData = [],
@@ -21,7 +22,7 @@ const pieCalculations = (completedDays, frequency) => {
 		}
 	}
 	return [pieData, graphicColor];
-};
+}
 
 function HomeScreen(props) {
 	const [pieGoals, setPieGoals] = useState([]);
@@ -29,10 +30,28 @@ function HomeScreen(props) {
 	useEffect(() => {
 		async function fetchData() {
 			await props.getGoals();
-			await props.getUser();
+      await props.getUser();
 		}
-		fetchData();
-	}, []);
+    fetchData();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (props.user && props.user.uid) {
+        async function reset(uid) {
+          let now = new Date();
+          let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          let lastSunday = new Date(today.setDate(today.getDate()-today.getDay()));
+          const lastTimeUpdated = props.goals.map(goal => new Date(goal.updatedAt))
+          //change variable 'now' to 'lastSunday' after demo
+          const oldGoalsCheck = lastTimeUpdated.some(time => time < lastSunday)
+          if (oldGoalsCheck) {
+            await props.resetGoals(uid)
+          }
+        }
+        reset(props.user.uid);
+      }
+    }, [props.user.uid]))
 
 	useEffect(() => {
 		setPieGoals(props.goals);
@@ -61,7 +80,7 @@ function HomeScreen(props) {
 										navigation={props.navigation}
 									/>
 								);
-							}
+              }
 						})
 					) : (
 						<Text style={styles.noGoals}>
@@ -87,7 +106,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
 	getGoals: () => dispatch(getGoalsThunk()),
-	getUser: () => dispatch(getUser()),
+  getUser: () => dispatch(getUser()),
+  resetGoals: (uid) => dispatch(resetGoalsThunk(uid))
 });
 
 export default connect(mapState, mapDispatch)(HomeScreen);

@@ -1,14 +1,15 @@
-import instance from "../axios";
-import { firebase } from "../../src/firebase/config";
+import instance from '../axios';
+import { firebase } from '../../src/firebase/config';
 
-const SET_POSTS = "SET_POSTS";
+const SET_POSTS = 'SET_POSTS';
 const setPosts = posts => ({ type: SET_POSTS, posts });
 
 // getting posts for feed
 export const getPosts = () => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
-		const { data } = await instance.post("/posts/feed", { token });
+		const { data } = await instance.post('/posts/feed', { token });
+
 		// data should be an array of posts with their likes attached ( no text yet, just info about title, days, etc )
 		dispatch(setPosts(data));
 	} catch (error) {
