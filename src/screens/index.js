@@ -7,3 +7,5 @@ export { default as GoalScreen } from './GoalScreen/GoalScreen';
 export { default as GoalScreen2 } from './GoalScreen2/GoalScreen2';
 export { default as FriendsScreen } from './FriendsScreen/FriendsScreen';
 export { default as SingleGoalScreen } from './SingleGoalScreen/SingleGoalScreen';
+export { default as FeedIcon } from './FeedScreen/FeedIcon';
+export { default as FriendsIcon } from './FriendsScreen/FriendsIcon';

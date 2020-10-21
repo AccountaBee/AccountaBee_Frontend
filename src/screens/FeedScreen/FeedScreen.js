@@ -1,13 +1,15 @@
+
 import React, { Component } from "react";
-import { Text, View, Modal, Image, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
+import { Text, View, Modal, ScrollView, Image, TouchableOpacity, SafeAreaView, FlatList } from "react-native";
 import { connect } from "react-redux";
-import { getUnseenLikes } from "../../../redux/reducers/likes";
+import { getUnseenLikes, updateLikesToSeen } from "../../../redux/reducers/likes";
 import { getPosts } from "../../../redux/reducers/posts";
 import { likePost } from "../../../redux/reducers/singlePost";
 import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles'
+
 
 // TODO - make notification icon
 // only send a limited number of posts
@@ -29,7 +31,7 @@ class FeedScreen extends Component {
 
 	stringifyNotification = post => {
 		const baseText = `cheered you on for completing ${post.completedDays} ${
-			post.completedDays === 1 ? "day" : "days"
+			post.completedDays === 1 ? 'day' : 'days'
 		} of ${post.title}`;
 		let text;
 		if (post.likes.length === 1) {
@@ -39,7 +41,7 @@ class FeedScreen extends Component {
 		} else {
 			text = `${post.likes[0].user.firstName} and &${post.likes[1].user.firstName} and ${
 				post.likes.length - 2
-			} other ${post.likes.length - 2 === 1 ? "friend" : "friends"} ${baseText}`;
+			} other ${post.likes.length - 2 === 1 ? 'friend' : 'friends'} ${baseText}`;
 		}
 		return { id: post.id, text: text };
 	};
@@ -93,12 +95,13 @@ class FeedScreen extends Component {
 
 	render() {
 		const posts = this.props.posts || [];
-		const unseenLikes = this.props.likes || [];
+		const unseenLikes = this.props.unseenLikes || [];
 
 		posts.sort((a, b) => b.id - a.id);
 
 		return (
 			// need to add scrolling or paginaton or something
+
 			<View >
 				<View style={styles.container} >
 					<Text style={styles.headline}>Feed</Text>
@@ -141,6 +144,7 @@ class FeedScreen extends Component {
 					
 				</View>
 
+
 			</View>
 		);
 	}
@@ -149,14 +153,15 @@ class FeedScreen extends Component {
 const mapState = state => {
 	return {
 		posts: state.posts,
-		likes: state.likes
+		unseenLikes: state.unseenLikes
 	};
 };
 
 const mapDispatch = dispatch => ({
 	getPosts: () => dispatch(getPosts()),
 	likePost: postId => dispatch(likePost(postId)),
-	getUnseenLikes: () => dispatch(getUnseenLikes())
+	getUnseenLikes: () => dispatch(getUnseenLikes()),
+	updateLikesToSeen: unseenLikes => dispatch(updateLikesToSeen(unseenLikes))
 });
 
 export default connect(mapState, mapDispatch)(FeedScreen);
