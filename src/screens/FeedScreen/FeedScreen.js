@@ -3,12 +3,13 @@ import { Text, View, Modal, Image, TouchableOpacity, SafeAreaView, FlatList } fr
 import { connect } from 'react-redux';
 import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
 import { getPosts } from '../../../redux/reducers/posts';
-import { likePost } from '../../../redux/reducers/singlePost';
+import { likePost, unlikePost } from '../../../redux/reducers/singlePost';
 import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import TimeAgo from 'react-native-timeago';
+import { firebase } from '../../firebase/config';
 
 class FeedScreen extends Component {
 	constructor(props) {
@@ -20,6 +21,7 @@ class FeedScreen extends Component {
 
 	componentDidMount() {
 		this.props.getPosts();
+
 		this.props.getUnseenLikes();
 		// only show modal if there are likes
 		if (this.props.unseenLikes.length > 0) {
@@ -27,8 +29,15 @@ class FeedScreen extends Component {
 		}
 	}
 
-	onLikePress = postId => {
-		this.props.likePost(postId);
+	onLikePress = async post => {
+		let currentUid = firebase.auth().currentUser.uid;
+		let myLike = post.likes.filter(like => like.userUid === currentUid);
+		console.log(myLike);
+		if (myLike.length) {
+			this.props.unlikePost(post.id);
+		} else {
+			this.props.likePost(post.id);
+		}
 	};
 
 	onCloseModal = unseenLikes => {
@@ -80,7 +89,7 @@ class FeedScreen extends Component {
 					<TouchableOpacity
 						activeOpacity={0.5}
 						style={styles.clapButton}
-						onPress={() => this.onLikePress(post.id)}>
+						onPress={() => this.onLikePress(post)}>
 						<View style={{ flexDirection: 'row', marginTop: 10 }}>
 							<Image
 								source={require('../../../assets/hand-clap-ol-2-512.png')}
@@ -172,6 +181,7 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
 	getPosts: () => dispatch(getPosts()),
 	likePost: postId => dispatch(likePost(postId)),
+	unlikePost: postId => dispatch(unlikePost(postId)),
 	getUnseenLikes: () => dispatch(getUnseenLikes()),
 	updateLikesToSeen: unseenLikes => dispatch(updateLikesToSeen(unseenLikes))
 });
