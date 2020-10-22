@@ -11,6 +11,7 @@ import { getUser } from '../../../redux/reducers/users';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { getGoalsThunk, resetGoalsThunk } from '../../../redux/reducers/goals';
 import styles from './styles';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const pieCalculations = (completedDays, frequency) => {
 	const pieData = [],
@@ -31,7 +32,8 @@ function HomeScreen(props) {
 	const [celebration, setCelebration] = useState(false);
 	const [celebratedAlready, setCelebratedAlready] = useState(false);
 	const [loaded, setLoaded] = useState(false);
-	const [pieGoals, setPieGoals] = useState([]);
+  const [pieGoals, setPieGoals] = useState([]);
+  const [spinner, setSpinner] = useState(false)
 
 	useEffect(() => {
 		async function fetchData() {
@@ -89,9 +91,25 @@ function HomeScreen(props) {
 		}, [props.goals])
   ); 
   
+  useEffect(() => {
+		setInterval(() => {
+      setSpinner(!spinner)
+    }, 3000)
+	}, [])
 
 	if (!loaded) {
-		return null;
+		return (
+      <View style={styles.spinnerContainer}>
+        <Spinner
+          visible={true}
+          textContent={'Loading...'}
+          textStyle={styles.spinnerTextStyle}
+          color={'#8688BC'}
+          animation={'fade'}
+          overlayColor={'white'}
+        />
+      </View>
+    )
 	} else {
 		return (
 			<>
@@ -179,7 +197,7 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
 	getGoals: () => dispatch(getGoalsThunk()),
 	getUser: () => dispatch(getUser()),
-	resetGoals: (uid) => dispatch(resetGoalsThunk(uid)),
+	resetGoals: uid => dispatch(resetGoalsThunk(uid)),
 });
 
 export default connect(mapState, mapDispatch)(HomeScreen);
