@@ -59,7 +59,16 @@ export default StyleSheet.create({
 		fontSize: 18,
 		marginBottom: 15,
 		textAlign: 'center',
-	},
+  },
+  spinnerTextStyle: {
+    color: '#8688BC'
+  },
+  spinnerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
+  },
 });
 
 export const pieStyle = StyleSheet.create({
@@ -87,5 +96,5 @@ export const pieStyle = StyleSheet.create({
 		color: '#424347',
 		marginTop: 10,
 		fontSize: 16,
-	},
+  },
 });
