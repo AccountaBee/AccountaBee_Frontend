@@ -8,7 +8,6 @@ import { getUnseenLikes } from '../../../redux/reducers/unseenLikes';
 class FeedIcon extends React.Component {
 	componentDidMount() {
 		this.props.getUnseenLikes();
-		console.log('DISPATCH');
 	}
 	render() {
 		const { unseenLikes } = this.props || [];

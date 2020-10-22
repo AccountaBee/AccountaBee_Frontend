@@ -30,8 +30,6 @@ class FeedScreen extends Component {
 	}
 
 	onLikePress = (post, myLike) => {
-		// let myLike = post.likes.filter(like => like.userUid === uid);
-		console.log(myLike);
 		if (myLike.length) {
 			this.props.unlikePost(post.id);
 		} else {
@@ -66,6 +64,7 @@ class FeedScreen extends Component {
 		let { completedDays, title, targetDaysMet, createdAt } = post;
 		let { firstName } = post.user;
 		let currentUid = firebase.auth().currentUser.uid;
+
 		let myLike = post.likes.filter(like => like.userUid === currentUid);
 
 		return (
@@ -115,7 +114,7 @@ class FeedScreen extends Component {
 						</View>
 					</TouchableOpacity>
 
-					{post.likes.length <= 1 ? (
+					{post.likes.length === 1 ? (
 						<Text style={styles.clapNumber}>{post.likes.length} Clap</Text>
 					) : (
 						<Text style={styles.clapNumber}>{post.likes.length} Claps</Text>

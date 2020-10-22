@@ -9,16 +9,13 @@ export const getPosts = () => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
 		const { data } = await instance.post('/posts/feed', { token });
-
-		// data should be an array of posts with their likes attached ( no text yet, just info about title, days, etc )
+		// data should be an array of posts with their likes attached
+		console.log(data);
 		dispatch(setPosts(data));
 	} catch (error) {
 		console.log(error);
 	}
 };
-
-// On feed we will have an array of posts objects [   ] from posts in redux
-// Each post will be { title, frequency, completedDays, id, userUid, likes: [{postId, userUid, seen}] }
 
 export default function (state = [], action) {
 	switch (action.type) {
