@@ -8,6 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
+import TimeAgo from 'react-native-timeago';
 
 class FeedScreen extends Component {
 	constructor(props) {
@@ -64,7 +65,9 @@ class FeedScreen extends Component {
 					<View style={styles.feedContent}>
 						<View>
 							<Text style={styles.userName}>{firstName}</Text>
-							<Text>{createdAt}</Text>
+							<View>
+								<TimeAgo time={createdAt} />
+							</View>
 						</View>
 					</View>
 
