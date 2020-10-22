@@ -6,11 +6,11 @@ import GoalPieChart from './PieChart';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
 import { messageGenerator } from './MessageGenerator';
-import { getGoalsThunk } from '../../../redux/reducers/goals';
-import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getUser } from '../../../redux/reducers/users';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import { getGoalsThunk, resetGoalsThunk } from '../../../redux/reducers/goals';
+import styles from './styles';
 
 const pieCalculations = (completedDays, frequency) => {
 	const pieData = [],
@@ -45,6 +45,37 @@ function HomeScreen(props) {
 	useEffect(() => {
 		setPieGoals(props.goals);
 	}, [props.goals]);
+
+	useFocusEffect(
+		React.useCallback(() => {
+			if (props.user && props.user.uid) {
+				async function reset(uid) {
+					let now = new Date();
+					let today = new Date(
+						now.getFullYear(),
+						now.getMonth(),
+						now.getDate()
+					);
+					let lastSunday = new Date(
+						today.setDate(today.getDate() - today.getDay())
+					);
+					const lastTimeUpdated = props.goals.map(
+						(goal) => new Date(goal.updatedAt)
+					);
+					//change variable 'now' to 'lastSunday' after demo
+					const oldGoalsCheck = lastTimeUpdated.some(
+						(time) => time < lastSunday
+					);
+					if (oldGoalsCheck) {
+						await props.resetGoals(uid);
+						setCelebration(false);
+						setCelebratedAlready(false);
+					}
+				}
+				reset(props.user.uid);
+			}
+		}, [props.user.uid])
+	);
 
 	useFocusEffect(
 		React.useCallback(() => {
@@ -139,12 +170,14 @@ function HomeScreen(props) {
 }
 
 const mapState = (state) => ({
+	user: state.user,
 	goals: state.goals,
 });
 
 const mapDispatch = (dispatch) => ({
 	getGoals: () => dispatch(getGoalsThunk()),
 	getUser: () => dispatch(getUser()),
+	resetGoals: (uid) => dispatch(resetGoalsThunk(uid)),
 });
 
 export default connect(mapState, mapDispatch)(HomeScreen);

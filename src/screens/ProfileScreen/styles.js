@@ -19,4 +19,38 @@ export default StyleSheet.create({
 		minWidth: '40%',
 		alignSelf: 'center',
 	},
+	editPic: {
+		backgroundColor: '#424347',
+		opacity: 0.6,
+		minWidth: '40%',
+		alignSelf: 'center',
+	},
+	picContainer: {
+		minHeight: '20%',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	photo: {
+		marginTop: '10%',
+		alignSelf: 'center',
+	},
+	text: {
+		marginTop: '4%',
+		fontWeight: '400',
+		color: '#424347',
+		fontSize: 20,
+	},
+	section: {
+		marginTop: '10%',
+		alignItems: 'center',
+		marginVertical: '5%',
+		borderTopWidth: 1,
+		borderBottomWidth: 1,
+		borderTopLeftRadius: 50,
+		borderTopRightRadius: 80,
+		borderBottomLeftRadius: 50,
+		borderBottomRightRadius: 80,
+		borderColor: '#424347',
+		paddingBottom: '5%',
+	},
 });
