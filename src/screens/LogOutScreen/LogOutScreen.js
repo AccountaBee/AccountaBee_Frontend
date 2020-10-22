@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { firebase } from '../../firebase/config';
 import { clearGoals } from '../../../redux/reducers/goals';
+import { removeUser } from '../../../redux/reducers/users'
 import { connect } from 'react-redux';
 
 function LogOutScreen(props) {
@@ -10,7 +11,8 @@ function LogOutScreen(props) {
 			{
 				text: 'OK',
 				onPress: async () => {
-					await props.clearGoals();
+          await props.clearGoals();
+          await props.clearUser();
 					return firebase
 						.auth()
 						.signOut()
@@ -34,7 +36,8 @@ function LogOutScreen(props) {
 }
 
 const mapDispatch = (dispatch) => ({
-	clearGoals: () => dispatch(clearGoals()),
+  clearGoals: () => dispatch(clearGoals()),
+  clearUser: () => dispatch(removeUser())
 });
 
 export default connect(null, mapDispatch)(LogOutScreen);

@@ -36,10 +36,10 @@ function HomeScreen(props) {
 	useEffect(() => {
 		async function fetchData() {
 			await props.getGoals();
-			await props.getUser();
+      await props.getUser();   
+      setLoaded(true);
 		}
 		fetchData();
-		setLoaded(true);
 	}, []);
 
 	useEffect(() => {
@@ -62,7 +62,7 @@ function HomeScreen(props) {
 					const lastTimeUpdated = props.goals.map(
 						(goal) => new Date(goal.updatedAt)
 					);
-					//change variable 'now' to 'lastSunday' after demo
+					//change variable 'lastSunday' to 'now' for demo
 					const oldGoalsCheck = lastTimeUpdated.some(
 						(time) => time < lastSunday
 					);
@@ -87,7 +87,8 @@ function HomeScreen(props) {
 				setCelebration(true);
 			}
 		}, [props.goals])
-	);
+  ); 
+  
 
 	if (!loaded) {
 		return null;
