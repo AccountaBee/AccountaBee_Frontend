@@ -112,12 +112,12 @@ function SingleGoalScreen(props) {
 							<View style={styles.buttonContainer}>
 								<CustomButton
 									style={styles.nextButton}
-									title="VIEW POST IN FEED"
+									title='VIEW POST IN FEED'
 									onPress={() => viewPost()}
 								/>
 								<CustomButton
 									style={styles.nextButton}
-									title="BACK TO GOALS"
+									title='BACK TO GOALS'
 									onPress={() => backToGoals()}
 								/>
 							</View>

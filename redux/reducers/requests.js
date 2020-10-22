@@ -1,15 +1,15 @@
-import instance from "../axios";
-import { firebase } from "../../src/firebase/config";
-import { getFriends } from "./friends";
+import instance from '../axios';
+import { firebase } from '../../src/firebase/config';
+import { getPosts } from './posts';
 
-const SET_REQUESTS = "SET_REQUESTS";
+const SET_REQUESTS = 'SET_REQUESTS';
 
 const setRequests = requests => ({ type: SET_REQUESTS, requests });
 
 export const getRequests = () => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
-		const { data } = await instance.post("/friends/invites", { token });
+		const { data } = await instance.post('/friends/invites', { token });
 		dispatch(setRequests(data));
 	} catch (error) {
 		console.log(error);
@@ -19,9 +19,10 @@ export const getRequests = () => async dispatch => {
 export const confirmRequest = (status, senderId) => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
-		await instance.put("/friends/reply", { token, senderId, status });
+		await instance.put('/friends/reply', { token, senderId, status });
 		dispatch(getRequests(token));
-		dispatch(getFriends(token));
+		// dispatch(getFriends(token));
+		dispatch(getPosts());
 	} catch (error) {
 		alert(error);
 	}

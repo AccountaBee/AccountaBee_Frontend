@@ -19,8 +19,10 @@ import {
 	GoalScreen2,
 	SingleGoalScreen,
 	FriendsScreen,
+	FeedIcon,
+	FriendsIcon,
 } from './src/screens';
-import FriendsIcon from './src/screens/FriendsScreen/FriendsIcon';
+
 import { decode, encode } from 'base-64';
 import { useAuth, userContext } from './src/context';
 
@@ -95,7 +97,20 @@ const TabsScreen = () => (
 		}}
 	>
 		<Tabs.Screen name="Goals" component={GoalScreenNav} />
-		<Tabs.Screen name="Feed" component={FeedScreen} />
+		<Tabs.Screen
+			name="Feed"
+			component={FeedScreen}
+			options={{
+				tabBarIcon: ({ focused, color }) => {
+					color = focused ? '#9FC78A' : '#8688BC';
+					return (
+						<>
+							<FeedIcon focused={focused} />
+						</>
+					);
+				},
+			}}
+		/>
 		<Tabs.Screen
 			name="Friends"
 			component={FriendsScreen}
@@ -103,7 +118,6 @@ const TabsScreen = () => (
 				tabBarIcon: ({ focused, color }) => {
 					color = focused ? '#9FC78A' : '#8688BC';
 					return (
-						// STYLE & PLACEMENT ON ICON WILL BE IMPROVED
 						<>
 							<FriendsIcon focused={focused} />
 						</>
