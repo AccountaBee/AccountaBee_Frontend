@@ -16,6 +16,7 @@ export default StyleSheet.create({
 		marginBottom: 20,
 	},
 	logout: {
+		marginTop: '10%',
 		minWidth: '40%',
 		alignSelf: 'center',
 	},
