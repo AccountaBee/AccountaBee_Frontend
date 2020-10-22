@@ -29,9 +29,8 @@ class FeedScreen extends Component {
 		}
 	}
 
-	onLikePress = async post => {
-		let currentUid = firebase.auth().currentUser.uid;
-		let myLike = post.likes.filter(like => like.userUid === currentUid);
+	onLikePress = (post, myLike) => {
+		// let myLike = post.likes.filter(like => like.userUid === uid);
 		console.log(myLike);
 		if (myLike.length) {
 			this.props.unlikePost(post.id);
@@ -66,6 +65,8 @@ class FeedScreen extends Component {
 	renderPost = post => {
 		let { completedDays, title, targetDaysMet, createdAt } = post;
 		let { firstName } = post.user;
+		let currentUid = firebase.auth().currentUser.uid;
+		let myLike = post.likes.filter(like => like.userUid === currentUid);
 
 		return (
 			<View style={styles.feedItem} key={post.id}>
@@ -89,13 +90,21 @@ class FeedScreen extends Component {
 					<TouchableOpacity
 						activeOpacity={0.5}
 						style={styles.clapButton}
-						onPress={() => this.onLikePress(post)}>
+						onPress={() => this.onLikePress(post, myLike)}>
 						<View style={{ flexDirection: 'row', marginTop: 10 }}>
-							<Image
-								source={require('../../../assets/hand-clap-ol-2-512.png')}
-								style={styles.clapImage}
-								title='ClapImage'
-							/>
+							{myLike.length ? (
+								<Image
+									source={require('../../../assets/hand-clap-green.png')}
+									style={styles.clapImage}
+									title='ClapImage'
+								/>
+							) : (
+								<Image
+									source={require('../../../assets/hand-clap-ol-2-512.png')}
+									style={styles.clapImage}
+									title='ClapImage'
+								/>
+							)}
 
 							<EvilIcons
 								name='comment'
