@@ -5,7 +5,7 @@ const GOT_USER = 'GOT_USER';
 const REMOVE_USER = 'REMOVE_USER';
 
 const gotUser = user => ({ type: GOT_USER, user });
-const removeUser = () => ({ type: REMOVE_USER });
+export const removeUser = () => ({ type: REMOVE_USER });
 
 export const getUser = () => async dispatch => {
 	try {
