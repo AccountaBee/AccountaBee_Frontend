@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity, SafeAreaView, Animated} from 'react-native';
+import { Text, Animated} from 'react-native';
 import styles from './styles';
 
 export default class ClapBubble extends Component{
@@ -14,7 +14,7 @@ export default class ClapBubble extends Component{
     componentDidMount(){
         Animated.parallel([
             Animated.timing(this.state.yPosition, {
-                toValue: -40,
+                toValue: -70,
                 duration: 600,
                 useNativeDriver:false
             }),

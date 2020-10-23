@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, Animated, Image} from 'react-native'
+import {View, Text, Animated, Image, Easing} from 'react-native'
 import styles from "./styles";
 
 class Bee extends Component {
@@ -12,16 +12,19 @@ class Bee extends Component {
         const {LogoAnime, LogoText} = this.state
         Animated.parallel([
             Animated.spring(LogoAnime, {
+                delay: 100,
                 toValue: 1,
-                tension: 10,
+                tension: 500,
                 friction: 2,
-                duration: 10000,
+                duration: 40000,
+                easing: Easing.bounce,
+
                 useNativeDriver:false
             }).start(),
 
             Animated.timing(LogoText, {
                 toValue: 1,
-                duration: 4000,
+                duration: 2000,
                 useNativeDriver: true
             })
         ]).start()

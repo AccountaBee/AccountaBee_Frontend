@@ -29,12 +29,13 @@ class FeedScreen extends Component {
 			this.setState({ modalVisible: true });
 		}
 	}
+
 	animationComplete(){
 		this.setState({clapVisible: false})
 	}
 
 	renderClaps(){
-		return <ClapBubble  animationComplete={this.animationComplete.bind(this)}  />
+		return <ClapBubble animationComplete={this.animationComplete.bind(this)}/>
 	}
 
 	onLikePress = (post, myLike) => {
@@ -130,11 +131,6 @@ class FeedScreen extends Component {
 								<Text style={styles.clapNumber}>{post.likes.length} Claps</Text>
 							)}
 						</View>
-				
-				
-
-					
-					
 				</View>
 			</View>
 			</SafeAreaView>
