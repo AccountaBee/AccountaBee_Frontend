@@ -20,7 +20,8 @@ import {
 	SingleGoalScreen,
 	FriendsScreen,
 	FeedIcon,
-	FriendsIcon
+	FriendsIcon,
+
 } from './src/screens';
 
 import { decode, encode } from 'base-64';
