@@ -1,24 +1,21 @@
-import React from "react";
-import { Text, View, TextInput, Button, Image, Alert } from "react-native";
-import styles from "./styles";
-import { connect } from "react-redux";
-import { getSentRequests, sendRequest } from "../../../redux/reducers/sentRequests";
-import { confirmRequest, getRequests } from "../../../redux/reducers/requests";
-import { getFriends } from "../../../redux/reducers/friends";
-import { Feather } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
-
-//TODO - add loading icon because it takes a second to load requests
-//TODO - make confirm/deny buttons nice icons
-//TODO - better error handling messages on backend
-//TODO - let users upload photo???
-//TODO - style
+import React from 'react';
+import { Text, View, TextInput, Image, Alert } from 'react-native';
+import styles from './styles';
+import { connect } from 'react-redux';
+import {
+	getSentRequests,
+	sendRequest,
+} from '../../../redux/reducers/sentRequests';
+import { confirmRequest, getRequests } from '../../../redux/reducers/requests';
+import { getFriends } from '../../../redux/reducers/friends';
+import { Feather } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class FriendsScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: ""
+			email: '',
 		};
 	}
 
@@ -28,7 +25,7 @@ class FriendsScreen extends React.Component {
 		this.props.getFriends();
 	}
 
-	handleChange = email => {
+	handleChange = (email) => {
 		this.setState({ email });
 	};
 
@@ -39,15 +36,15 @@ class FriendsScreen extends React.Component {
 
 	onReplyPress = async (status, senderId) => {
 		this.props.confirmRequest(status, senderId);
-		if (status === "confirmed") Alert.alert("You are now friends!");
-		if (status === "denied") Alert.alert("Friend request was deleted successfully");
+		if (status === 'confirmed') Alert.alert('You are now friends!');
+		if (status === 'denied')
+			Alert.alert('Friend request was deleted successfully');
 	};
 
 	render() {
 		const { sentRequests } = this.props || [];
 		const { requests } = this.props || [];
 		const { friends } = this.props || [];
-
 		return (
 			<View style={styles.page}>
 				<View style={styles.headline_container}>
@@ -61,26 +58,33 @@ class FriendsScreen extends React.Component {
 				{requests && requests.length ? (
 					<View style={styles.sub_container}>
 						<Text style={styles.subheading}>Friend Requests</Text>
-						{requests.map(request => (
+						{requests.map((request) => (
 							<View style={styles.request_container} key={request.uid}>
 								<View style={styles.request_top}>
-									<Image
-										style={styles.photo}
-										source={require("../../../assets/blank-profile.png")}
-									/>
+									{request.profilePicture ? (
+										<Image
+											style={styles.photo}
+											source={{ uri: request.profilePicture }}
+										/>
+									) : (
+										<Image
+											style={styles.photo}
+											source={require('../../../assets/blank-profile.png')}
+										/>
+									)}
 									<Feather
 										name="check"
 										size={30}
 										style={styles.icon}
 										color="black"
-										onPress={() => this.onReplyPress("confirmed", request.uid)}
+										onPress={() => this.onReplyPress('confirmed', request.uid)}
 									/>
 									<Feather
 										style={styles.icon}
 										name="x"
 										size={30}
 										color="black"
-										onPress={() => this.onReplyPress("denied", request.uid)}
+										onPress={() => this.onReplyPress('denied', request.uid)}
 									/>
 								</View>
 								<View style={styles.request_bottom}>
@@ -95,12 +99,13 @@ class FriendsScreen extends React.Component {
 				<View style={styles.sub_container}>
 					{/* <Text style={styles.subheading}>Add A Friend</Text> */}
 					<Text style={styles.instructions}>
-						Add a buddy to hold yourself accountable! Type in your friend's email to send a request.
-						Once they approve, you will be able to congratulate each other when you complete goals!
+						Add a buddy to hold yourself accountable! Type in your friend's
+						email to send a request. Once they approve, you will be able to
+						congratulate each other when you complete goals!
 					</Text>
 					<View style={styles.input_container}>
 						<TextInput
-							onChangeText={email => this.handleChange(email)}
+							onChangeText={(email) => this.handleChange(email)}
 							style={styles.input}
 							placeholder="Email"
 							placeholderTextColor="#aaaaaa"
@@ -119,19 +124,20 @@ class FriendsScreen extends React.Component {
 	}
 }
 
-const mapState = state => ({
+const mapState = (state) => ({
 	sentRequests: state.sentRequests,
 	requests: state.requests,
 	friends: state.friends,
-	user: state.user
+	user: state.user,
 });
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch) => ({
 	getSentRequests: () => dispatch(getSentRequests()),
 	getRequests: () => dispatch(getRequests()),
 	getFriends: () => dispatch(getFriends()),
-	sendRequest: email => dispatch(sendRequest(email)),
-	confirmRequest: (status, senderId) => dispatch(confirmRequest(status, senderId))
+	sendRequest: (email) => dispatch(sendRequest(email)),
+	confirmRequest: (status, senderId) =>
+		dispatch(confirmRequest(status, senderId)),
 });
 
 export default connect(mapState, mapDispatch)(FriendsScreen);
