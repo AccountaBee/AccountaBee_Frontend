@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
 import { newPost } from '../../../redux/reducers/singlePost';
 import { ScrollView } from 'react-native-gesture-handler';
+import { toastGeneratorTextOne, toastGeneratorTextTwo } from './ToastGenerator';
 
 function SingleGoalScreen(props) {
 	const goal = props.goal || {};
@@ -20,8 +21,8 @@ function SingleGoalScreen(props) {
 			setIsCompleted(!isCompleted);
 			await props.updateSingleGoalFreq(goalId);
 			Toast.show({
-				text1: 'Congratulations!',
-				text2: 'You are one step closer! 👋',
+				text1: `${toastGeneratorTextOne()}`,
+        text2: `${toastGeneratorTextTwo()} 👋,`,
 				type: 'success',
 				position: 'bottom | top',
 				autoHide: true,

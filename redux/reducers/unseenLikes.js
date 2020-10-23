@@ -36,7 +36,7 @@ export const updateLikesToSeen = postsWithLikes => async dispatch => {
 		let likes = [];
 		for (let i = 0; i < postsWithLikes.length; i++) {
 			let post = postsWithLikes[i];
-			// console.log('POST', post.likes);
+
 			likes = likes.concat(post.likes);
 		}
 

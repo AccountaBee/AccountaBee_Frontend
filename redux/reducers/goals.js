@@ -9,7 +9,7 @@ export const setGoals = goals => ({ type: SET_GOALS, goals });
 export const gotGoals = goals => ({ type: GOT_GOALS, goals });
 export const clearGoals = () => ({ type: CLEAR_GOALS });
 
-export const setGoalsThunk = (goals) => async (dispatch) => {
+export const setGoalsThunk = goals => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		let { data, status } = await instance.post('/goals', { goals, token });
@@ -23,13 +23,13 @@ export const setGoalsThunk = (goals) => async (dispatch) => {
 	}
 };
 
-export const deleteGoalThunk = (goalId, goals) => async (dispatch) => {
+export const deleteGoalThunk = (goalId, goals) => async dispatch => {
 	try {
 		let { status } = await instance.delete(`/goals/${goalId}`);
-		console.log('status is: ', status);
+
 		if (status === 200) {
 			console.log('goal successfully deleted');
-			dispatch(gotGoals(goals.filter((goal) => goalId !== goal.id)));
+			dispatch(gotGoals(goals.filter(goal => goalId !== goal.id)));
 		} else {
 			console.log('error deleting goals in database, status error: ', status);
 		}
@@ -38,7 +38,7 @@ export const deleteGoalThunk = (goalId, goals) => async (dispatch) => {
 	}
 };
 
-export const completedDaysThunk = (goalId) => async (dispatch) => {
+export const completedDaysThunk = goalId => async dispatch => {
 	try {
 		await instance.put(`goals/${goalId}`);
 		let token = await firebase.auth().currentUser.getIdToken();
@@ -49,7 +49,7 @@ export const completedDaysThunk = (goalId) => async (dispatch) => {
 	}
 };
 
-export const getGoalsThunk = () => async (dispatch) => {
+export const getGoalsThunk = () => async dispatch => {
 	try {
 		let token = await firebase.auth().currentUser.getIdToken();
 		const res = await instance.post(`/goals/allGoals`, { token });
@@ -59,11 +59,10 @@ export const getGoalsThunk = () => async (dispatch) => {
 	}
 };
 
-export const resetGoalsThunk = (uid) => async dispatch => {
+export const resetGoalsThunk = uid => async dispatch => {
 	try {
-    const res = await instance.put(`/goals/reset`, { uid });
-    dispatch(gotGoals(res.data));
-    
+		const res = await instance.put(`/goals/reset`, { uid });
+		dispatch(gotGoals(res.data));
 	} catch (error) {
 		console.log(error);
 	}

@@ -3,22 +3,20 @@ import { Text, Animated} from 'react-native';
 import styles from './styles';
 
 export default class ClapBubble extends Component{
-    constructor(){
-        super()
-        this.state={
-            yPosition: new Animated.Value(0),
-            opacity: new Animated.Value(0)
-        }
+    state={
+        yPosition: new Animated.Value(0),
+        opacity: new Animated.Value(0)
     }
-
+    
     componentDidMount(){
+        const {yPosition, opacity}= this.state
         Animated.parallel([
-            Animated.timing(this.state.yPosition, {
+            Animated.timing(yPosition, {
                 toValue: -70,
                 duration: 600,
                 useNativeDriver:false
             }),
-            Animated.timing(this.state.opacity,{
+            Animated.timing(opacity,{
                 toValue: 1,
                 duration: 500,
                 useNativeDriver:false
