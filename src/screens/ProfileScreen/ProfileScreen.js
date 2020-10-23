@@ -4,18 +4,34 @@ import { firebase } from '../../firebase/config';
 import { clearGoals } from '../../../redux/reducers/goals';
 import { removeUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { getFriendsNum, getFriends } from '../../../redux/reducers/friends';
 import CustomButton from '../CustomButton';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import styles from './styles';
 
+let image2 = await testreturn.blob();
+// console.log('image: ', image);
+console.log('image 2: ', image2);
+// // console.log('image', image);
+let url = URL.createObjectURL(image2);
+setImage(url);
+
 function ProfileScreen(props) {
 	const [friendsNum, setFriendsNum] = useState(0);
 	const [image, setImage] = useState(null);
 
 	useEffect(() => {
-		setFriendsNum(props.friends.length);
+		// LOADING IMAGE ON LOG IN WILL NEED TO BE IN AN ASYNC FUNCTION IN HERE
+
+		// const test = async () => {
+		// 	let whatami = props.user.profilePicture;
+		// 	let whatami2 = URL.createObjectURL(whatami);
+		// 	setImage(whatami2);
+		// 	setFriendsNum(props.friends.length);
+		// };
+		// test();
 		console.log('friends num: ', props.friends.length);
 	}, []);
 
@@ -35,38 +51,69 @@ function ProfileScreen(props) {
 		cameraRollAccess();
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
-			// allowsEditing: true,
-			// aspect: [4, 3],
-			quality: 1,
+			quality: 0,
 		});
-		console.log(result);
+		// console.log(result);
 		if (!result.cancelled) {
-			setImage(result.uri);
-			let localUri = result.uri;
-			let filename = localUri.split('/').pop();
+			// setImage(result.base64);
 
-			// Infer the type of the image
-			let match = /\.(\w+)$/.exec(filename);
-			let type = match ? `image/${match[1]}` : `image`;
+			async function uploadImageAsync(uri) {
+				let apiUrl = `http://localhost:8080/api/users/picture`;
+				const token = await firebase.auth().currentUser.getIdToken();
+				// Note:
+				// Uncomment this if you want to experiment with local server
+				//
+				// if (Constants.isDevice) {
+				// 	apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
+				// } else {
+				// 	apiUrl = `http://localhost:8080/api/users/picture`;
+				// }
 
-			// Upload the image using the fetch and FormData APIs
-			let formData = new FormData();
-			// Assume "photo" is the name of the form field the server expects
-			formData.append('profilePicture', {
-				uri: localUri,
-				name: filename,
-				type,
-			});
-			const token = await firebase.auth().currentUser.getIdToken();
-			formData.append('token', token);
-			console.log('form data: ', formData);
-			await fetch('https://accountabee.herokuapp.com/api/users/picture', {
-				method: 'PATCH',
-				body: formData,
-				headers: {
-					'content-type': 'multipart/form-data',
-				},
-			});
+				let uriParts = uri.split('.');
+				let fileType = uriParts[uriParts.length - 1];
+
+				let formData = new FormData();
+				formData.append('photo', {
+					uri,
+					name: `photo.${fileType}`,
+					type: `image/${fileType}`,
+				});
+				let options = {
+					method: 'POST',
+					body: formData,
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'multipart/form-data',
+						authorization: token,
+					},
+				};
+
+				// return await axios.post(
+				// 	'http://localhost:8080/api/users/picture',
+				// 	options
+				// );
+				return fetch(apiUrl, options);
+			}
+
+			const testreturn = await uploadImageAsync(result.uri);
+			// console.log('testreturn: ', testreturn.json());
+			// console.log('testreturn: ', testreturn.blob());
+			// var reader = new FileReader();
+			// reader.readAsDataURL(blob);
+			// reader.onloadend = function () {
+			// 	var base64data = reader.result;
+			// 	console.log(base64data);
+			// };
+
+			// let image = await testreturn.json();
+			let image2 = await testreturn.blob();
+			// console.log('image: ', image);
+			console.log('image 2: ', image2);
+			// // console.log('image', image);
+			let url = URL.createObjectURL(image2);
+			setImage(url);
+			// console.log('image: ', image);
+			// setImage(image);
 		}
 	};
 
@@ -119,11 +166,11 @@ function ProfileScreen(props) {
 						source={require('../../../assets/blank-profile.png')}
 					/>
 				)}
-				{/* <CustomButton
+				<CustomButton
 					title="EDIT PICTURE"
 					style={styles.editPic}
 					onPress={() => pickImage()}
-				/> */}
+				/>
 				<View style={styles.section}>
 					<Text style={styles.text}>Name: {props.user.firstName}</Text>
 					<Text style={styles.text}>Email: {props.user.email}</Text>
