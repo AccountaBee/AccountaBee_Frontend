@@ -26,7 +26,6 @@ function RegistrationScreen(props, { navigation }) {
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then(async () => {
-				// follow this structure on other pages to get the token of the current user!
 				let token = await firebase.auth().currentUser.getIdToken();
 				const body = {
 					token,

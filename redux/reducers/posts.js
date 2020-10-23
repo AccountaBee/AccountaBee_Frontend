@@ -10,7 +10,6 @@ export const getPosts = () => async dispatch => {
 		const token = await firebase.auth().currentUser.getIdToken();
 		const { data } = await instance.post('/posts/feed', { token });
 		// data should be an array of posts with their likes attached
-		console.log(data);
 		dispatch(setPosts(data));
 	} catch (error) {
 		console.log(error);

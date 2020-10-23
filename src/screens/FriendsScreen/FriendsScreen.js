@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, Button, Image, Alert } from 'react-native';
+import { Text, View, TextInput, Image, Alert } from 'react-native';
 import styles from './styles';
 import { connect } from 'react-redux';
 import { getSentRequests, sendRequest } from '../../../redux/reducers/sentRequests';
@@ -7,12 +7,6 @@ import { confirmRequest, getRequests } from '../../../redux/reducers/requests';
 import { getFriends } from '../../../redux/reducers/friends';
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
-//TODO - add loading icon because it takes a second to load requests
-//TODO - make confirm/deny buttons nice icons
-//TODO - better error handling messages on backend
-//TODO - let users upload photo???
-//TODO - style
 
 class FriendsScreen extends React.Component {
 	constructor(props) {
@@ -40,12 +34,12 @@ class FriendsScreen extends React.Component {
 	onReplyPress = async (status, senderId) => {
 		this.props.confirmRequest(status, senderId);
 		if (status === 'confirmed') Alert.alert('You are now friends!');
-		if (status === 'denied') Alert.alert('Friend request was deleted successfully!');
+		if (status === 'denied') Alert.alert('Friend request was deleted successfully');
 	};
 
 	render() {
 		const { requests } = this.props || [];
-
+		const { friends } = this.props || [];
 		return (
 			<View>
 				<View style={styles.headlineContainer}>
@@ -58,10 +52,14 @@ class FriendsScreen extends React.Component {
 						{requests.map(request => (
 							<View style={styles.requestContainer} key={request.uid}>
 								<View style={styles.requestTop}>
-									<Image
-										style={styles.photo}
-										source={require('../../../assets/blank-profile.png')}
-									/>
+									{request.profilePicture ? (
+										<Image style={styles.photo} source={{ uri: request.profilePicture }} />
+									) : (
+										<Image
+											style={styles.photo}
+											source={require('../../../assets/blank-profile.png')}
+										/>
+									)}
 									<Feather
 										name='check'
 										size={30}

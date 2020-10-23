@@ -8,7 +8,7 @@ import { EvilIcons } from '@expo/vector-icons';
 export default RenderPost = props => {
 	const { post } = props;
 	const { completedDays, title, targetDaysMet, createdAt } = post;
-	const { firstName } = post.user;
+	const { firstName, profilePicture } = post.user;
 	const currentUid = firebase.auth().currentUser.uid;
 
 	const isGoalSettingPost = post.completedDays === 0;
@@ -31,7 +31,11 @@ export default RenderPost = props => {
 
 	return (
 		<View style={styles.feedItem} key={post.id}>
-			<Image source={require('../../../assets/blank-profile.png')} style={styles.userImage} />
+			{profilePicture ? (
+				<Image source={{ uri: profilePicture }} style={styles.userImage} />
+			) : (
+				<Image source={require('../../../assets/blank-profile.png')} style={styles.userImage} />
+			)}
 			<View style={{ flex: 1 }}>
 				<View style={styles.feedContent}>
 					<View>
