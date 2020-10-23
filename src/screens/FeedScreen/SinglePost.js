@@ -3,7 +3,6 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { firebase } from '../../firebase/config';
 import TimeAgo from 'react-native-timeago';
 import styles from './styles';
-import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 
 export default RenderPost = props => {
@@ -51,12 +50,21 @@ export default RenderPost = props => {
 					onPress={() => props.onLikePress(post, myLike)}>
 					<View style={{ flexDirection: 'row', marginTop: 10 }}>
 						{isGoalSettingPost ? (
-							<AntDesign
-								name='smileo'
-								size={24}
-								color='black'
-								style={{ marginTop: 7, marginRight: 1 }}
-							/>
+							<View>
+								{myLike.length ? (
+									<Image
+										source={require('../../../assets/firecolors.png')}
+										style={styles.clapImage}
+										title='ClapImage'
+									/>
+								) : (
+									<Image
+										source={require('../../../assets/fire.png')}
+										style={styles.clapImage}
+										title='ClapImage'
+									/>
+								)}
+							</View>
 						) : (
 							<View>
 								{myLike.length ? (
