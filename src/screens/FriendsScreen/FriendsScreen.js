@@ -2,10 +2,7 @@ import React from 'react';
 import { Text, View, TextInput, Image, Alert } from 'react-native';
 import styles from './styles';
 import { connect } from 'react-redux';
-import {
-	getSentRequests,
-	sendRequest,
-} from '../../../redux/reducers/sentRequests';
+import { getSentRequests, sendRequest } from '../../../redux/reducers/sentRequests';
 import { confirmRequest, getRequests } from '../../../redux/reducers/requests';
 import { getFriends } from '../../../redux/reducers/friends';
 import { Feather } from '@expo/vector-icons';
@@ -15,7 +12,7 @@ class FriendsScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: '',
+			email: ''
 		};
 	}
 
@@ -25,7 +22,7 @@ class FriendsScreen extends React.Component {
 		this.props.getFriends();
 	}
 
-	handleChange = (email) => {
+	handleChange = email => {
 		this.setState({ email });
 	};
 
@@ -37,35 +34,26 @@ class FriendsScreen extends React.Component {
 	onReplyPress = async (status, senderId) => {
 		this.props.confirmRequest(status, senderId);
 		if (status === 'confirmed') Alert.alert('You are now friends!');
-		if (status === 'denied')
-			Alert.alert('Friend request was deleted successfully');
+		if (status === 'denied') Alert.alert('Friend request was deleted successfully');
 	};
 
 	render() {
-		const { sentRequests } = this.props || [];
 		const { requests } = this.props || [];
 		const { friends } = this.props || [];
 		return (
-			<View style={styles.page}>
-				<View style={styles.headline_container}>
+			<View>
+				<View style={styles.headlineContainer}>
 					<Text style={styles.headline}>Manage Friends</Text>
 				</View>
-				{/* <View style={styles.button_container}>
-					<TouchableOpacity>
-						<Text style={styles.friends_button}>View My Friends</Text>
-					</TouchableOpacity>
-				</View> */}
+
 				{requests && requests.length ? (
-					<View style={styles.sub_container}>
+					<View>
 						<Text style={styles.subheading}>Friend Requests</Text>
-						{requests.map((request) => (
-							<View style={styles.request_container} key={request.uid}>
-								<View style={styles.request_top}>
+						{requests.map(request => (
+							<View style={styles.requestContainer} key={request.uid}>
+								<View style={styles.requestTop}>
 									{request.profilePicture ? (
-										<Image
-											style={styles.photo}
-											source={{ uri: request.profilePicture }}
-										/>
+										<Image style={styles.photo} source={{ uri: request.profilePicture }} />
 									) : (
 										<Image
 											style={styles.photo}
@@ -73,21 +61,21 @@ class FriendsScreen extends React.Component {
 										/>
 									)}
 									<Feather
-										name="check"
+										name='check'
 										size={30}
 										style={styles.icon}
-										color="black"
+										color='black'
 										onPress={() => this.onReplyPress('confirmed', request.uid)}
 									/>
 									<Feather
 										style={styles.icon}
-										name="x"
+										name='x'
 										size={30}
-										color="black"
+										color='black'
 										onPress={() => this.onReplyPress('denied', request.uid)}
 									/>
 								</View>
-								<View style={styles.request_bottom}>
+								<View style={styles.requestBottom}>
 									<Text style={styles.name}>{request.firstName}</Text>
 									<Text style={styles.email}>{request.email}</Text>
 								</View>
@@ -96,25 +84,23 @@ class FriendsScreen extends React.Component {
 					</View>
 				) : null}
 
-				<View style={styles.sub_container}>
-					{/* <Text style={styles.subheading}>Add A Friend</Text> */}
+				<View>
 					<Text style={styles.instructions}>
-						Add a buddy to hold yourself accountable! Type in your friend's
-						email to send a request. Once they approve, you will be able to
-						congratulate each other when you complete goals!
+						Add a buddy to hold yourself accountable! Type in your friend's email to send a request.
+						Once they approve, you will be able to congratulate each other when you complete goals!
 					</Text>
-					<View style={styles.input_container}>
+					<View>
 						<TextInput
-							onChangeText={(email) => this.handleChange(email)}
+							onChangeText={email => this.handleChange(email)}
 							style={styles.input}
-							placeholder="Email"
-							placeholderTextColor="#aaaaaa"
-							underlineColorAndroid="transparent"
-							autoCapitalize="none"
+							placeholder='Email'
+							placeholderTextColor='#aaaaaa'
+							underlineColorAndroid='transparent'
+							autoCapitalize='none'
 						/>
-						<View style={styles.button_container}>
+						<View style={styles.buttonContainer}>
 							<TouchableOpacity onPress={() => this.onRequestPress()}>
-								<Text style={styles.send}>SEND</Text>
+								<Text style={styles.sendButton}>SEND</Text>
 							</TouchableOpacity>
 						</View>
 					</View>
@@ -124,20 +110,19 @@ class FriendsScreen extends React.Component {
 	}
 }
 
-const mapState = (state) => ({
+const mapState = state => ({
 	sentRequests: state.sentRequests,
 	requests: state.requests,
 	friends: state.friends,
-	user: state.user,
+	user: state.user
 });
 
-const mapDispatch = (dispatch) => ({
+const mapDispatch = dispatch => ({
 	getSentRequests: () => dispatch(getSentRequests()),
 	getRequests: () => dispatch(getRequests()),
 	getFriends: () => dispatch(getFriends()),
-	sendRequest: (email) => dispatch(sendRequest(email)),
-	confirmRequest: (status, senderId) =>
-		dispatch(confirmRequest(status, senderId)),
+	sendRequest: email => dispatch(sendRequest(email)),
+	confirmRequest: (status, senderId) => dispatch(confirmRequest(status, senderId))
 });
 
 export default connect(mapState, mapDispatch)(FriendsScreen);
