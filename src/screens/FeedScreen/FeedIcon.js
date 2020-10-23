@@ -8,7 +8,6 @@ import { getUnseenLikes } from '../../../redux/reducers/unseenLikes';
 class FeedIcon extends React.Component {
 	componentDidMount() {
 		this.props.getUnseenLikes();
-		console.log('DISPATCH');
 	}
 	render() {
 		const { unseenLikes } = this.props || [];
@@ -18,14 +17,16 @@ class FeedIcon extends React.Component {
 		return (
 			<View>
 				<IconBadge
-					MainElement={<Feather name='message-square' size={20} color={color} />}
+					MainElement={
+						<Feather name="message-square" size={20} color={color} />
+					}
 					BadgeElement={<Text style={{ color: '#FFFFFF' }}>{badgeCount}</Text>}
 					IconBadgeStyle={{
 						width: 15,
 						height: 20,
 						backgroundColor: 'red',
 						left: 8,
-						bottom: 20
+						bottom: 20,
 					}}
 					Hidden={badgeCount == 0}
 				/>
@@ -34,12 +35,12 @@ class FeedIcon extends React.Component {
 	}
 }
 
-const mapState = state => ({
-	unseenLikes: state.unseenLikes
+const mapState = (state) => ({
+	unseenLikes: state.unseenLikes,
 });
 
-const mapDispatch = dispatch => ({
-	getUnseenLikes: () => dispatch(getUnseenLikes())
+const mapDispatch = (dispatch) => ({
+	getUnseenLikes: () => dispatch(getUnseenLikes()),
 });
 
 export default connect(mapState, mapDispatch)(FeedIcon);
