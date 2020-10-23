@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, Button, Image, Alert } from 'react-native';
+import { Text, View, TextInput, Image, Alert } from 'react-native';
 import styles from './styles';
 import { connect } from 'react-redux';
 import {
@@ -45,7 +45,6 @@ class FriendsScreen extends React.Component {
 		const { sentRequests } = this.props || [];
 		const { requests } = this.props || [];
 		const { friends } = this.props || [];
-		console.log('requests: ', requests);
 		return (
 			<View style={styles.page}>
 				<View style={styles.headline_container}>

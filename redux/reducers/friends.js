@@ -11,7 +11,6 @@ export const getFriends = () => async (dispatch) => {
 		const token = await firebase.auth().currentUser.getIdToken();
 		// should return an array of friends
 		const { data } = await instance.post('/friends', { token });
-		console.log('DATA', data);
 		dispatch(setFriends(data));
 	} catch (error) {
 		console.log(error);

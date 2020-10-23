@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
 import { Text, Alert, View, Image, Platform } from 'react-native';
 import { firebase } from '../../firebase/config';
 import { clearGoals } from '../../../redux/reducers/goals';
@@ -111,14 +110,14 @@ function ProfileScreen(props) {
 			},
 		]);
 	};
-	console.log('props.user: ', props.user);
+	const { firstName, email, createdAt } = props.user;
 	if (!loaded) {
 		return null;
 	} else {
 		return (
 			<>
 				<View style={styles.container}>
-					<Text style={styles.headline}>{props.user.firstName}'s Profile</Text>
+					<Text style={styles.headline}>{firstName}'s Profile</Text>
 				</View>
 				<View style={styles.picContainer}>
 					{image ? (
@@ -148,12 +147,11 @@ function ProfileScreen(props) {
 						onPress={() => pickImage()}
 					/>
 					<View style={styles.section}>
-						<Text style={styles.text}>Name: {props.user.firstName}</Text>
-						<Text style={styles.text}>Email: {props.user.email}</Text>
+						<Text style={styles.text}>Name: {firstName}</Text>
+						<Text style={styles.text}>Email: {email}</Text>
 						<Text style={styles.text}>Friends: {friendsNum}</Text>
 						<Text style={styles.text}>
-							Member Since:{' '}
-							{new Date(props.user.createdAt).toString().slice(4, 15)}
+							Member Since: {new Date(createdAt).toString().slice(4, 15)}
 						</Text>
 					</View>
 				</View>
