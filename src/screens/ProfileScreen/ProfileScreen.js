@@ -4,34 +4,20 @@ import { firebase } from '../../firebase/config';
 import { clearGoals } from '../../../redux/reducers/goals';
 import { removeUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { getFriendsNum, getFriends } from '../../../redux/reducers/friends';
 import CustomButton from '../CustomButton';
 import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
 import styles from './styles';
-
-let image2 = await testreturn.blob();
-// console.log('image: ', image);
-console.log('image 2: ', image2);
-// // console.log('image', image);
-let url = URL.createObjectURL(image2);
-setImage(url);
 
 function ProfileScreen(props) {
 	const [friendsNum, setFriendsNum] = useState(0);
 	const [image, setImage] = useState(null);
 
 	useEffect(() => {
-		// LOADING IMAGE ON LOG IN WILL NEED TO BE IN AN ASYNC FUNCTION IN HERE
-
-		// const test = async () => {
-		// 	let whatami = props.user.profilePicture;
-		// 	let whatami2 = URL.createObjectURL(whatami);
-		// 	setImage(whatami2);
-		// 	setFriendsNum(props.friends.length);
-		// };
-		// test();
+		console.log('user: ', props.user);
+		if (props.user.profilePicture) {
+			setImage(props.user.profilePicture);
+		}
 		console.log('friends num: ', props.friends.length);
 	}, []);
 
@@ -53,21 +39,10 @@ function ProfileScreen(props) {
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
 			quality: 0,
 		});
-		// console.log(result);
 		if (!result.cancelled) {
-			// setImage(result.base64);
-
 			async function uploadImageAsync(uri) {
-				let apiUrl = `http://localhost:8080/api/users/picture`;
+				let apiUrl = `https://accountabee.herokuapp.com/api/users/picture`;
 				const token = await firebase.auth().currentUser.getIdToken();
-				// Note:
-				// Uncomment this if you want to experiment with local server
-				//
-				// if (Constants.isDevice) {
-				// 	apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
-				// } else {
-				// 	apiUrl = `http://localhost:8080/api/users/picture`;
-				// }
 
 				let uriParts = uri.split('.');
 				let fileType = uriParts[uriParts.length - 1];
@@ -87,11 +62,6 @@ function ProfileScreen(props) {
 						authorization: token,
 					},
 				};
-
-				// return await axios.post(
-				// 	'http://localhost:8080/api/users/picture',
-				// 	options
-				// );
 				return fetch(apiUrl, options);
 			}
 
@@ -106,12 +76,12 @@ function ProfileScreen(props) {
 			// };
 
 			// let image = await testreturn.json();
-			let image2 = await testreturn.blob();
-			// console.log('image: ', image);
-			console.log('image 2: ', image2);
-			// // console.log('image', image);
-			let url = URL.createObjectURL(image2);
-			setImage(url);
+			// let image2 = await testreturn.blob();
+			// // console.log('image: ', image);
+			// console.log('image 2: ', image2);
+			// // // console.log('image', image);
+			// let url = URL.createObjectURL(image2);
+			// setImage(url);
 			// console.log('image: ', image);
 			// setImage(image);
 		}
@@ -149,9 +119,9 @@ function ProfileScreen(props) {
 					<Image
 						source={{ uri: image }}
 						style={{
-							width: 250,
-							height: 250,
-							borderRadius: 125,
+							width: 200,
+							height: 200,
+							borderRadius: 100,
 							marginTop: '10%',
 						}}
 					/>
