@@ -23,7 +23,6 @@ class FeedScreen extends Component {
 		this.props.getPosts();
 
 		this.props.getUnseenLikes();
-		// only show modal if there are likes
 		if (this.props.unseenLikes.length > 0) {
 			this.setState({ modalVisible: true });
 		}
@@ -65,6 +64,21 @@ class FeedScreen extends Component {
 		let { firstName } = post.user;
 		let currentUid = firebase.auth().currentUser.uid;
 
+		const isGoalSettingPost = post.completedDays === 0;
+
+		let likeWord = isGoalSettingPost ? 'Encouragement' : 'Clap';
+
+		let postText;
+		if (isGoalSettingPost) {
+			postText = `${firstName} set a goal to complete ${post.frequency || 3} ${
+				post.frequency === 1 ? 'day' : 'days'
+			} of ${title} this week!`;
+		} else {
+			postText = `${firstName} has completed ${targetDaysMet ? 'ALL' : ''} ${completedDays} ${
+				completedDays === 1 ? 'day' : 'days'
+			} of their ${title} goal!`;
+		}
+
 		let myLike = post.likes.filter(like => like.userUid === currentUid);
 
 		return (
@@ -80,29 +94,36 @@ class FeedScreen extends Component {
 						</View>
 					</View>
 
-					<Text style={styles.post}>
-						{`${firstName} has completed ${targetDaysMet ? 'ALL' : ''} ${completedDays} ${
-							completedDays === 1 ? 'day' : 'days'
-						} of their ${title} goal!`}
-					</Text>
+					<Text style={styles.post}>{postText}</Text>
 
 					<TouchableOpacity
 						activeOpacity={0.5}
 						style={styles.clapButton}
 						onPress={() => this.onLikePress(post, myLike)}>
 						<View style={{ flexDirection: 'row', marginTop: 10 }}>
-							{myLike.length ? (
-								<Image
-									source={require('../../../assets/hand-clap-green.png')}
-									style={styles.clapImage}
-									title='ClapImage'
+							{isGoalSettingPost ? (
+								<AntDesign
+									name='smileo'
+									size={24}
+									color='black'
+									style={{ marginTop: 7, marginRight: 1 }}
 								/>
 							) : (
-								<Image
-									source={require('../../../assets/hand-clap-ol-2-512.png')}
-									style={styles.clapImage}
-									title='ClapImage'
-								/>
+								<View>
+									{myLike.length ? (
+										<Image
+											source={require('../../../assets/hand-clap-green.png')}
+											style={styles.clapImage}
+											title='ClapImage'
+										/>
+									) : (
+										<Image
+											source={require('../../../assets/hand-clap-ol-2-512.png')}
+											style={styles.clapImage}
+											title='ClapImage'
+										/>
+									)}
+								</View>
 							)}
 
 							<EvilIcons
@@ -115,9 +136,13 @@ class FeedScreen extends Component {
 					</TouchableOpacity>
 
 					{post.likes.length === 1 ? (
-						<Text style={styles.clapNumber}>{post.likes.length} Clap</Text>
+						<Text style={styles.clapNumber}>
+							{post.likes.length} {likeWord}
+						</Text>
 					) : (
-						<Text style={styles.clapNumber}>{post.likes.length} Claps</Text>
+						<Text style={styles.clapNumber}>
+							{post.likes.length} {likeWord}s
+						</Text>
 					)}
 					<Text style={styles.viewAllComments}>View all 9 comments</Text>
 				</View>

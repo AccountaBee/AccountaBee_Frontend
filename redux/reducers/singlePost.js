@@ -23,6 +23,24 @@ export const newPost = (title, completedDays, targetDaysMet) => async dispatch =
 	}
 };
 
+export const newGoalPost = (title, frequency) => async dispatch => {
+	try {
+		// { token, title, completedDays, targetDaysMet, frequency } = req.body
+		const token = await firebase.auth().currentUser.getIdToken();
+		const { data } = await instance.post('/posts/newPost', {
+			title,
+			completedDays: 0,
+			targetDaysMet: false,
+			token,
+			frequency
+		});
+		dispatch(setPost(data));
+		dispatch(getPosts());
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 export const likePost = postId => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
