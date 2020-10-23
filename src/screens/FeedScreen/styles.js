@@ -95,18 +95,48 @@ export default StyleSheet.create({
 	},
 	xbutton: {
 		marginTop: 20,
-    },
+	},
+	clapButton:{
+		// position:'absolute',
+		height: 35,
+		width: 35,
+		borderRadius: 30,
+		backgroundColor: '#ecf0f1',
+		left: 250,
+		justifyContent:'center',
+		alignContent:'center',
+		alignItems:'center',
+		elevation : 3
+	},
+	clapBubble:{
+		height: 35,
+		width: 35,
+		borderRadius: 30,
+		backgroundColor:'#bddbad',
+		bottom:35,
+		left: 250,
+		justifyContent:'center',
+		alignContent:'center',
+		alignItems:'center',
+	},
     clapImage:{
         width:25,
-        height:25,
-        justifyContent:'center',
-        marginRight:5,
-        marginTop:10
+		height:25,
+		justifyContent:'center',
+		alignContent:'center',
+		alignItems:'center',
+	
     },
     clapNumber:{
-        marginTop:13,
-        fontSize:12
-    },
+        // marginTop:1,
+		fontSize:12,
+		marginTop : 15,
+		marginRight: 20,
+	},
+	clapText:{
+		color: 'white',
+		fontSize: 14
+	},
     viewAllComments:{
         marginTop:10,
         marginBottom:10,

@@ -15,13 +15,13 @@ class Bee extends Component {
                 toValue: 1,
                 tension: 10,
                 friction: 2,
-                duration: 4000,
+                duration: 10000,
                 useNativeDriver:false
             }).start(),
 
             Animated.timing(LogoText, {
                 toValue: 1,
-                duration: 2500,
+                duration: 4000,
                 useNativeDriver: true
             })
         ]).start()

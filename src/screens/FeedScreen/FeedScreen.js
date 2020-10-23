@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { Text, View, Modal, Image, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
+import { Text, View, Modal, Image, TouchableOpacity, SafeAreaView, FlatList, Animated} from 'react-native';
 import { connect } from 'react-redux';
 import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
 import { getPosts } from '../../../redux/reducers/posts';
 import { likePost, unlikePost } from '../../../redux/reducers/singlePost';
 import { AntDesign } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import TimeAgo from 'react-native-timeago';
 import { firebase } from '../../firebase/config';
+import ClapBubble from './ClapBubble'
 
 class FeedScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalVisible: false
+			modalVisible: false,
+			clapsVisible: true,
 		};
 	}
 
@@ -27,6 +28,13 @@ class FeedScreen extends Component {
 		if (this.props.unseenLikes.length > 0) {
 			this.setState({ modalVisible: true });
 		}
+	}
+	animationComplete(){
+		this.setState({clapVisible: false})
+	}
+
+	renderClaps(){
+		return <ClapBubble  animationComplete={this.animationComplete.bind(this)}  />
 	}
 
 	onLikePress = (post, myLike) => {
@@ -69,6 +77,7 @@ class FeedScreen extends Component {
 		let myLike = post.likes.filter(like => like.userUid === currentUid);
 
 		return (
+			<SafeAreaView>
 			<View style={styles.feedItem} key={post.id}>
 				<Image source={require('../../../assets/blank-profile.png')} style={styles.userImage} />
 				<View style={{ flex: 1 }}>
@@ -87,42 +96,48 @@ class FeedScreen extends Component {
 						} of their ${title} goal!`}
 					</Text>
 
-					<TouchableOpacity
-						activeOpacity={0.5}
-						style={styles.clapButton}
-						onPress={() => this.onLikePress(post, myLike)}>
-						<View style={{ flexDirection: 'row', marginTop: 10 }}>
+					
+						<View style={{ flexDirection: 'row', flex: 1}}>
 							{myLike.length ? (
+								<View>
+								<TouchableOpacity
+								activeOpacity={0.7}
+								style={styles.clapButton}
+								onPress={() => this.onLikePress(post, myLike)}>
 								<Image
 									source={require('../../../assets/hand-clap-green.png')}
 									style={styles.clapImage}
 									title='ClapImage'
 								/>
+								</TouchableOpacity>
+								{this.renderClaps()}
+								</View>
 							) : (
+								<TouchableOpacity
+								activeOpacity={0.7}
+								style={styles.clapButton}
+								onPress={() => this.onLikePress(post, myLike)}>
 								<Image
 									source={require('../../../assets/hand-clap-ol-2-512.png')}
 									style={styles.clapImage}
 									title='ClapImage'
 								/>
+								</TouchableOpacity>
 							)}
-
-							<EvilIcons
-								name='comment'
-								size={38}
-								color='black'
-								style={{ marginTop: 7, marginRight: 1 }}
-							/>
+							{post.likes.length <= 1 ? (
+								<Text style={styles.clapNumber}>{post.likes.length} Clap</Text>
+								) : (
+								<Text style={styles.clapNumber}>{post.likes.length} Claps</Text>
+							)}
 						</View>
-					</TouchableOpacity>
+				
+				
 
-					{post.likes.length <= 1 ? (
-						<Text style={styles.clapNumber}>{post.likes.length} Clap</Text>
-					) : (
-						<Text style={styles.clapNumber}>{post.likes.length} Claps</Text>
-					)}
-					<Text style={styles.viewAllComments}>View all 9 comments</Text>
+					
+					
 				</View>
 			</View>
+			</SafeAreaView>
 		);
 	};
 
