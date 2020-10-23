@@ -32,8 +32,8 @@ function HomeScreen(props) {
 	const [celebration, setCelebration] = useState(false);
 	const [celebratedAlready, setCelebratedAlready] = useState(false);
 	const [loaded, setLoaded] = useState(false);
-  const [pieGoals, setPieGoals] = useState([]);
-  const [spinner, setSpinner] = useState(false)
+  	const [pieGoals, setPieGoals] = useState([]);
+  	const [spinner, setSpinner] = useState(false)
 
 	useEffect(() => {
 		async function fetchData() {

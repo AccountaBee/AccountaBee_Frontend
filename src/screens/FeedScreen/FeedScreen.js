@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Modal, FlatList } from 'react-native';
+import { Text, View, Modal, FlatList} from 'react-native';
 import { connect } from 'react-redux';
 import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
 import { getPosts } from '../../../redux/reducers/posts';
@@ -7,13 +7,15 @@ import { likePost, unlikePost } from '../../../redux/reducers/singlePost';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
+import ClapBubble from './ClapBubble'
 import RenderPost from './SinglePost';
 
 class FeedScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalVisible: false
+			modalVisible: false,
+			clapsVisible: true,
 		};
 	}
 
@@ -23,6 +25,14 @@ class FeedScreen extends Component {
 		if (this.props.unseenLikes.length > 0) {
 			this.setState({ modalVisible: true });
 		}
+	}
+
+	animationComplete(){
+		this.setState({clapVisible: false})
+	}
+
+	renderClaps(){
+		return <ClapBubble animationComplete={this.animationComplete.bind(this)}/>
 	}
 
 	onLikePress = (post, myLike) => {
