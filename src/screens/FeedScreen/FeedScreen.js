@@ -69,14 +69,18 @@ class FeedScreen extends Component {
 
 	renderPost = (post) => {
 		let { completedDays, title, targetDaysMet, createdAt } = post;
-		let { firstName } = post.user;
+		let { firstName, profilePicture } = post.user;
 
 		return (
 			<View style={styles.feedItem} key={post.id}>
-				<Image
-					source={require('../../../assets/blank-profile.png')}
-					style={styles.userImage}
-				/>
+				{profilePicture ? (
+					<Image source={{ uri: profilePicture }} style={styles.userImage} />
+				) : (
+					<Image
+						source={require('../../../assets/blank-profile.png')}
+						style={styles.userImage}
+					/>
+				)}
 				<View style={{ flex: 1 }}>
 					<View style={styles.feedContent}>
 						<View>
@@ -88,7 +92,7 @@ class FeedScreen extends Component {
 					</View>
 
 					<Text style={styles.post}>
-						{`${firstName} has completed ${
+						{`${firstName} has completed${
 							targetDaysMet ? 'ALL' : ''
 						} ${completedDays} ${
 							completedDays === 1 ? 'day' : 'days'

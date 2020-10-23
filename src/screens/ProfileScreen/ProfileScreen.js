@@ -1,25 +1,70 @@
 import React, { useState, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Text, Alert, View, Image, Platform } from 'react-native';
 import { firebase } from '../../firebase/config';
 import { clearGoals } from '../../../redux/reducers/goals';
-import { removeUser } from '../../../redux/reducers/users';
+import { getFriendsNum } from '../../../redux/reducers/friends';
+import { removeUser, getUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
-import { getFriendsNum, getFriends } from '../../../redux/reducers/friends';
 import CustomButton from '../CustomButton';
 import * as ImagePicker from 'expo-image-picker';
 import styles from './styles';
 
+async function uploadImageAsync(uri) {
+	const apiUrl = `https://accountabee.herokuapp.com/api/users/picture`;
+	const token = await firebase.auth().currentUser.getIdToken();
+
+	let uriParts = uri.split('.');
+	let fileType = uriParts[uriParts.length - 1];
+
+	let formData = new FormData();
+	formData.append('photo', {
+		uri,
+		name: `photo.${fileType}`,
+		type: `image/${fileType}`,
+	});
+	let options = {
+		method: 'POST',
+		body: formData,
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'multipart/form-data',
+			authorization: token,
+		},
+	};
+	return fetch(apiUrl, options);
+}
+
 function ProfileScreen(props) {
-	const [friendsNum, setFriendsNum] = useState(0);
 	const [image, setImage] = useState(null);
+	const [friendsNum, setFriendsNum] = useState(0);
+	const [loaded, setLoaded] = useState(null);
 
 	useEffect(() => {
-		console.log('user: ', props.user);
+		const func = async () => {
+			if (props.user.profilePicture) {
+				setImage(props.user.profilePicture);
+			}
+			const friends = await props.getFriends();
+			setFriendsNum(friends);
+			setLoaded(true);
+		};
+		func();
+	}, []);
+
+	useEffect(() => {
 		if (props.user.profilePicture) {
 			setImage(props.user.profilePicture);
 		}
-		console.log('friends num: ', props.friends.length);
-	}, []);
+	}, [props.user]);
+
+	useEffect(() => {
+		const friendsFunc = async () => {
+			const friends = await props.getFriends();
+			setFriendsNum(friends);
+		};
+		friendsFunc();
+	}, [props.requests]);
 
 	const cameraRollAccess = async () => {
 		if (Platform.OS !== 'web') {
@@ -40,50 +85,8 @@ function ProfileScreen(props) {
 			quality: 0,
 		});
 		if (!result.cancelled) {
-			async function uploadImageAsync(uri) {
-				let apiUrl = `https://accountabee.herokuapp.com/api/users/picture`;
-				const token = await firebase.auth().currentUser.getIdToken();
-
-				let uriParts = uri.split('.');
-				let fileType = uriParts[uriParts.length - 1];
-
-				let formData = new FormData();
-				formData.append('photo', {
-					uri,
-					name: `photo.${fileType}`,
-					type: `image/${fileType}`,
-				});
-				let options = {
-					method: 'POST',
-					body: formData,
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'multipart/form-data',
-						authorization: token,
-					},
-				};
-				return fetch(apiUrl, options);
-			}
-
-			const testreturn = await uploadImageAsync(result.uri);
-			// console.log('testreturn: ', testreturn.json());
-			// console.log('testreturn: ', testreturn.blob());
-			// var reader = new FileReader();
-			// reader.readAsDataURL(blob);
-			// reader.onloadend = function () {
-			// 	var base64data = reader.result;
-			// 	console.log(base64data);
-			// };
-
-			// let image = await testreturn.json();
-			// let image2 = await testreturn.blob();
-			// // console.log('image: ', image);
-			// console.log('image 2: ', image2);
-			// // // console.log('image', image);
-			// let url = URL.createObjectURL(image2);
-			// setImage(url);
-			// console.log('image: ', image);
-			// setImage(image);
+			await uploadImageAsync(result.uri);
+			await props.getUser();
 		}
 	};
 
@@ -108,61 +111,71 @@ function ProfileScreen(props) {
 			},
 		]);
 	};
-
-	return (
-		<>
-			<View style={styles.container}>
-				<Text style={styles.headline}>{props.user.firstName}'s Profile</Text>
-			</View>
-			<View style={styles.picContainer}>
-				{image ? (
-					<Image
-						source={{ uri: image }}
-						style={{
-							width: 200,
-							height: 200,
-							borderRadius: 100,
-							marginTop: '10%',
-						}}
-					/>
-				) : (
-					<Image
-						style={{
-							width: 200,
-							height: 200,
-							borderRadius: 100,
-							marginTop: '10%',
-						}}
-						source={require('../../../assets/blank-profile.png')}
-					/>
-				)}
-				<CustomButton
-					title="EDIT PICTURE"
-					style={styles.editPic}
-					onPress={() => pickImage()}
-				/>
-				<View style={styles.section}>
-					<Text style={styles.text}>Name: {props.user.firstName}</Text>
-					<Text style={styles.text}>Email: {props.user.email}</Text>
-					<Text style={styles.text}>Friends: {friendsNum}</Text>
-					<Text style={styles.text}>Member Since: {props.user.createdAt}</Text>
+	console.log('props.user: ', props.user);
+	if (!loaded) {
+		return null;
+	} else {
+		return (
+			<>
+				<View style={styles.container}>
+					<Text style={styles.headline}>{props.user.firstName}'s Profile</Text>
 				</View>
-			</View>
-			<CustomButton
-				style={styles.logout}
-				title="LOG OUT"
-				onPress={() => createLogoutAlert()}
-			/>
-		</>
-	);
+				<View style={styles.picContainer}>
+					{image ? (
+						<Image
+							source={{ uri: image }}
+							style={{
+								width: 200,
+								height: 200,
+								borderRadius: 100,
+								marginTop: '10%',
+							}}
+						/>
+					) : (
+						<Image
+							style={{
+								width: 200,
+								height: 200,
+								borderRadius: 100,
+								marginTop: '10%',
+							}}
+							source={require('../../../assets/blank-profile.png')}
+						/>
+					)}
+					<CustomButton
+						title="EDIT PICTURE"
+						style={styles.editPic}
+						onPress={() => pickImage()}
+					/>
+					<View style={styles.section}>
+						<Text style={styles.text}>Name: {props.user.firstName}</Text>
+						<Text style={styles.text}>Email: {props.user.email}</Text>
+						<Text style={styles.text}>Friends: {friendsNum}</Text>
+						<Text style={styles.text}>
+							Member Since:{' '}
+							{new Date(props.user.createdAt).toString().slice(4, 15)}
+						</Text>
+					</View>
+				</View>
+				<CustomButton
+					style={styles.logout}
+					title="LOG OUT"
+					onPress={() => createLogoutAlert()}
+				/>
+			</>
+		);
+	}
 }
 
 const mapState = (state) => ({
+	requests: state.requests,
 	user: state.user,
 	friends: state.friends,
 });
 
 const mapDispatch = (dispatch) => ({
+	getUser: () => dispatch(getUser()),
+	getFriends: () => dispatch(getFriendsNum()),
 	clearUser: () => dispatch(removeUser()),
 	clearGoals: () => dispatch(clearGoals()),
 });

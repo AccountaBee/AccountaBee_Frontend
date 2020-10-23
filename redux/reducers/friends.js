@@ -18,13 +18,14 @@ export const getFriends = () => async (dispatch) => {
 	}
 };
 
+// returns the number of friends a user has (does not set to Redux state)
 export const getFriendsNum = () => async (dispatch) => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
 		const { data } = await instance.post('/friends/number', { token });
-		console.log('friend length data: ', data);
+		return data;
 	} catch (error) {
-		console.error(error);
+		console.log(error);
 	}
 };
 
