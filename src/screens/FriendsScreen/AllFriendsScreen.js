@@ -1,12 +1,8 @@
-import React from "react";
-import { Text, View, TextInput, Button, Image, Alert } from "react-native";
-import styles from "./styles";
-import { connect } from "react-redux";
-import { getSentRequests, sendRequest } from "../../../redux/reducers/sentRequests";
-
-import { getFriends } from "../../../redux/reducers/friends";
-import { Feather } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React from 'react';
+import { Text, View } from 'react-native';
+import styles from './styles';
+import { connect } from 'react-redux';
+import { getFriends } from '../../../redux/reducers/friends';
 
 class AllFriendsScreen extends React.Component {
 	async componentDidMount() {
@@ -36,18 +32,11 @@ class AllFriendsScreen extends React.Component {
 }
 
 const mapState = state => ({
-	sentRequests: state.sentRequests,
-	requests: state.requests,
-	friends: state.friends,
-	user: state.user
+	friends: state.friends
 });
 
 const mapDispatch = dispatch => ({
-	getSentRequests: () => dispatch(getSentRequests()),
-	getRequests: () => dispatch(getRequests()),
-	getFriends: () => dispatch(getFriends()),
-	sendRequest: email => dispatch(sendRequest(email)),
-	confirmRequest: (status, senderId) => dispatch(confirmRequest(status, senderId))
+	getFriends: () => dispatch(getFriends())
 });
 
 export default connect(mapState, mapDispatch)(AllFriendsScreen);

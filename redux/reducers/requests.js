@@ -1,6 +1,7 @@
 import instance from '../axios';
 import { firebase } from '../../src/firebase/config';
 import { getPosts } from './posts';
+import { Alert } from 'react-native';
 
 const SET_REQUESTS = 'SET_REQUESTS';
 
@@ -21,10 +22,10 @@ export const confirmRequest = (status, senderId) => async dispatch => {
 		const token = await firebase.auth().currentUser.getIdToken();
 		await instance.put('/friends/reply', { token, senderId, status });
 		dispatch(getRequests(token));
-		// dispatch(getFriends(token));
 		dispatch(getPosts());
 	} catch (error) {
-		alert(error);
+		console.log(error);
+		Alert.alert('sorry, there was a problem accepting this request. Please try again.');
 	}
 };
 

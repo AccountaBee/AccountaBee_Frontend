@@ -6,10 +6,9 @@ import CustomButton from '../CustomButton';
 import { firebase } from '../../firebase/config';
 import { getUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
+import { Alert } from 'react-native';
 
-const provider = new firebase.auth.GoogleAuthProvider();
-
-function LoginScreen(props, { navigation }) {
+function LoginScreen(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -26,9 +25,7 @@ function LoginScreen(props, { navigation }) {
 				props.navigation.navigate('Home');
 			})
 			.catch(() => {
-				alert(
-					'Sorry your email or password are incorrect. Please check again!'
-				);
+				Alert.alert('Your email or password is incorrect. Please try again!');
 			});
 	};
 
@@ -36,33 +33,28 @@ function LoginScreen(props, { navigation }) {
 		<View style={styles.container}>
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
-				keyboardShouldPersistTaps="always"
-			>
+				keyboardShouldPersistTaps='always'>
 				<Text style={styles.header}>ACCOUNTABEE</Text>
 				<TextInput
 					style={styles.input}
-					placeholder="E-mail"
-					placeholderTextColor="#aaaaaa"
-					onChangeText={(text) => setEmail(text)}
+					placeholder='E-mail'
+					placeholderTextColor='#aaaaaa'
+					onChangeText={text => setEmail(text)}
 					value={email}
-					underlineColorAndroid="transparent"
-					autoCapitalize="none"
+					underlineColorAndroid='transparent'
+					autoCapitalize='none'
 				/>
 				<TextInput
 					style={styles.input}
-					placeholderTextColor="#aaaaaa"
+					placeholderTextColor='#aaaaaa'
 					secureTextEntry
-					placeholder="Password"
-					onChangeText={(text) => setPassword(text)}
+					placeholder='Password'
+					onChangeText={text => setPassword(text)}
 					value={password}
-					underlineColorAndroid="transparent"
-					autoCapitalize="none"
+					underlineColorAndroid='transparent'
+					autoCapitalize='none'
 				/>
-				<CustomButton
-					title="LOG IN"
-					style={styles.button}
-					onPress={() => onLoginPress()}
-				/>
+				<CustomButton title='LOG IN' style={styles.button} onPress={() => onLoginPress()} />
 				<View style={styles.footerView}>
 					<Text style={styles.footerText}>
 						Don't have an account?{' '}
@@ -76,12 +68,12 @@ function LoginScreen(props, { navigation }) {
 	);
 }
 
-const mapState = (state) => ({
-	user: state.user,
+const mapState = state => ({
+	user: state.user
 });
 
-const mapDispatch = (dispatch) => ({
-	getUser: () => dispatch(getUser()),
+const mapDispatch = dispatch => ({
+	getUser: () => dispatch(getUser())
 });
 
 export default connect(mapState, mapDispatch)(LoginScreen);

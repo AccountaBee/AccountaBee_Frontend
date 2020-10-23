@@ -1,5 +1,6 @@
 import instance from '../axios';
 import { firebase } from '../../src/firebase/config';
+import { Alert } from 'react-native';
 
 const GOT_USER = 'GOT_USER';
 const REMOVE_USER = 'REMOVE_USER';
@@ -13,7 +14,7 @@ export const getUser = () => async (dispatch) => {
 		const { data } = await instance.post('/users/login', { token });
 		dispatch(gotUser(data));
 	} catch (error) {
-		alert('Sorry, there was a problem signing in. Please try again.');
+		Alert.alert('Sorry, there was a problem signing in. Please try again.');
 	}
 };
 
