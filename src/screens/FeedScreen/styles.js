@@ -95,16 +95,57 @@ export default StyleSheet.create({
 	xbutton: {
 		marginTop: 20
 	},
+	clapButton: {
+		// position:'absolute',
+		height: 35,
+		width: 35,
+		borderRadius: 30,
+		backgroundColor: '#ecf0f1',
+		left: 250,
+		justifyContent: 'center',
+		alignContent: 'center',
+		alignItems: 'center',
+		elevation: 3
+	},
+	clapBubble: {
+		height: 35,
+		width: 35,
+		borderRadius: 30,
+		backgroundColor: '#bddbad',
+		bottom: 35,
+		left: 250,
+		justifyContent: 'center',
+		alignContent: 'center',
+		alignItems: 'center'
+	},
 	clapImage: {
 		width: 25,
 		height: 25,
 		justifyContent: 'center',
-		marginRight: 5,
-		marginTop: 10
+		alignContent: 'center',
+		alignItems: 'center'
+		// marginRight: 5,
+		// marginTop: 10
 	},
+	// clapImage: {
+	// 	width: 25,
+	// 	height: 25,
+	// 	justifyContent: 'center',
+	// 	marginRight: 5,
+	// 	marginTop: 10
+	// },
 	clapNumber: {
+		fontSize: 12,
 		marginTop: 13,
-		fontSize: 12
+		marginRight: 20
+	},
+	// clapNumber: {
+	// 	marginTop: 13,
+	// 	fontSize: 12
+	// },
+	clapText: {
+		color: 'white',
+		fontSize: 14
 	},
 	viewAllComments: {
 		marginTop: 10,
@@ -112,6 +153,7 @@ export default StyleSheet.create({
 		fontSize: 12
 	},
 	feedItem: {
+		height: 150,
 		backgroundColor: '#FFF',
 		borderRadius: 5,
 		padding: 8,
@@ -120,6 +162,15 @@ export default StyleSheet.create({
 		marginLeft: 10,
 		marginRight: 10
 	},
+	// feedItem: {
+	// 	backgroundColor: '#FFF',
+	// 	borderRadius: 5,
+	// 	padding: 8,
+	// 	flexDirection: 'row',
+	// 	marginVertical: 8,
+	// 	marginLeft: 10,
+	// 	marginRight: 10
+	// },
 	feedContent: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
