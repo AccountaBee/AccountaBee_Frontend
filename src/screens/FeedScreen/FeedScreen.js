@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Modal, FlatList } from 'react-native';
+import { Text, View, Modal, Image, TouchableOpacity, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
 import { getPosts } from '../../../redux/reducers/posts';
@@ -7,7 +7,9 @@ import { likePost, unlikePost } from '../../../redux/reducers/singlePost';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
-import RenderPost from './SinglePost';
+import TimeAgo from 'react-native-timeago';
+import { firebase } from '../../firebase/config';
+import ClapBubble from './ClapBubble';
 
 class FeedScreen extends Component {
 	constructor(props) {
@@ -25,6 +27,14 @@ class FeedScreen extends Component {
 		}
 	}
 
+	animationComplete = () => {
+		this.setState({ clapsVisible: false });
+	};
+
+	renderClaps = () => {
+		return <ClapBubble animationComplete={this.animationComplete} />;
+	};
+
 	onLikePress = (post, myLike) => {
 		if (myLike.length) {
 			this.props.unlikePost(post.id);
@@ -36,10 +46,6 @@ class FeedScreen extends Component {
 	onCloseModal = unseenLikes => {
 		this.setState({ modalVisible: false });
 		this.props.updateLikesToSeen(unseenLikes);
-	};
-
-	renderPost = post => {
-		return <RenderPost post={post} onLikePress={this.onLikePress} />;
 	};
 
 	stringifyNotification = post => {
@@ -65,6 +71,118 @@ class FeedScreen extends Component {
 			}
 		}
 		return { id: post.id, text: text };
+	};
+
+	renderPost = post => {
+		const { completedDays, title, targetDaysMet, createdAt } = post;
+		const { firstName, profilePicture } = post.user;
+		const currentUid = firebase.auth().currentUser.uid;
+
+		const isGoalSettingPost = post.completedDays === 0;
+
+		const likeWord = isGoalSettingPost ? 'Cheer' : 'Clap';
+
+		let postText;
+
+		if (isGoalSettingPost) {
+			postText = `${firstName} set a goal to complete ${post.frequency || 3} ${
+				post.frequency === 1 ? 'day' : 'days'
+			} of ${title} this week!`;
+		} else {
+			postText = `${firstName} has completed ${targetDaysMet ? 'ALL' : ''} ${completedDays} ${
+				completedDays === 1 ? 'day' : 'days'
+			} of their ${title} goal!`;
+		}
+
+		let myLike = post.likes.filter(like => like.userUid === currentUid);
+
+		return (
+			<View style={styles.feedItem} key={post.id}>
+				{profilePicture ? (
+					<Image source={{ uri: profilePicture }} style={styles.userImage} />
+				) : (
+					<Image source={require('../../../assets/blank-profile.png')} style={styles.userImage} />
+				)}
+				<View style={{ flex: 1 }}>
+					<View style={styles.feedContent}>
+						<View>
+							<Text style={styles.userName}>{firstName}</Text>
+							<View>
+								<TimeAgo time={createdAt} />
+							</View>
+						</View>
+					</View>
+
+					<Text style={styles.post}>{postText}</Text>
+					{isGoalSettingPost ? (
+						<View>
+							{myLike.length ? (
+								<TouchableOpacity
+									activeOpacity={0.7}
+									style={styles.clapButton}
+									onPress={() => this.onLikePress(post, myLike)}>
+									<Image
+										source={require('../../../assets/firecolors.png')}
+										style={styles.clapImage}
+										title='ClapImage'
+									/>
+								</TouchableOpacity>
+							) : (
+								<TouchableOpacity
+									activeOpacity={0.7}
+									style={styles.clapButton}
+									onPress={() => this.onLikePress(post, myLike)}>
+									<Image
+										source={require('../../../assets/fire.png')}
+										style={styles.clapImage}
+										title='ClapImage'
+									/>
+								</TouchableOpacity>
+							)}
+						</View>
+					) : (
+						<View style={{ flexDirection: 'row', flex: 1 }}>
+							{myLike.length ? (
+								<View>
+									<TouchableOpacity
+										activeOpacity={0.7}
+										style={styles.clapButton}
+										onPress={() => this.onLikePress(post, myLike)}>
+										<Image
+											source={require('../../../assets/hand-clap-green.png')}
+											style={styles.clapImage}
+											title='ClapImage'
+										/>
+									</TouchableOpacity>
+									{this.renderClaps()}
+								</View>
+							) : (
+								<TouchableOpacity
+									activeOpacity={0.7}
+									style={styles.clapButton}
+									onPress={() => this.onLikePress(post, myLike)}>
+									<Image
+										source={require('../../../assets/hand-clap-ol-2-512.png')}
+										style={styles.clapImage}
+										title='ClapImage'
+									/>
+								</TouchableOpacity>
+							)}
+						</View>
+					)}
+
+					{post.likes.length === 1 ? (
+						<Text style={styles.clapNumber}>
+							{post.likes.length} {likeWord}
+						</Text>
+					) : (
+						<Text style={styles.clapNumber}>
+							{post.likes.length} {likeWord}s
+						</Text>
+					)}
+				</View>
+			</View>
+		);
 	};
 
 	render() {
