@@ -8,7 +8,7 @@ const successMessagesTextOne = [
 ];
 
 export const toastGeneratorTextOne = () => {
-	const num = Math.floor(Math.random() * (8 - 1));
+	const num = Math.floor(Math.random() * (7 - 1));
 	return successMessagesTextOne[num];
 };
 
@@ -22,6 +22,6 @@ const successMessagesTextTwo = [
 ];
 
 export const toastGeneratorTextTwo = () => {
-	const num = Math.floor(Math.random() * (4 - 1));
+	const num = Math.floor(Math.random() * (5 - 1));
 	return successMessagesTextTwo[num];
 };

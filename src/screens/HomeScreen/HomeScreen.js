@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { Text, View, Modal, TouchableHighlight } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
@@ -34,6 +34,11 @@ function HomeScreen(props) {
 	const [loaded, setLoaded] = useState(false);
   const [pieGoals, setPieGoals] = useState([]);
   const [spinner, setSpinner] = useState(false)
+  const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    setMessage(messageGenerator())
+  }, [])
 
 	useEffect(() => {
 		async function fetchData() {
@@ -164,7 +169,7 @@ function HomeScreen(props) {
 										<View style={styles.centeredView}>
 											<View style={styles.modalView}>
 												<Text style={styles.modalText}>
-													{messageGenerator()}
+													{message}
 												</Text>
 												<TouchableHighlight>
 													<AntDesign
