@@ -5,7 +5,7 @@ import NumericInput from 'react-native-numeric-input';
 import styles from './styles';
 import { connect } from 'react-redux';
 import { setGoalsThunk } from '../../../redux/reducers/goals';
-import { newGoalPost } from '../../../redux/reducers/singlePost';
+import { newGoalPost } from '../../../redux/reducers/posts';
 
 function GoalScreen2(props) {
 	const [allGoals, setAllGoals] = useState([]);

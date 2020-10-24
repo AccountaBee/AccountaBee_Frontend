@@ -3,7 +3,7 @@ import { Text, View, Modal, Image, TouchableOpacity, FlatList } from 'react-nati
 import { connect } from 'react-redux';
 import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
 import { getPosts } from '../../../redux/reducers/posts';
-import { likePost, unlikePost } from '../../../redux/reducers/singlePost';
+import { likePost, unlikePost } from '../../../redux/reducers/posts';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';

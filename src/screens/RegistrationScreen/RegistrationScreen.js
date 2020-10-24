@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, Image } from 'react-native';
+import { Text, TextInput, View, Image, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../../firebase/config';
 import styles from './styles';
@@ -7,7 +7,7 @@ import CustomButton from '../CustomButton';
 import { registerNewUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
 
-function RegistrationScreen(props, { navigation }) {
+function RegistrationScreen(props) {
 	const [firstName, setFirstName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');

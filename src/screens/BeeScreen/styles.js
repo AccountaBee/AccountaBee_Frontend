@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
 	container: {
 		flex: 1,
-        alignItems: 'center',
-        justifyContent : 'space-between'
+		alignItems: 'center',
+		justifyContent: 'space-between'
 	},
 	header: {
 		flex: 1,
@@ -17,12 +17,11 @@ export default StyleSheet.create({
 		fontFamily: 'Avenir',
 		fontWeight: '500',
 		fontSize: 28,
-		color: "#8688BC",
+		color: '#8688BC'
 	},
-    
-    bee:{
-        width: 50,
-        height: 50
-    }
 
+	bee: {
+		width: 50,
+		height: 50
+	}
 });
