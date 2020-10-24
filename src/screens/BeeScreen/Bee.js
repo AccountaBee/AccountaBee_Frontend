@@ -8,15 +8,37 @@ class Bee extends Component {
         LogoText : new Animated.Value(0),
     }
 
+    // componentDidMount(){
+    //     const {LogoAnime, LogoText} = this.state
+    //     Animated.parallel([
+    //         Animated.spring(LogoAnime, {
+    //             delay: 100,
+    //             toValue: 1,
+    //             tension: 500,
+    //             friction: 2,
+    //             duration: 40000,
+    //             easing: Easing.bounce,
+
+    //             useNativeDriver:false
+    //         }).start(),
+
+    //         Animated.timing(LogoText, {
+    //             toValue: 1,
+    //             duration: 2000,
+    //             useNativeDriver: true
+    //         })
+    //     ]).start()
+    // }
+
     componentDidMount(){
         const {LogoAnime, LogoText} = this.state
         Animated.parallel([
             Animated.spring(LogoAnime, {
                 delay: 100,
                 toValue: 1,
-                tension: 500,
-                friction: 2,
-                duration: 40000,
+                tension: 10,
+                friction: 1,
+                duration: 90000,
                 easing: Easing.bounce,
 
                 useNativeDriver:false

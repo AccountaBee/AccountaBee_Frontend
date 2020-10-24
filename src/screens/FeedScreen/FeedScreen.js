@@ -30,7 +30,7 @@ class FeedScreen extends Component {
 	}
 
 	animationComplete(){
-		this.setState({clapVisible: false})
+		this.setState({clapsVisible: false})
 	}
 
 	renderClaps(){

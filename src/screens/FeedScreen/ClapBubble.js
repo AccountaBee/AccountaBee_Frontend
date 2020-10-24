@@ -12,7 +12,7 @@ export default class ClapBubble extends Component{
         const {yPosition, opacity}= this.state
         Animated.parallel([
             Animated.timing(yPosition, {
-                toValue: -70,
+                toValue: -40,
                 duration: 600,
                 useNativeDriver:false
             }),

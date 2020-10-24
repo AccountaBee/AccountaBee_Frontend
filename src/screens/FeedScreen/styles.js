@@ -142,6 +142,7 @@ export default StyleSheet.create({
         fontSize:12
     },
     feedItem:{
+		height: 150,
         backgroundColor:'#FFF',
         borderRadius: 5,
         padding : 8,
