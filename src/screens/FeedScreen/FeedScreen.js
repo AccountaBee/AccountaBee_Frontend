@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Modal, FlatList} from 'react-native';
+import { Text, View, Modal, Image, TouchableOpacity, SafeAreaView, FlatList, Animated} from 'react-native';
 import { connect } from 'react-redux';
 import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
 import { getPosts } from '../../../redux/reducers/posts';
@@ -7,6 +7,8 @@ import { likePost, unlikePost } from '../../../redux/reducers/singlePost';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
+import TimeAgo from 'react-native-timeago';
+import { firebase } from '../../firebase/config';
 import ClapBubble from './ClapBubble'
 import RenderPost from './SinglePost';
 
@@ -76,6 +78,73 @@ class FeedScreen extends Component {
 		}
 		return { id: post.id, text: text };
 	};
+
+	renderPost = post => {
+		let { completedDays, title, targetDaysMet, createdAt } = post;
+		let { firstName } = post.user;
+		let currentUid = firebase.auth().currentUser.uid;
+		let myLike = post.likes.filter(like => like.userUid === currentUid);
+
+		return (
+			<SafeAreaView>
+			<View style={styles.feedItem} key={post.id}>
+				<Image source={require('../../../assets/blank-profile.png')} style={styles.userImage} />
+				<View style={{ flex: 1 }}>
+					<View style={styles.feedContent}>
+						<View>
+							<Text style={styles.userName}>{firstName}</Text>
+							<View>
+								<TimeAgo time={createdAt} />
+							</View>
+						</View>
+					</View>
+
+					<Text style={styles.post}>
+						{`${firstName} has completed ${targetDaysMet ? 'ALL' : ''} ${completedDays} ${
+							completedDays === 1 ? 'day' : 'days'
+						} of their ${title} goal!`}
+					</Text>
+
+					
+						<View style={{ flexDirection: 'row', flex: 1}}>
+							{myLike.length ? (
+								<View>
+								<TouchableOpacity
+								activeOpacity={0.7}
+								style={styles.clapButton}
+								onPress={() => this.onLikePress(post, myLike)}>
+								<Image
+									source={require('../../../assets/hand-clap-green.png')}
+									style={styles.clapImage}
+									title='ClapImage'
+								/>
+								</TouchableOpacity>
+								{this.renderClaps()}
+								</View>
+							) : (
+								<TouchableOpacity
+								activeOpacity={0.7}
+								style={styles.clapButton}
+								onPress={() => this.onLikePress(post, myLike)}>
+								<Image
+									source={require('../../../assets/hand-clap-ol-2-512.png')}
+									style={styles.clapImage}
+									title='ClapImage'
+								/>
+								</TouchableOpacity>
+							)}
+							{post.likes.length <= 1 ? (
+								<Text style={styles.clapNumber}>{post.likes.length} Clap</Text>
+								) : (
+								<Text style={styles.clapNumber}>{post.likes.length} Claps</Text>
+							)}
+						</View>
+				</View>
+			</View>
+			</SafeAreaView>
+		);
+	};
+
 
 	render() {
 		const posts = this.props.posts || [];

@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
 import * as ImagePicker from 'expo-image-picker';
 import styles from './styles';
+import { ScrollView } from 'react-native-gesture-handler';
+
 
 async function uploadImageAsync(uri) {
 	const apiUrl = `https://accountabee.herokuapp.com/api/users/picture`;
@@ -116,6 +118,7 @@ function ProfileScreen(props) {
 	} else {
 		return (
 			<>
+				<ScrollView>
 				<View style={styles.container}>
 					<Text style={styles.headline}>{firstName}'s Profile</Text>
 				</View>
@@ -160,6 +163,7 @@ function ProfileScreen(props) {
 					title="LOG OUT"
 					onPress={() => createLogoutAlert()}
 				/>
+				</ScrollView>
 			</>
 		);
 	}
