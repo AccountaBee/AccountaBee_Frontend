@@ -45,7 +45,6 @@ export const likePost = postId => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
 		const res = await instance.post('/likes/add', { token, postId });
-		console.log(res.data);
 		dispatch(getPosts());
 	} catch (error) {
 		console.log(error);
@@ -56,7 +55,6 @@ export const unlikePost = postId => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
 		const res = await instance.post('/likes/remove', { token, postId });
-		console.log(res.data);
 		dispatch(getPosts());
 	} catch (error) {
 		console.log(error);
