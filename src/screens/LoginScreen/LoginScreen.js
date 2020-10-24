@@ -7,6 +7,7 @@ import { firebase } from '../../firebase/config';
 import { getUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
 import { Alert } from 'react-native';
+import Bee from '../BeeScreen/Bee'
 
 function LoginScreen(props) {
 	const [email, setEmail] = useState('');
@@ -34,7 +35,11 @@ function LoginScreen(props) {
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps='always'>
-				<Text style={styles.header}>ACCOUNTABEE</Text>
+
+				<View>
+					<Bee />
+				</View>
+				{/* <Text style={styles.header}>ACCOUNTABEE</Text> */}
 				<TextInput
 					style={styles.input}
 					placeholder='E-mail'
