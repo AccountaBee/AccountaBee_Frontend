@@ -12,7 +12,7 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		alignSelf: 'center',
 		marginBottom: 30,
-		marginTop: 120,
+		marginTop: 30,
 		fontFamily: 'Avenir',
 		fontWeight: '500',
 		fontSize: 28,
@@ -58,4 +58,14 @@ export default StyleSheet.create({
 		fontWeight: 'bold',
 		fontSize: 16,
 	},
+	beeContainer: {
+		marginTop: 80,
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'space-between'
+	},
+	bee:{
+		width: 50,
+		height: 50
+	}
 });

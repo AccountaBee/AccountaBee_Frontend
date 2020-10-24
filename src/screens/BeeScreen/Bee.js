@@ -8,28 +8,6 @@ class Bee extends Component {
 		LogoText: new Animated.Value(0)
 	};
 
-	// componentDidMount(){
-	//     const {LogoAnime, LogoText} = this.state
-	//     Animated.parallel([
-	//         Animated.spring(LogoAnime, {
-	//             delay: 100,
-	//             toValue: 1,
-	//             tension: 500,
-	//             friction: 2,
-	//             duration: 40000,
-	//             easing: Easing.bounce,
-
-	//             useNativeDriver:false
-	//         }).start(),
-
-	//         Animated.timing(LogoText, {
-	//             toValue: 1,
-	//             duration: 2000,
-	//             useNativeDriver: true
-	//         })
-	//     ]).start()
-	// }
-
 	componentDidMount() {
 		const { LogoAnime, LogoText } = this.state;
 		Animated.parallel([
@@ -37,7 +15,7 @@ class Bee extends Component {
 				delay: 100,
 				toValue: 1,
 				tension: 10,
-				friction: 1,
+				friction: 1.5,
 				duration: 90000,
 				easing: Easing.bounce,
 
@@ -63,7 +41,7 @@ class Bee extends Component {
 							outputRange: [80, 0]
 						})
 					}}>
-					<Image source={require('../../../assets/beeLogin.png')} style={styles.bee} />
+					<Image source={require('../../../assets/bee.png')} style={styles.bee} />
 				</Animated.View>
 
 				<Animated.View style={{ opacity: this.state.LogoText }}>
