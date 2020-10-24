@@ -32,7 +32,6 @@ function GoalScreen2(props) {
 	};
 
 	const setGoalsPress = async () => {
-		console.log(allGoals);
 		await props.setGoals(allGoals);
 
 		for (let i = 0; i < allGoals.length; i++) {
