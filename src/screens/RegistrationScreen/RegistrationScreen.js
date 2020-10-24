@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, Alert } from 'react-native';
+import { Text, TextInput, View, Image, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../../firebase/config';
 import styles from './styles';
@@ -45,6 +45,9 @@ function RegistrationScreen(props) {
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps='always'>
+				<View style={styles.beeContainer}>
+					<Image source={require('../../../assets/bee.png')} style={styles.bee} />
+				</View>
 				<Text style={styles.header}>ACCOUNTABEE</Text>
 				<TextInput
 					style={styles.input}

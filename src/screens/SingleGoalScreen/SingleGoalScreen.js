@@ -19,7 +19,7 @@ function SingleGoalScreen(props) {
 			return;
 		} else if (goal.completedDays < goal.frequency - 1) {
 			setIsCompleted(!isCompleted);
-			await props.updateSingleGoalFreq(goalId);
+      await props.updateSingleGoalFreq(goalId);
 			Toast.show({
 				text1: `${toastGeneratorTextOne()}`,
 				text2: `${toastGeneratorTextTwo()} 👋,`,
