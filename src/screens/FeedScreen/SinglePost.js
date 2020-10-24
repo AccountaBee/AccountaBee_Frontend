@@ -70,8 +70,8 @@ export default RenderPost = props => {
 								)}
 							</View>
 						) : (
-							<View>
-								{myLike.length ? (
+							<View style={{ flexDirection: 'row', flex: 1}}>
+							{myLike.length ? (
 								<View>
 								<TouchableOpacity
 								activeOpacity={0.7}
@@ -96,7 +96,8 @@ export default RenderPost = props => {
 									title='ClapImage'
 								/>
 								</TouchableOpacity>
-								)}
+							)}
+						
 							</View>
 						)}
 

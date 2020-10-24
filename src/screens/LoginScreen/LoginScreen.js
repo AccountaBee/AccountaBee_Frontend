@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { Text, TextInput, View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "./styles";
-import CustomButton from "../CustomButton";
-import { firebase } from "../../firebase/config";
-import { getUser } from "../../../redux/reducers/users";
-import { connect } from "react-redux";
-import Bee from "../BeeScreen/Bee"
+import React, { useState } from 'react';
+import { Text, TextInput, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
+import CustomButton from '../CustomButton';
+import { firebase } from '../../firebase/config';
+import { getUser } from '../../../redux/reducers/users';
+import { connect } from 'react-redux';
 import { Alert } from 'react-native';
 
 function LoginScreen(props) {
@@ -33,13 +32,9 @@ function LoginScreen(props) {
 	return (
 		<View style={styles.container}>
 			<KeyboardAwareScrollView
-				style={{ flex: 1, width: "100%" }}
-				keyboardShouldPersistTaps="always">
-
-				<View>
-					<Bee/>
-				</View>
-
+				style={{ flex: 1, width: '100%' }}
+				keyboardShouldPersistTaps='always'>
+				<Text style={styles.header}>ACCOUNTABEE</Text>
 				<TextInput
 					style={styles.input}
 					placeholder='E-mail'
