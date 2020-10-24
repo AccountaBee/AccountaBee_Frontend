@@ -93,83 +93,52 @@ export default StyleSheet.create({
 		flexDirection: 'row'
 	},
 	xbutton: {
-		marginTop: 20,
+		marginTop: 20
 	},
-	clapButton:{
-		// position:'absolute',
-		height: 35,
-		width: 35,
-		borderRadius: 30,
-		backgroundColor: '#ecf0f1',
-		left: 250,
-		justifyContent:'center',
-		alignContent:'center',
-		alignItems:'center',
-		elevation : 3
+	clapImage: {
+		width: 25,
+		height: 25,
+		justifyContent: 'center',
+		marginRight: 5,
+		marginTop: 10
 	},
-	clapBubble:{
-		height: 35,
-		width: 35,
-		borderRadius: 30,
-		backgroundColor:'#bddbad',
-		bottom:35,
-		left: 250,
-		justifyContent:'center',
-		alignContent:'center',
-		alignItems:'center',
+	clapNumber: {
+		marginTop: 13,
+		fontSize: 12
 	},
-    clapImage:{
-        width:25,
-		height:25,
-		justifyContent:'center',
-		alignContent:'center',
-		alignItems:'center',
-		// marginRight: 5,
-		// marginTop: 10
-    },
-    clapNumber:{
-		fontSize:12,
-		marginTop : 13,
-		marginRight: 20,
+	viewAllComments: {
+		marginTop: 10,
+		marginBottom: 10,
+		fontSize: 12
 	},
-	clapText:{
-		color: 'white',
-		fontSize: 14
+	feedItem: {
+		backgroundColor: '#FFF',
+		borderRadius: 5,
+		padding: 8,
+		flexDirection: 'row',
+		marginVertical: 8,
+		marginLeft: 10,
+		marginRight: 10
 	},
-    viewAllComments:{
-        marginTop:10,
-        marginBottom:10,
-        fontSize:12
-    },
-    feedItem:{
-        backgroundColor:'#FFF',
-        borderRadius: 5,
-        padding : 8,
-        flexDirection: 'row',
-        marginVertical: 8,
-        marginLeft: 10,
-		marginRight: 10,
-    },
-    feedContent:{
-        flexDirection:'row', 
-        justifyContent:'space-between',
-		alignItems:'center',
-    },
-    userName:{
-        fontSize: 15,
-        fontWeight: '500',
-        color: '#454D65'
-    },
-    userImage:{
-        width:36,
-        height:36,
-        borderRadius:18,
-        marginRight:16
-    },
-    post:{
-        marginTop: 10,
-        fontSize:16,
-        color:'#838899'
-    }
-
+	feedContent: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center'
+	},
+	userName: {
+		fontSize: 15,
+		fontWeight: '500',
+		color: '#454D65'
+	},
+	userImage: {
+		width: 36,
+		height: 36,
+		borderRadius: 18,
+		marginRight: 16
+	},
+	post: {
+		marginTop: 10,
+		fontSize: 16,
+		color: '#838899'
+	}
 });

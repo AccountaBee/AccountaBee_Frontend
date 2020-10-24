@@ -72,30 +72,17 @@ export default RenderPost = props => {
 						) : (
 							<View>
 								{myLike.length ? (
-								<View>
-								<TouchableOpacity
-								activeOpacity={0.7}
-								style={styles.clapButton}
-								onPress={() => this.onLikePress(post, myLike)}>
-								<Image
-									source={require('../../../assets/hand-clap-green.png')}
-									style={styles.clapImage}
-									title='ClapImage'
-								/>
-								</TouchableOpacity>
-								{this.renderClaps()}
-								</View>
-							) : (
-								<TouchableOpacity
-								activeOpacity={0.7}
-								style={styles.clapButton}
-								onPress={() => this.onLikePress(post, myLike)}>
-								<Image
-									source={require('../../../assets/hand-clap-ol-2-512.png')}
-									style={styles.clapImage}
-									title='ClapImage'
-								/>
-								</TouchableOpacity>
+									<Image
+										source={require('../../../assets/hand-clap-green.png')}
+										style={styles.clapImage}
+										title='ClapImage'
+									/>
+								) : (
+									<Image
+										source={require('../../../assets/hand-clap-ol-2-512.png')}
+										style={styles.clapImage}
+										title='ClapImage'
+									/>
 								)}
 							</View>
 						)}
