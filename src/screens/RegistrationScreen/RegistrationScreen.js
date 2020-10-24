@@ -7,7 +7,7 @@ import CustomButton from '../CustomButton';
 import { registerNewUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
 
-function RegistrationScreen(props, { navigation }) {
+function RegistrationScreen(props) {
 	const [firstName, setFirstName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');

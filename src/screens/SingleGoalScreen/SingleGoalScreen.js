@@ -5,7 +5,7 @@ import Toast from 'react-native-toast-message';
 import { completedDaysThunk } from '../../../redux/reducers/goals';
 import { connect } from 'react-redux';
 import CustomButton from '../CustomButton';
-import { newPost } from '../../../redux/reducers/singlePost';
+import { newPost } from '../../../redux/reducers/posts';
 import { ScrollView } from 'react-native-gesture-handler';
 import { toastGeneratorTextOne, toastGeneratorTextTwo } from './ToastGenerator';
 
@@ -14,7 +14,7 @@ function SingleGoalScreen(props) {
 	const [isCompleted, setIsCompleted] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
 
-	const incrementDay = async (goalId) => {
+	const incrementDay = async goalId => {
 		if (goal.completedDays > goal.frequency - 1) {
 			return;
 		} else if (goal.completedDays < goal.frequency - 1) {
@@ -22,13 +22,13 @@ function SingleGoalScreen(props) {
 			await props.updateSingleGoalFreq(goalId);
 			Toast.show({
 				text1: `${toastGeneratorTextOne()}`,
-        text2: `${toastGeneratorTextTwo()} 👋,`,
+				text2: `${toastGeneratorTextTwo()} 👋,`,
 				type: 'success',
 				position: 'bottom | top',
 				autoHide: true,
 				topOffset: 30,
 				bottomOffset: 40,
-				visibilityTime: 1000,
+				visibilityTime: 1000
 			});
 			props.newPost(goal.title, goal.completedDays + 1, false);
 		}
@@ -41,7 +41,7 @@ function SingleGoalScreen(props) {
 		}
 	};
 
-	const getStatusStyles = (day) => {
+	const getStatusStyles = day => {
 		if (goal.completedDays === day - 1) {
 			return [styles.activeCircle, styles.activeText];
 		} else if (goal.completedDays > day - 1) {
@@ -81,18 +81,11 @@ function SingleGoalScreen(props) {
 							<View style={styles.container} key={idx}>
 								<TouchableOpacity
 									onPress={() =>
-										day === goal.completedDays + 1 ? (
-											incrementDay(goal.id)
-										) : (
-											<View></View>
-										)
-									}
-								>
+										day === goal.completedDays + 1 ? incrementDay(goal.id) : <View></View>
+									}>
 									<View style={styles.day}>
 										<View style={[styles.circle, statusStyles[0]]}></View>
-										<Text style={[styles.text, statusStyles[1]]}>
-											Day {day}
-										</Text>
+										<Text style={[styles.text, statusStyles[1]]}>Day {day}</Text>
 									</View>
 								</TouchableOpacity>
 							</View>
@@ -101,15 +94,11 @@ function SingleGoalScreen(props) {
 				</ScrollView>
 			</View>
 			<View>
-				<Modal animationType="slide" transparent={true} visible={modalVisible}>
+				<Modal animationType='slide' transparent={true} visible={modalVisible}>
 					<View style={styles.centeredView}>
 						<View style={styles.modalView}>
-							<Text style={styles.modalText}>
-								Congratulations,{'\n'}you made it!
-							</Text>
-							<Text style={styles.modalInnerText}>
-								You completed your goal "{goal.title}"!
-							</Text>
+							<Text style={styles.modalText}>Congratulations,{'\n'}you made it!</Text>
+							<Text style={styles.modalInnerText}>You completed your goal "{goal.title}"!</Text>
 							<View style={styles.buttonContainer}>
 								<CustomButton
 									style={styles.nextButton}
@@ -131,13 +120,13 @@ function SingleGoalScreen(props) {
 }
 
 const mapState = (state, props) => ({
-	goal: state.goals.find((goal) => goal.id === props.route.params.goal.id),
+	goal: state.goals.find(goal => goal.id === props.route.params.goal.id)
 });
 
-const mapDispatch = (dispatch) => ({
-	updateSingleGoalFreq: (goalId) => dispatch(completedDaysThunk(goalId)),
+const mapDispatch = dispatch => ({
+	updateSingleGoalFreq: goalId => dispatch(completedDaysThunk(goalId)),
 	newPost: (title, completedDays, targetDaysMet) =>
-		dispatch(newPost(title, completedDays, targetDaysMet)),
+		dispatch(newPost(title, completedDays, targetDaysMet))
 });
 
 export default connect(mapState, mapDispatch)(SingleGoalScreen);
