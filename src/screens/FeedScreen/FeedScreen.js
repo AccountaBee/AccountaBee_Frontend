@@ -138,7 +138,16 @@ class FeedScreen extends Component {
 
 					<Text style={styles.post}>{postText}</Text>
 					{isGoalSettingPost ? (
-						<View>
+						<View style={styles.likeContainer}>
+							{post.likes.length === 1 ? (
+								<Text style={styles.clapNumber}>
+									{post.likes.length} {likeWord}
+								</Text>
+							) : (
+								<Text style={styles.clapNumber}>
+									{post.likes.length} {likeWord}s
+								</Text>
+							)}
 							{myLike.length ? (
 								<View>
 									<TouchableOpacity
@@ -169,7 +178,16 @@ class FeedScreen extends Component {
 							)}
 						</View>
 					) : (
-						<View style={{ flexDirection: 'row', flex: 1 }}>
+						<View style={styles.likeContainer}>
+							{post.likes.length === 1 ? (
+								<Text style={styles.clapNumber}>
+									{post.likes.length} {likeWord}
+								</Text>
+							) : (
+								<Text style={styles.clapNumber}>
+									{post.likes.length} {likeWord}s
+								</Text>
+							)}
 							{myLike.length ? (
 								<View>
 									<TouchableOpacity
@@ -199,15 +217,6 @@ class FeedScreen extends Component {
 								</TouchableOpacity>
 							)}
 						</View>
-					)}
-					{post.likes.length === 1 ? (
-						<Text style={styles.clapNumber}>
-							{post.likes.length} {likeWord}
-						</Text>
-					) : (
-						<Text style={styles.clapNumber}>
-							{post.likes.length} {likeWord}s
-						</Text>
 					)}
 				</View>
 			</View>
