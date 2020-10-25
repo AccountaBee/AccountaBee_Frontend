@@ -1,10 +1,9 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { width } = Dimensions.get('window');
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 const { height } = Dimensions.get('window');
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 70,
+		paddingTop: '18%',
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
@@ -15,16 +14,13 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
+		fontWeight: '500',
 	},
 	row: {
 		flexDirection: 'row',
 	},
-	text: {
-		fontWeight: '500',
-		fontSize: 18,
-		marginVertical: 20,
-		position: 'relative',
-		bottom: '5%',
+	testClaps: {
+		marginLeft: 100,
 	},
 	textInput: {
 		backgroundColor: 'white',
@@ -96,13 +92,14 @@ export default StyleSheet.create({
 		marginTop: 20,
 	},
 	clapButton: {
-		marginTop: '3%',
+		position: 'absolute',
 		height: 35,
 		width: 35,
 		borderRadius: 30,
 		backgroundColor: '#ecf0f1',
+		top: 4,
+		left: 250,
 		justifyContent: 'center',
-		alignContent: 'center',
 		alignItems: 'center',
 		elevation: 3,
 	},
@@ -110,21 +107,18 @@ export default StyleSheet.create({
 		height: 35,
 		width: 35,
 		borderRadius: 30,
-		backgroundColor: '#bddbad',
-		bottom: 35,
+		top: 4,
 		justifyContent: 'center',
 		alignContent: 'center',
 		alignItems: 'center',
 	},
-	fireClapBubble: {
-		height: 35,
-		width: 35,
-		borderRadius: 30,
+	clapBubbleGreen: {
+		backgroundColor: '#bddbad',
+		left: 15,
+	},
+	clapBubbleOrange: {
 		backgroundColor: '#FBB374',
-		bottom: 35,
-		justifyContent: 'center',
-		alignContent: 'center',
-		alignItems: 'center',
+		left: 10,
 	},
 	clapImage: {
 		width: 25,
@@ -134,19 +128,13 @@ export default StyleSheet.create({
 		alignItems: 'center',
 	},
 	clapNumber: {
-		borderWidth: 1,
 		fontSize: 12,
 		marginTop: 13,
-		marginRight: 20,
+		marginLeft: 190,
 	},
 	clapText: {
 		color: 'white',
 		fontSize: 14,
-	},
-	likeContainer: {
-		flexDirection: 'row',
-		borderWidth: 1,
-		borderColor: 'red',
 	},
 	viewAllComments: {
 		marginTop: 10,
@@ -155,7 +143,6 @@ export default StyleSheet.create({
 	},
 	feedItem: {
 		height: 150,
-		maxHeight: 150,
 		backgroundColor: '#FFF',
 		borderRadius: 5,
 		padding: 8,
@@ -175,14 +162,15 @@ export default StyleSheet.create({
 		color: '#454D65',
 	},
 	userImage: {
-		width: 60,
-		height: 60,
-		borderRadius: 30,
+		width: 50,
+		height: 50,
+		borderRadius: 25,
 		marginRight: 16,
 	},
 	post: {
 		marginTop: 10,
 		fontSize: 16,
 		color: '#838899',
+		maxWidth: '80%',
 	},
 });

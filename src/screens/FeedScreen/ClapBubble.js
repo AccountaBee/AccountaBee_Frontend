@@ -37,8 +37,8 @@ export default class ClapBubble extends Component {
 			<Animated.View
 				style={
 					this.props.fire
-						? [styles.fireClapBubble, animationStyle]
-						: [styles.clapBubble, animationStyle]
+						? [styles.clapBubble, animationStyle, styles.clapBubbleOrange]
+						: [styles.clapBubble, animationStyle, styles.clapBubbleGreen]
 				}
 			>
 				<Text style={styles.clapText}>+1</Text>

@@ -41,7 +41,7 @@ export default StyleSheet.create({
 		color: '#424347',
 		marginTop: '13%',
 		marginLeft: '7%',
-		maxWidth: '80%',
+		maxWidth: '85%',
 	},
 	textInput: {
 		backgroundColor: 'white',
@@ -60,11 +60,12 @@ export default StyleSheet.create({
 		fontSize: 20,
 		textAlign: 'center',
 		marginBottom: 15,
+		fontWeight: '500',
 	},
 	goalHeader: {
 		color: '#424347',
 		marginLeft: '7%',
-		maxWidth: '80%',
+		maxWidth: '85%',
 		marginTop: '7%',
 		marginBottom: 40,
 		fontSize: 20,

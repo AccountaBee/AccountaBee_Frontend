@@ -14,6 +14,7 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
+		fontWeight: '500',
 	},
 	noGoals: {
 		color: '#424347',

@@ -117,52 +117,54 @@ function ProfileScreen(props) {
 		return null;
 	} else {
 		return (
-			<ScrollView>
+			<>
 				<View style={styles.container}>
 					<Text style={styles.headline}>{firstName}'s Profile</Text>
 				</View>
-				<View style={styles.picContainer}>
-					{image ? (
-						<Image
-							source={{ uri: image }}
-							style={{
-								width: 200,
-								height: 200,
-								borderRadius: 100,
-								marginTop: '10%',
-							}}
+				<ScrollView>
+					<View style={styles.picContainer}>
+						{image ? (
+							<Image
+								source={{ uri: image }}
+								style={{
+									width: 180,
+									height: 180,
+									borderRadius: 90,
+									marginTop: '10%',
+								}}
+							/>
+						) : (
+							<Image
+								style={{
+									width: 180,
+									height: 180,
+									borderRadius: 90,
+									marginTop: '10%',
+								}}
+								source={require('../../../assets/blank-profile.png')}
+							/>
+						)}
+						<CustomButton
+							title="EDIT PICTURE"
+							style={styles.editPic}
+							onPress={() => pickImage()}
 						/>
-					) : (
-						<Image
-							style={{
-								width: 200,
-								height: 200,
-								borderRadius: 100,
-								marginTop: '10%',
-							}}
-							source={require('../../../assets/blank-profile.png')}
-						/>
-					)}
-					<CustomButton
-						title="EDIT PICTURE"
-						style={styles.editPic}
-						onPress={() => pickImage()}
-					/>
-					<View style={styles.section}>
-						<Text style={styles.text}>Name: {firstName}</Text>
-						<Text style={styles.text}>Email: {email}</Text>
-						<Text style={styles.text}>Friends: {friendsNum}</Text>
-						<Text style={styles.text}>
-							Joined: {new Date(createdAt).toString().slice(4, 15)}
-						</Text>
+						<View style={styles.section}>
+							<Text style={styles.text}>Name: {firstName}</Text>
+							<Text style={styles.text}>Email: {email}</Text>
+							<Text style={styles.text}>Friends: {friendsNum}</Text>
+							<Text style={styles.text}>
+								Joined: {new Date(createdAt).toString().slice(4, 15)}
+							</Text>
+						</View>
 					</View>
-				</View>
-				<CustomButton
-					style={styles.logout}
-					title="LOG OUT"
-					onPress={() => createLogoutAlert()}
-				/>
-			</ScrollView>
+					<CustomButton
+						style={styles.logout}
+						title="LOG OUT"
+						onPress={() => createLogoutAlert()}
+					/>
+				</ScrollView>
+			</>
 		);
 	}
 }

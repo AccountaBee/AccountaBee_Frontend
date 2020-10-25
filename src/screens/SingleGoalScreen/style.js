@@ -15,6 +15,7 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		marginTop: 10,
 		marginBottom: 20,
+		fontWeight: '500',
 	},
 	container: {
 		width: width,

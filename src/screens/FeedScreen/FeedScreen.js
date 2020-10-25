@@ -8,17 +8,17 @@ import {
 	TouchableOpacity,
 	FlatList,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 import {
 	getUnseenLikes,
 	updateLikesToSeen,
 } from '../../../redux/reducers/unseenLikes';
 import { getPosts, likePost, unlikePost } from '../../../redux/reducers/posts';
-import { firebase } from '../../firebase/config';
-import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
-import TimeAgo from 'react-native-timeago';
+import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
+import TimeAgo from 'react-native-timeago';
+import { firebase } from '../../firebase/config';
 import ClapBubble from './ClapBubble';
 
 class FeedScreen extends Component {
@@ -26,7 +26,7 @@ class FeedScreen extends Component {
 		super(props);
 		this.state = {
 			modalVisible: false,
-			clapsVisible: true,
+			clapsVisible: false,
 		};
 	}
 
@@ -98,8 +98,6 @@ class FeedScreen extends Component {
 
 		const isGoalSettingPost = post.completedDays === 0;
 
-		const likeWord = isGoalSettingPost ? 'Cheer' : 'Clap';
-
 		let postText;
 
 		if (isGoalSettingPost) {
@@ -108,7 +106,7 @@ class FeedScreen extends Component {
 			} of ${title} this week!`;
 		} else {
 			postText = `${firstName} has completed${
-				targetDaysMet ? 'ALL' : ''
+				targetDaysMet ? ' ALL' : ''
 			} ${completedDays} ${
 				completedDays === 1 ? 'day' : 'days'
 			} of their ${title} goal!`;
@@ -116,6 +114,11 @@ class FeedScreen extends Component {
 
 		let myLike = post.likes.filter((like) => like.userUid === currentUid);
 
+		const likeWord = isGoalSettingPost ? 'Cheer' : 'Clap';
+		const iconText =
+			post.likes.length === 1
+				? `${post.likes.length} ${likeWord}`
+				: `${post.likes.length} ${likeWord}s`;
 		return (
 			<View style={styles.feedItem} key={post.id}>
 				{profilePicture ? (
@@ -138,18 +141,10 @@ class FeedScreen extends Component {
 
 					<Text style={styles.post}>{postText}</Text>
 					{isGoalSettingPost ? (
-						<View style={styles.likeContainer}>
-							{post.likes.length === 1 ? (
-								<Text style={styles.clapNumber}>
-									{post.likes.length} {likeWord}
-								</Text>
-							) : (
-								<Text style={styles.clapNumber}>
-									{post.likes.length} {likeWord}s
-								</Text>
-							)}
+						<View style={{ flexDirection: 'row' }}>
 							{myLike.length ? (
-								<View style={styles.likeButtonContainer}>
+								<>
+									<Text style={styles.clapNumber}>{iconText}</Text>
 									<TouchableOpacity
 										activeOpacity={0.7}
 										style={styles.clapButton}
@@ -162,34 +157,29 @@ class FeedScreen extends Component {
 										/>
 									</TouchableOpacity>
 									{this.renderClaps(true)}
-								</View>
+								</>
 							) : (
-								<TouchableOpacity
-									activeOpacity={0.7}
-									style={styles.clapButton}
-									onPress={() => this.onLikePress(post, myLike)}
-								>
-									<Image
-										source={require('../../../assets/fire.png')}
-										style={styles.clapImage}
-										title="ClapImage"
-									/>
-								</TouchableOpacity>
+								<>
+									<Text style={styles.clapNumber}>{iconText}</Text>
+									<TouchableOpacity
+										activeOpacity={0.7}
+										style={styles.clapButton}
+										onPress={() => this.onLikePress(post, myLike)}
+									>
+										<Image
+											source={require('../../../assets/fire.png')}
+											style={styles.clapImage}
+											title="ClapImage"
+										/>
+									</TouchableOpacity>
+								</>
 							)}
 						</View>
 					) : (
-						<View style={styles.likeContainer}>
-							{post.likes.length === 1 ? (
-								<Text style={styles.clapNumber}>
-									{post.likes.length} {likeWord}
-								</Text>
-							) : (
-								<Text style={styles.clapNumber}>
-									{post.likes.length} {likeWord}s
-								</Text>
-							)}
+						<View style={{ flexDirection: 'row' }}>
 							{myLike.length ? (
-								<View>
+								<>
+									<Text style={styles.clapNumber}>{iconText}</Text>
 									<TouchableOpacity
 										activeOpacity={0.7}
 										style={styles.clapButton}
@@ -202,19 +192,22 @@ class FeedScreen extends Component {
 										/>
 									</TouchableOpacity>
 									{this.renderClaps()}
-								</View>
+								</>
 							) : (
-								<TouchableOpacity
-									activeOpacity={0.7}
-									style={styles.clapButton}
-									onPress={() => this.onLikePress(post, myLike)}
-								>
-									<Image
-										source={require('../../../assets/hand-clap-ol-2-512.png')}
-										style={styles.clapImage}
-										title="ClapImage"
-									/>
-								</TouchableOpacity>
+								<>
+									<Text style={styles.clapNumber}>{iconText}</Text>
+									<TouchableOpacity
+										activeOpacity={0.7}
+										style={styles.clapButton}
+										onPress={() => this.onLikePress(post, myLike)}
+									>
+										<Image
+											source={require('../../../assets/hand-clap-ol-2-512.png')}
+											style={styles.clapImage}
+											title="ClapImage"
+										/>
+									</TouchableOpacity>
+								</>
 							)}
 						</View>
 					)}

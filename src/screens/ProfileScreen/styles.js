@@ -1,8 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 70,
+		paddingTop: '18%',
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
@@ -13,10 +15,11 @@ export default StyleSheet.create({
 		color: 'white',
 		fontSize: 26,
 		textAlign: 'center',
+		fontWeight: '500',
 		marginBottom: 20,
 	},
 	logout: {
-		marginTop: '10%',
+		marginTop: '6%',
 		minWidth: '40%',
 		alignSelf: 'center',
 	},
@@ -24,6 +27,7 @@ export default StyleSheet.create({
 		backgroundColor: '#424347',
 		opacity: 0.6,
 		minWidth: '40%',
+		paddingHorizontal: 10,
 		alignSelf: 'center',
 	},
 	picContainer: {
@@ -37,9 +41,8 @@ export default StyleSheet.create({
 	},
 	text: {
 		marginTop: '4%',
-		fontWeight: '400',
+		fontSize: 0.042 * width,
 		color: '#424347',
-		fontSize: 20,
 	},
 	section: {
 		marginTop: '10%',

@@ -4,7 +4,7 @@ const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
 	headlineContainer: {
-		paddingTop: 70,
+		paddingTop: '18%',
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
@@ -15,6 +15,7 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
+		fontWeight: '500',
 	},
 	subheading: {
 		fontWeight: '700',
