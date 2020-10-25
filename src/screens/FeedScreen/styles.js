@@ -1,5 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { width } = Dimensions.get('window');
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 const { height } = Dimensions.get('window');
 
 export default StyleSheet.create({
@@ -20,16 +19,8 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 	},
 	testClaps: {
-		// marginTop: 30,
 		marginLeft: 100,
 	},
-	// text: {
-	// 	fontWeight: '500',
-	// 	fontSize: 18,
-	// 	marginVertical: 20,
-	// 	position: 'relative',
-	// 	bottom: '5%',
-	// },
 	textInput: {
 		backgroundColor: 'white',
 		width: '80%',
@@ -106,9 +97,8 @@ export default StyleSheet.create({
 		borderRadius: 30,
 		backgroundColor: '#ecf0f1',
 		top: 4,
-		left: 258,
+		left: 250,
 		justifyContent: 'center',
-		// alignContent: 'center',
 		alignItems: 'center',
 		elevation: 3,
 	},
@@ -116,13 +106,18 @@ export default StyleSheet.create({
 		height: 35,
 		width: 35,
 		borderRadius: 30,
-		backgroundColor: '#bddbad',
-		// bottom: 35,
 		top: 4,
-		left: 195,
 		justifyContent: 'center',
 		alignContent: 'center',
 		alignItems: 'center',
+	},
+	clapBubbleGreen: {
+		backgroundColor: '#bddbad',
+		left: 15,
+	},
+	clapBubbleOrange: {
+		backgroundColor: '#FBB374',
+		left: 10,
 	},
 	clapImage: {
 		width: 25,
@@ -130,25 +125,12 @@ export default StyleSheet.create({
 		justifyContent: 'center',
 		alignContent: 'center',
 		alignItems: 'center',
-		// marginRight: 5,
-		// marginTop: 10
 	},
-	// clapImage: {
-	// 	width: 25,
-	// 	height: 25,
-	// 	justifyContent: 'center',
-	// 	marginRight: 5,
-	// 	marginTop: 10
-	// },
 	clapNumber: {
 		fontSize: 12,
 		marginTop: 13,
-		marginLeft: 205,
+		marginLeft: 190,
 	},
-	// clapNumber: {
-	// 	marginTop: 13,
-	// 	fontSize: 12
-	// },
 	clapText: {
 		color: 'white',
 		fontSize: 14,
@@ -168,15 +150,6 @@ export default StyleSheet.create({
 		marginLeft: 10,
 		marginRight: 10,
 	},
-	// feedItem: {
-	// 	backgroundColor: '#FFF',
-	// 	borderRadius: 5,
-	// 	padding: 8,
-	// 	flexDirection: 'row',
-	// 	marginVertical: 8,
-	// 	marginLeft: 10,
-	// 	marginRight: 10
-	// },
 	feedContent: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -188,14 +161,15 @@ export default StyleSheet.create({
 		color: '#454D65',
 	},
 	userImage: {
-		width: 36,
-		height: 36,
-		borderRadius: 18,
+		width: 50,
+		height: 50,
+		borderRadius: 25,
 		marginRight: 16,
 	},
 	post: {
 		marginTop: 10,
 		fontSize: 16,
 		color: '#838899',
+		maxWidth: '80%',
 	},
 });

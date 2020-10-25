@@ -42,13 +42,16 @@ class FeedScreen extends Component {
 		this.setState({ clapsVisible: false });
 	};
 
-	renderClaps = () => {
-		return <ClapBubble animationComplete={this.animationComplete} />;
+	renderClaps = (fireBoolean = false) => {
+		return (
+			<ClapBubble
+				animationComplete={this.animationComplete}
+				fire={fireBoolean}
+			/>
+		);
 	};
 
 	onLikePress = (post, myLike) => {
-		console.log('in the func');
-		console.log('my like in like press func: ', myLike);
 		if (myLike.length) {
 			this.props.unlikePost(post.id);
 		} else {
@@ -103,14 +106,13 @@ class FeedScreen extends Component {
 			} of ${title} this week!`;
 		} else {
 			postText = `${firstName} has completed${
-				targetDaysMet ? 'ALL' : ''
+				targetDaysMet ? ' ALL' : ''
 			} ${completedDays} ${
 				completedDays === 1 ? 'day' : 'days'
 			} of their ${title} goal!`;
 		}
 
 		let myLike = post.likes.filter((like) => like.userUid === currentUid);
-		// console.log('my like is ----------------> ', myLike);
 
 		const likeWord = isGoalSettingPost ? 'Cheer' : 'Clap';
 		const iconText =
@@ -154,6 +156,7 @@ class FeedScreen extends Component {
 											title="ClapImage"
 										/>
 									</TouchableOpacity>
+									{this.renderClaps(true)}
 								</>
 							) : (
 								<>
