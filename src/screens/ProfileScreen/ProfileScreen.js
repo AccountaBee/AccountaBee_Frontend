@@ -21,7 +21,7 @@ async function uploadImageAsync(uri) {
 	formData.append('photo', {
 		uri,
 		name: `photo.${fileType}`,
-		type: `image/${fileType}`
+		type: `image/${fileType}`,
 	});
 	let options = {
 		method: 'POST',
@@ -29,8 +29,8 @@ async function uploadImageAsync(uri) {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'multipart/form-data',
-			authorization: token
-		}
+			authorization: token,
+		},
 	};
 	return fetch(apiUrl, options);
 }
@@ -70,7 +70,10 @@ function ProfileScreen(props) {
 		if (Platform.OS !== 'web') {
 			const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
 			if (status !== 'granted') {
-				Alert.alert('Sorry, we need camera roll permissions to change your profile picture!', null);
+				Alert.alert(
+					'Sorry, we need camera roll permissions to change your profile picture!',
+					null
+				);
 			}
 		}
 	};
@@ -79,7 +82,7 @@ function ProfileScreen(props) {
 		cameraRollAccess();
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
-			quality: 0
+			quality: 0,
 		});
 		if (!result.cancelled) {
 			await uploadImageAsync(result.uri);
@@ -100,12 +103,12 @@ function ProfileScreen(props) {
 						.then(() => {
 							console.log('You are signed out');
 						});
-				}
+				},
 			},
 			{
 				text: 'Cancel',
-				onPress: () => console.log('false alarm!')
-			}
+				onPress: () => console.log('false alarm!'),
+			},
 		]);
 	};
 	const { firstName, email, createdAt } = props.user;
@@ -125,7 +128,7 @@ function ProfileScreen(props) {
 								width: 200,
 								height: 200,
 								borderRadius: 100,
-								marginTop: '10%'
+								marginTop: '10%',
 							}}
 						/>
 					) : (
@@ -134,38 +137,46 @@ function ProfileScreen(props) {
 								width: 200,
 								height: 200,
 								borderRadius: 100,
-								marginTop: '10%'
+								marginTop: '10%',
 							}}
 							source={require('../../../assets/blank-profile.png')}
 						/>
 					)}
-					<CustomButton title='EDIT PICTURE' style={styles.editPic} onPress={() => pickImage()} />
+					<CustomButton
+						title="EDIT PICTURE"
+						style={styles.editPic}
+						onPress={() => pickImage()}
+					/>
 					<View style={styles.section}>
 						<Text style={styles.text}>Name: {firstName}</Text>
 						<Text style={styles.text}>Email: {email}</Text>
 						<Text style={styles.text}>Friends: {friendsNum}</Text>
 						<Text style={styles.text}>
-							Member Since: {new Date(createdAt).toString().slice(4, 15)}
+							Joined: {new Date(createdAt).toString().slice(4, 15)}
 						</Text>
 					</View>
 				</View>
-				<CustomButton style={styles.logout} title='LOG OUT' onPress={() => createLogoutAlert()} />
+				<CustomButton
+					style={styles.logout}
+					title="LOG OUT"
+					onPress={() => createLogoutAlert()}
+				/>
 			</ScrollView>
 		);
 	}
 }
 
-const mapState = state => ({
+const mapState = (state) => ({
 	requests: state.requests,
 	user: state.user,
-	friends: state.friends
+	friends: state.friends,
 });
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch) => ({
 	getUser: () => dispatch(getUser()),
 	getFriends: () => dispatch(getFriendsNum()),
 	clearUser: () => dispatch(removeUser()),
-	clearGoals: () => dispatch(clearGoals())
+	clearGoals: () => dispatch(clearGoals()),
 });
 
 export default connect(mapState, mapDispatch)(ProfileScreen);

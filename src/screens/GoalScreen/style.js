@@ -2,25 +2,30 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 80,
-		paddingLeft: 20,
-		paddingRight: 20,
+		paddingTop: '20%',
 		backgroundColor: '#8688BC',
 	},
 	headline: {
-		marginTop: 10,
+		marginTop: '2%',
 		color: 'white',
 		fontSize: 20,
 		textAlign: 'center',
-		marginBottom: 15,
+		marginBottom: '5%',
 	},
 	nextButton: {
 		alignSelf: 'center',
 		backgroundColor: '#8688BC',
-		width: '80%',
-		marginTop: 10,
+		width: '50%',
+		marginTop: '3%',
 	},
 	flex: {
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		marginLeft: '5%',
+		marginRight: '5%',
+	},
+	flexGoal: {
+		alignItems: 'flex-end',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 	},
@@ -31,13 +36,15 @@ export default StyleSheet.create({
 	subheader: {
 		color: '#424347',
 		fontSize: 16,
-		marginLeft: 20,
-		marginTop: 25,
+		marginLeft: '5%',
+		marginTop: '6%',
+		marginBottom: '3%',
 	},
 	textInput: {
+		marginBottom: 0,
 		backgroundColor: 'white',
 		width: '80%',
-		padding: 5,
+		padding: 10,
 		height: 55,
 		borderRadius: 5,
 		borderColor: 'white',
@@ -53,7 +60,7 @@ export default StyleSheet.create({
 		color: '#424347',
 	},
 	goalHeader: {
-		marginLeft: 20,
+		marginLeft: '5%',
 		fontSize: 22,
 		fontWeight: '500',
 	},
@@ -72,6 +79,7 @@ export default StyleSheet.create({
 		marginTop: 100,
 	},
 	button: {
+		alignSelf: 'flex-start',
 		paddingVertical: 16,
 		paddingHorizontal: 10,
 		marginTop: 0,
