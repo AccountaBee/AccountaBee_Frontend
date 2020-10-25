@@ -1,30 +1,26 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { width } = Dimensions.get('window');
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 const { height } = Dimensions.get('window');
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 70,
+		paddingTop: '18%',
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC'
+		backgroundColor: '#8688BC',
 	},
 	headline: {
 		marginTop: 10,
 		color: 'white',
 		fontSize: 26,
 		textAlign: 'center',
-		marginBottom: 20
+		marginBottom: 20,
+		fontWeight: '500',
 	},
 	row: {
-		flexDirection: 'row'
+		flexDirection: 'row',
 	},
-	text: {
-		fontWeight: '500',
-		fontSize: 18,
-		marginVertical: 20,
-		position: 'relative',
-		bottom: '5%'
+	testClaps: {
+		marginLeft: 100,
 	},
 	textInput: {
 		backgroundColor: 'white',
@@ -35,18 +31,18 @@ export default StyleSheet.create({
 		borderColor: 'white',
 		borderWidth: 1,
 		fontSize: 18,
-		marginRight: 0
+		marginRight: 0,
 	},
 	button: {
 		paddingVertical: 16,
 		paddingHorizontal: 10,
 		marginTop: 0,
 		marginLeft: 0,
-		backgroundColor: '#9FC78A'
+		backgroundColor: '#9FC78A',
 	},
 	centeredView: {
 		flex: 1,
-		justifyContent: 'flex-end'
+		justifyContent: 'flex-end',
 	},
 	modalView: {
 		flex: 1,
@@ -62,19 +58,19 @@ export default StyleSheet.create({
 		shadowColor: '#000',
 		shadowOpacity: 0.5,
 		shadowRadius: 3.84,
-		elevation: 0
+		elevation: 0,
 	},
 	textStyle: {
 		color: 'white',
 		fontWeight: 'bold',
-		textAlign: 'center'
+		textAlign: 'center',
 	},
 	modalText: {
 		marginTop: 25,
 		marginBottom: 5,
 		textAlign: 'center',
 		color: 'white',
-		fontSize: 20
+		fontSize: 20,
 	},
 	modalInnerTextContainer: {
 		borderRadius: 5,
@@ -82,7 +78,7 @@ export default StyleSheet.create({
 		marginVertical: 8,
 		marginLeft: 10,
 		marginRight: 10,
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
 	},
 	modalInnerText: {
 		marginBottom: 12,
@@ -90,67 +86,60 @@ export default StyleSheet.create({
 		color: 'white',
 		fontSize: 20,
 		marginTop: 10,
-		flexDirection: 'row'
+		flexDirection: 'row',
 	},
 	xbutton: {
-		marginTop: 20
+		marginTop: 20,
 	},
 	clapButton: {
-		// position:'absolute',
+		position: 'absolute',
 		height: 35,
 		width: 35,
 		borderRadius: 30,
 		backgroundColor: '#ecf0f1',
+		top: 4,
 		left: 250,
 		justifyContent: 'center',
-		alignContent: 'center',
 		alignItems: 'center',
-		elevation: 3
+		elevation: 3,
 	},
 	clapBubble: {
 		height: 35,
 		width: 35,
 		borderRadius: 30,
-		backgroundColor: '#bddbad',
-		bottom: 35,
-		left: 250,
+		top: 4,
 		justifyContent: 'center',
 		alignContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+	},
+	clapBubbleGreen: {
+		backgroundColor: '#bddbad',
+		left: 15,
+	},
+	clapBubbleOrange: {
+		backgroundColor: '#FBB374',
+		left: 10,
 	},
 	clapImage: {
 		width: 25,
 		height: 25,
 		justifyContent: 'center',
 		alignContent: 'center',
-		alignItems: 'center'
-		// marginRight: 5,
-		// marginTop: 10
+		alignItems: 'center',
 	},
-	// clapImage: {
-	// 	width: 25,
-	// 	height: 25,
-	// 	justifyContent: 'center',
-	// 	marginRight: 5,
-	// 	marginTop: 10
-	// },
 	clapNumber: {
 		fontSize: 12,
 		marginTop: 13,
-		marginRight: 20
+		marginLeft: 190,
 	},
-	// clapNumber: {
-	// 	marginTop: 13,
-	// 	fontSize: 12
-	// },
 	clapText: {
 		color: 'white',
-		fontSize: 14
+		fontSize: 14,
 	},
 	viewAllComments: {
 		marginTop: 10,
 		marginBottom: 10,
-		fontSize: 12
+		fontSize: 12,
 	},
 	feedItem: {
 		height: 150,
@@ -160,36 +149,28 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		marginVertical: 8,
 		marginLeft: 10,
-		marginRight: 10
+		marginRight: 10,
 	},
-	// feedItem: {
-	// 	backgroundColor: '#FFF',
-	// 	borderRadius: 5,
-	// 	padding: 8,
-	// 	flexDirection: 'row',
-	// 	marginVertical: 8,
-	// 	marginLeft: 10,
-	// 	marginRight: 10
-	// },
 	feedContent: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	userName: {
 		fontSize: 15,
 		fontWeight: '500',
-		color: '#454D65'
+		color: '#454D65',
 	},
 	userImage: {
-		width: 36,
-		height: 36,
-		borderRadius: 18,
-		marginRight: 16
+		width: 50,
+		height: 50,
+		borderRadius: 25,
+		marginRight: 16,
 	},
 	post: {
 		marginTop: 10,
 		fontSize: 16,
-		color: '#838899'
-	}
+		color: '#838899',
+		maxWidth: '80%',
+	},
 });

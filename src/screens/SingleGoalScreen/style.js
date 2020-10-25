@@ -7,7 +7,7 @@ export default StyleSheet.create({
 		paddingTop: 71,
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor:'#8688BC',
+		backgroundColor: '#8688BC',
 	},
 	headline: {
 		color: 'white',
@@ -15,11 +15,11 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		marginTop: 10,
 		marginBottom: 20,
+		fontWeight: '500',
 	},
 	container: {
 		width: width,
-		marginTop: 10,
-		paddingBottom: 5,
+		marginTop: '6%',
 		paddingLeft: 35,
 		borderBottomColor: '#bbb',
 		borderBottomWidth: StyleSheet.hairlineWidth,
@@ -30,7 +30,8 @@ export default StyleSheet.create({
 	text: {
 		fontWeight: '500',
 		fontSize: 18,
-		marginVertical: 20,
+		marginTop: '6%',
+		marginBottom: '4%',
 		position: 'relative',
 		bottom: '5%',
 	},
@@ -43,10 +44,10 @@ export default StyleSheet.create({
 		marginRight: 20,
 	},
 	completeCircle: {
-    borderColor: '#9FC78A',
-  },
-  activeCircle: {
-    borderColor: '#DA4453',
+		borderColor: '#9FC78A',
+	},
+	activeCircle: {
+		borderColor: '#DA4453',
 	},
 	incompleteCircle: {
 		borderColor: '#bbb',
@@ -55,10 +56,10 @@ export default StyleSheet.create({
 		color: '#bbb',
 	},
 	activeText: {
-    color: '#29323c',
-  },
-  completeText: {
-    color: '#9FC78A',
+		color: '#29323c',
+	},
+	completeText: {
+		color: '#9FC78A',
 		textDecorationLine: 'line-through',
 	},
 	textInput: {
@@ -128,14 +129,14 @@ export default StyleSheet.create({
 		marginBottom: 15,
 		textAlign: 'center',
 		color: 'white',
-		fontSize: 40,
+		fontSize: 35,
 	},
 	modalInnerText: {
 		marginBottom: 12,
 		textAlign: 'center',
 		color: 'white',
 		fontSize: 20,
-		marginTop:10
+		marginTop: 10,
 	},
 	xbutton: {
 		marginTop: 20,
@@ -143,16 +144,14 @@ export default StyleSheet.create({
 	nextButton: {
 		alignSelf: 'center',
 		backgroundColor: '#9FC78A',
-		width: '90%',
-		padding: 70,
-		marginLeft: 30,
-		marginRight: 30,
+		width: '70%',
 		marginTop: 20,
 		height: 48,
 		borderRadius: 5,
 		justifyContent: 'center',
 	},
 	buttonContainer: {
-		marginTop: 60
-	}
+		marginTop: 60,
+		width: '100%',
+	},
 });

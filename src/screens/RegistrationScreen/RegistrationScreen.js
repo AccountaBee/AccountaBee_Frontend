@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, Image, Alert } from 'react-native';
+import { Text, TextInput, View, Image, Alert, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../../firebase/config';
 import styles from './styles';
@@ -18,6 +18,7 @@ function RegistrationScreen(props) {
 	};
 
 	const onRegisterPress = () => {
+		Keyboard.dismiss();
 		if (password !== confirmPassword) {
 			Alert.alert("Passwords don't match. Please try again!");
 			return;
@@ -30,13 +31,15 @@ function RegistrationScreen(props) {
 				const body = {
 					token,
 					email,
-					firstName
+					firstName,
 				};
 				await props.gotUser(body);
 				props.navigation.navigate('All Goals');
 			})
 			.catch(() => {
-				Alert.alert('Sorry, there was a problem creating an account. Please try again!');
+				Alert.alert(
+					'Sorry, there was a problem creating an account. Please try again!'
+				);
 			});
 	};
 
@@ -44,73 +47,79 @@ function RegistrationScreen(props) {
 		<View style={styles.container}>
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
-				keyboardShouldPersistTaps='always'>
+				keyboardShouldPersistTaps="always"
+			>
 				<View style={styles.beeContainer}>
-					<Image source={require('../../../assets/bee.png')} style={styles.bee} />
+					<Image
+						source={require('../../../assets/bee.png')}
+						style={styles.bee}
+					/>
 				</View>
 				<Text style={styles.header}>ACCOUNTABEE</Text>
-				<TextInput
-					style={styles.input}
-					placeholder='First Name'
-					placeholderTextColor='#aaaaaa'
-					onChangeText={text => setFirstName(text)}
-					value={firstName}
-					underlineColorAndroid='transparent'
-					autoCapitalize='none'
-				/>
-				<TextInput
-					style={styles.input}
-					placeholder='E-mail'
-					placeholderTextColor='#aaaaaa'
-					onChangeText={text => setEmail(text)}
-					value={email}
-					underlineColorAndroid='transparent'
-					autoCapitalize='none'
-				/>
-				<TextInput
-					style={styles.input}
-					placeholderTextColor='#aaaaaa'
-					secureTextEntry
-					placeholder='Password'
-					onChangeText={text => setPassword(text)}
-					value={password}
-					underlineColorAndroid='transparent'
-					autoCapitalize='none'
-				/>
-				<TextInput
-					style={styles.input}
-					placeholderTextColor='#aaaaaa'
-					secureTextEntry
-					placeholder='Confirm Password'
-					onChangeText={text => setConfirmPassword(text)}
-					value={confirmPassword}
-					underlineColorAndroid='transparent'
-					autoCapitalize='none'
-				/>
-				<CustomButton
-					title='CREATE ACCOUNT'
-					style={styles.button}
-					onPress={() => onRegisterPress()}
-				/>
-				<View style={styles.footerView}>
-					<Text style={styles.footerText}>
-						Already have an account?{' '}
-						<Text onPress={onFooterLinkPress} style={styles.footerLink}>
-							Log in
+				<View>
+					<TextInput
+						style={styles.input}
+						placeholder="First Name"
+						placeholderTextColor="#aaaaaa"
+						onChangeText={(text) => setFirstName(text)}
+						value={firstName}
+						underlineColorAndroid="transparent"
+						autoCapitalize="none"
+					/>
+					<TextInput
+						style={styles.input}
+						placeholder="Email"
+						placeholderTextColor="#aaaaaa"
+						onChangeText={(text) => setEmail(text)}
+						value={email}
+						underlineColorAndroid="transparent"
+						autoCapitalize="none"
+					/>
+					<TextInput
+						style={styles.input}
+						placeholderTextColor="#aaaaaa"
+						secureTextEntry
+						placeholder="Password"
+						onChangeText={(text) => setPassword(text)}
+						value={password}
+						underlineColorAndroid="transparent"
+						autoCapitalize="none"
+					/>
+					<TextInput
+						style={styles.input}
+						placeholderTextColor="#aaaaaa"
+						secureTextEntry
+						placeholder="Confirm Password"
+						onChangeText={(text) => setConfirmPassword(text)}
+						value={confirmPassword}
+						underlineColorAndroid="transparent"
+						autoCapitalize="none"
+					/>
+					<CustomButton
+						title="CREATE ACCOUNT"
+						style={styles.button}
+						onPress={() => onRegisterPress()}
+					/>
+					<View style={styles.footerView}>
+						<Text style={styles.footerText}>
+							Already have an account?{' '}
+							<Text onPress={onFooterLinkPress} style={styles.footerLink}>
+								Log in
+							</Text>
 						</Text>
-					</Text>
+					</View>
 				</View>
 			</KeyboardAwareScrollView>
 		</View>
 	);
 }
 
-const mapState = state => ({
-	user: state.user
+const mapState = (state) => ({
+	user: state.user,
 });
 
-const mapDispatch = dispatch => ({
-	gotUser: user => dispatch(registerNewUser(user))
+const mapDispatch = (dispatch) => ({
+	gotUser: (user) => dispatch(registerNewUser(user)),
 });
 
 export default connect(mapState, mapDispatch)(RegistrationScreen);

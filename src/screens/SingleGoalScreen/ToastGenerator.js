@@ -3,8 +3,8 @@ const successMessagesTextOne = [
 	'Yaaaas!',
 	'Amazing!',
 	'Fantastic!',
-  'Impressive!',
-  'Eyyyyyyy!',
+	'Impressive!',
+	'Eyyyyyyy!',
 ];
 
 export const toastGeneratorTextOne = () => {
@@ -13,12 +13,12 @@ export const toastGeneratorTextOne = () => {
 };
 
 const successMessagesTextTwo = [
-  'You are one step closer!',
-  'You are one day closer!',
-	'One day down!',
-  'Another day completed!',
-  "You're getting there!",
-  'You are committed!'
+	'You are one step closer! 🐝',
+	'You are one day closer! 🐝',
+	'One day down! 🐝',
+	'Another day completed! 🐝',
+	"You're getting there! 🐝",
+	'You are committed! 🐝',
 ];
 
 export const toastGeneratorTextTwo = () => {

@@ -5,20 +5,8 @@ export default StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 	},
-	header: {
-		flex: 1,
-		height: 120,
-		width: 240,
-		textAlign: 'center',
-		alignSelf: 'center',
-		marginBottom: 40,
-		marginTop: 180,
-		fontFamily: 'Avenir',
-		fontWeight: '500',
-		fontSize: 28,
-		color: '#8688BC',
-	},
 	input: {
+		color: '#424347',
 		height: 48,
 		borderRadius: 5,
 		overflow: 'hidden',
@@ -37,7 +25,7 @@ export default StyleSheet.create({
 		borderRadius: 5,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor : '#8688BC'
+		backgroundColor: '#8688BC',
 	},
 	buttonTitle: {
 		color: 'white',
@@ -51,7 +39,7 @@ export default StyleSheet.create({
 	},
 	footerText: {
 		fontSize: 16,
-		color: '#2e2e2d',
+		color: '#424347',
 	},
 	footerLink: {
 		color: '#8688BC',

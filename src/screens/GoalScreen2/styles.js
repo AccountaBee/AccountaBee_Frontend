@@ -2,37 +2,46 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 70,
-		paddingLeft: 20,
-		paddingRight: 20,
+		paddingTop: '18%',
 		backgroundColor: '#8688BC',
-	},
-	numberInput: {
-		marginTop: 15,
-		color: '#8688BC',
 	},
 	nextButton: {
 		alignSelf: 'center',
 		backgroundColor: '#8688BC',
-		width: '80%',
-		marginTop: 20,
+		width: '40%',
+		marginTop: '9%',
 	},
 	flex: {
-		width: '78%',
-		marginTop: 30,
-		marginLeft: 40,
+		maxWidth: '85%',
+		marginTop: '7%',
+		marginLeft: '7%',
 		flexDirection: 'row',
-		justifyContent: 'space-around',
+		justifyContent: 'space-between',
+	},
+	goals: {
+		width: '55%',
+		alignSelf: 'center',
+		fontSize: 20,
+		color: '#424347',
+	},
+	numberInput: {
+		textAlign: 'right',
+		alignSelf: 'flex-end',
+		marginTop: 15,
+		fontSize: 20,
+		color: '#8688BC',
 	},
 	bigger: {
 		fontSize: 26,
 		marginBottom: 20,
 	},
 	subheader: {
+		fontStyle: 'italic',
 		fontSize: 16,
 		color: '#424347',
-		marginLeft: '10%',
-		marginTop: 50,
+		marginTop: '13%',
+		marginLeft: '7%',
+		maxWidth: '85%',
 	},
 	textInput: {
 		backgroundColor: 'white',
@@ -51,24 +60,21 @@ export default StyleSheet.create({
 		fontSize: 20,
 		textAlign: 'center',
 		marginBottom: 15,
-	},
-	goals: {
-		width: '80%',
-		paddingTop: 10,
-		fontSize: 18,
-		marginLeft: 0,
-		color: '#424347',
+		fontWeight: '500',
 	},
 	goalHeader: {
-		marginLeft: 20,
+		color: '#424347',
+		marginLeft: '7%',
+		maxWidth: '85%',
+		marginTop: '7%',
 		marginBottom: 40,
 		fontSize: 20,
 	},
 	breakBot: {
-		marginBottom: 15,
+		marginBottom: '4%',
 	},
 	breakTop: {
-		marginTop: 20,
+		marginTop: '5%',
 	},
 	breakTop2: {
 		marginTop: 40,

@@ -1,24 +1,25 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: 'center',
+		justifyContent: 'flex-end',
 	},
 	header: {
-		flex: 1,
-		height: 80,
-		width: 240,
+		width: '100%',
+		height: '20%',
 		textAlign: 'center',
 		alignSelf: 'center',
-		marginBottom: 30,
-		marginTop: 30,
+		marginTop: '6%',
 		fontFamily: 'Avenir',
 		fontWeight: '500',
-		fontSize: 28,
-		color: "#8688BC",
+		fontSize: 0.08 * width,
+		color: '#8688BC',
 	},
 	input: {
+		color: '#424347',
 		height: 48,
 		borderRadius: 5,
 		overflow: 'hidden',
@@ -37,7 +38,7 @@ export default StyleSheet.create({
 		borderRadius: 5,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor :"#8688BC",
+		backgroundColor: '#8688BC',
 	},
 	buttonTitle: {
 		color: 'white',
@@ -51,21 +52,23 @@ export default StyleSheet.create({
 	},
 	footerText: {
 		fontSize: 16,
-		color: '#2e2e2d',
+		color: '#424347',
 	},
 	footerLink: {
-		color: "#8688BC",
+		color: '#8688BC',
 		fontWeight: 'bold',
 		fontSize: 16,
 	},
 	beeContainer: {
-		marginTop: 80,
-		flex: 1,
+		marginTop: '25%',
 		alignItems: 'center',
-		justifyContent: 'space-between'
+		// justifyContent: 'space-between',
 	},
-	bee:{
+	bee: {
 		width: 50,
-		height: 50
-	}
+		height: 50,
+	},
+	inputContainer: {
+		alignSelf: 'flex-end',
+	},
 });

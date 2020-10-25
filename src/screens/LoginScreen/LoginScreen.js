@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View, Alert, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import CustomButton from '../CustomButton';
 import { firebase } from '../../firebase/config';
 import { getUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
-import { Alert } from 'react-native';
-import Bee from '../BeeScreen/Bee'
+import Bee from '../Bee/Bee';
 
 function LoginScreen(props) {
 	const [email, setEmail] = useState('');
@@ -18,6 +17,7 @@ function LoginScreen(props) {
 	};
 
 	const onLoginPress = () => {
+		Keyboard.dismiss();
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
@@ -34,32 +34,35 @@ function LoginScreen(props) {
 		<View style={styles.container}>
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
-				keyboardShouldPersistTaps='always'>
-
+				keyboardShouldPersistTaps="always"
+			>
 				<View>
 					<Bee />
 				</View>
-				{/* <Text style={styles.header}>ACCOUNTABEE</Text> */}
 				<TextInput
 					style={styles.input}
-					placeholder='E-mail'
-					placeholderTextColor='#aaaaaa'
-					onChangeText={text => setEmail(text)}
+					placeholder="E-mail"
+					placeholderTextColor="#aaaaaa"
+					onChangeText={(text) => setEmail(text)}
 					value={email}
-					underlineColorAndroid='transparent'
-					autoCapitalize='none'
+					underlineColorAndroid="transparent"
+					autoCapitalize="none"
 				/>
 				<TextInput
 					style={styles.input}
-					placeholderTextColor='#aaaaaa'
+					placeholderTextColor="#aaaaaa"
 					secureTextEntry
-					placeholder='Password'
-					onChangeText={text => setPassword(text)}
+					placeholder="Password"
+					onChangeText={(text) => setPassword(text)}
 					value={password}
-					underlineColorAndroid='transparent'
-					autoCapitalize='none'
+					underlineColorAndroid="transparent"
+					autoCapitalize="none"
 				/>
-				<CustomButton title='LOG IN' style={styles.button} onPress={() => onLoginPress()} />
+				<CustomButton
+					title="LOG IN"
+					style={styles.button}
+					onPress={() => onLoginPress()}
+				/>
 				<View style={styles.footerView}>
 					<Text style={styles.footerText}>
 						Don't have an account?{' '}
@@ -73,12 +76,12 @@ function LoginScreen(props) {
 	);
 }
 
-const mapState = state => ({
-	user: state.user
+const mapState = (state) => ({
+	user: state.user,
 });
 
-const mapDispatch = dispatch => ({
-	getUser: () => dispatch(getUser())
+const mapDispatch = (dispatch) => ({
+	getUser: () => dispatch(getUser()),
 });
 
 export default connect(mapState, mapDispatch)(LoginScreen);

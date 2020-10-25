@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: 70,
+		paddingTop: '18%',
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
@@ -14,6 +14,7 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
+		fontWeight: '500',
 	},
 	noGoals: {
 		color: '#424347',
@@ -24,7 +25,7 @@ export default StyleSheet.create({
 		alignSelf: 'center',
 	},
 	button: {
-		width: '50%',
+		width: '40%',
 		marginTop: 20,
 		backgroundColor: '#8688BC',
 		alignSelf: 'center',
@@ -59,16 +60,16 @@ export default StyleSheet.create({
 		fontSize: 18,
 		marginBottom: 15,
 		textAlign: 'center',
-  },
-  spinnerTextStyle: {
-    color: '#8688BC'
-  },
-  spinnerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
+	},
+	spinnerTextStyle: {
+		color: '#8688BC',
+	},
+	spinnerContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#F5FCFF',
+	},
 });
 
 export const pieStyle = StyleSheet.create({
@@ -96,5 +97,5 @@ export const pieStyle = StyleSheet.create({
 		color: '#424347',
 		marginTop: 10,
 		fontSize: 16,
-  },
+	},
 });
