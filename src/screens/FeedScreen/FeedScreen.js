@@ -149,7 +149,7 @@ class FeedScreen extends Component {
 								</Text>
 							)}
 							{myLike.length ? (
-								<View>
+								<View style={styles.likeButtonContainer}>
 									<TouchableOpacity
 										activeOpacity={0.7}
 										style={styles.clapButton}
