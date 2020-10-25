@@ -6,7 +6,7 @@ import CustomButton from '../CustomButton';
 import { firebase } from '../../firebase/config';
 import { getUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
-import Bee from '../BeeScreen/Bee';
+import Bee from '../Bee/Bee';
 
 function LoginScreen(props) {
 	const [email, setEmail] = useState('');
