@@ -10,7 +10,6 @@ import {
 	getGoalsThunk,
 } from '../../../redux/reducers/goals';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 function GoalScreen(props) {
 	const [newGoal, setGoal] = useState('');
