@@ -17,7 +17,7 @@ function GoalScreen2(props) {
 
 	const setFrequency = (value, title) => {
 		if (allGoals) {
-			const newGoals = allGoals.map(goal => {
+			const newGoals = allGoals.map((goal) => {
 				if (goal.title === title) {
 					goal.frequency = value;
 					return goal;
@@ -47,8 +47,8 @@ function GoalScreen2(props) {
 			<View style={styles.container}>
 				<Text style={[styles.headline, styles.bigger]}>Weekly Frequency</Text>
 			</View>
-			<Text style={[styles.goals, styles.goalHeader, styles.breakTop, styles.breakBot]}>
-				How many times per week do you want perform these goals?
+			<Text style={[styles.goalHeader, styles.breakBot]}>
+				How many times per week do you want to perform these goals?
 			</Text>
 			{props.goals &&
 				props.goals.map((goal, idx) => (
@@ -62,27 +62,32 @@ function GoalScreen2(props) {
 								maxValue={7}
 								style={styles.numberInput}
 								iconStyle={{ color: '#8688BC' }}
+								textColor={{ color: '#8688BC' }}
 								value={goal.frequency}
-								onChange={value => setFrequency(value, goal.title)}
+								onChange={(value) => setFrequency(value, goal.title)}
 							/>
 						</View>
 					</View>
 				))}
 			<Text style={styles.subheader}>
-				You can edit these goals at any point{'\n'} from your Goals dashboard.
+				You can edit these goals at any point from your Goals dashboard.
 			</Text>
-			<CustomButton style={styles.nextButton} title='SET GOALS' onPress={() => setGoalsPress()} />
+			<CustomButton
+				style={styles.nextButton}
+				title="SET GOALS"
+				onPress={() => setGoalsPress()}
+			/>
 		</>
 	);
 }
 
-const mapState = state => ({
-	goals: state.goals
+const mapState = (state) => ({
+	goals: state.goals,
 });
 
-const mapDispatch = dispatch => ({
-	setGoals: goals => dispatch(setGoalsThunk(goals)),
-	newGoalPost: (title, frequency) => dispatch(newGoalPost(title, frequency))
+const mapDispatch = (dispatch) => ({
+	setGoals: (goals) => dispatch(setGoalsThunk(goals)),
+	newGoalPost: (title, frequency) => dispatch(newGoalPost(title, frequency)),
 });
 
 export default connect(mapState, mapDispatch)(GoalScreen2);

@@ -50,6 +50,7 @@ function ProfileScreen(props) {
 			setLoaded(true);
 		};
 		func();
+		setLoaded(true);
 	}, []);
 
 	useEffect(() => {
