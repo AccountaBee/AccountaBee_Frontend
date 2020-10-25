@@ -1,21 +1,32 @@
+/* eslint-disable complexity */
 import React, { Component } from 'react';
-import { Text, View, Modal, Image, TouchableOpacity, FlatList } from 'react-native';
-import { connect } from 'react-redux';
-import { getUnseenLikes, updateLikesToSeen } from '../../../redux/reducers/unseenLikes';
-import { getPosts } from '../../../redux/reducers/posts';
-import { likePost, unlikePost } from '../../../redux/reducers/posts';
-import { AntDesign } from '@expo/vector-icons';
+import {
+	Text,
+	View,
+	Modal,
+	Image,
+	TouchableOpacity,
+	FlatList,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import styles from './styles';
-import TimeAgo from 'react-native-timeago';
+import {
+	getUnseenLikes,
+	updateLikesToSeen,
+} from '../../../redux/reducers/unseenLikes';
+import { getPosts, likePost, unlikePost } from '../../../redux/reducers/posts';
 import { firebase } from '../../firebase/config';
+import { connect } from 'react-redux';
+import { AntDesign } from '@expo/vector-icons';
+import TimeAgo from 'react-native-timeago';
+import styles from './styles';
 import ClapBubble from './ClapBubble';
 
 class FeedScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalVisible: false
+			modalVisible: false,
+			clapsVisible: true,
 		};
 	}
 
@@ -31,8 +42,13 @@ class FeedScreen extends Component {
 		this.setState({ clapsVisible: false });
 	};
 
-	renderClaps = () => {
-		return <ClapBubble animationComplete={this.animationComplete} />;
+	renderClaps = (fireBoolean = false) => {
+		return (
+			<ClapBubble
+				animationComplete={this.animationComplete}
+				fire={fireBoolean}
+			/>
+		);
 	};
 
 	onLikePress = (post, myLike) => {
@@ -43,12 +59,12 @@ class FeedScreen extends Component {
 		}
 	};
 
-	onCloseModal = unseenLikes => {
+	onCloseModal = (unseenLikes) => {
 		this.setState({ modalVisible: false });
 		this.props.updateLikesToSeen(unseenLikes);
 	};
 
-	stringifyNotification = post => {
+	stringifyNotification = (post) => {
 		const baseText = `cheered you on for completing ${post.completedDays} ${
 			post.completedDays === 1 ? 'day' : 'days'
 		} of ${post.title}`;
@@ -65,15 +81,17 @@ class FeedScreen extends Component {
 				break;
 			}
 			default: {
-				text = `${post.likes[0].user.firstName} and &${post.likes[1].user.firstName} and ${
-					post.likes.length - 2
-				} other ${post.likes.length - 2 === 1 ? 'friend' : 'friends'} ${baseText}`;
+				text = `${post.likes[0].user.firstName} and &${
+					post.likes[1].user.firstName
+				} and ${post.likes.length - 2} other ${
+					post.likes.length - 2 === 1 ? 'friend' : 'friends'
+				} ${baseText}`;
 			}
 		}
 		return { id: post.id, text: text };
 	};
 
-	renderPost = post => {
+	renderPost = (post) => {
 		const { completedDays, title, targetDaysMet, createdAt } = post;
 		const { firstName, profilePicture } = post.user;
 		const currentUid = firebase.auth().currentUser.uid;
@@ -89,19 +107,24 @@ class FeedScreen extends Component {
 				post.frequency === 1 ? 'day' : 'days'
 			} of ${title} this week!`;
 		} else {
-			postText = `${firstName} has completed ${targetDaysMet ? 'ALL' : ''} ${completedDays} ${
+			postText = `${firstName} has completed${
+				targetDaysMet ? 'ALL' : ''
+			} ${completedDays} ${
 				completedDays === 1 ? 'day' : 'days'
 			} of their ${title} goal!`;
 		}
 
-		let myLike = post.likes.filter(like => like.userUid === currentUid);
+		let myLike = post.likes.filter((like) => like.userUid === currentUid);
 
 		return (
 			<View style={styles.feedItem} key={post.id}>
 				{profilePicture ? (
 					<Image source={{ uri: profilePicture }} style={styles.userImage} />
 				) : (
-					<Image source={require('../../../assets/blank-profile.png')} style={styles.userImage} />
+					<Image
+						source={require('../../../assets/blank-profile.png')}
+						style={styles.userImage}
+					/>
 				)}
 				<View style={{ flex: 1 }}>
 					<View style={styles.feedContent}>
@@ -117,25 +140,30 @@ class FeedScreen extends Component {
 					{isGoalSettingPost ? (
 						<View>
 							{myLike.length ? (
-								<TouchableOpacity
-									activeOpacity={0.7}
-									style={styles.clapButton}
-									onPress={() => this.onLikePress(post, myLike)}>
-									<Image
-										source={require('../../../assets/firecolors.png')}
-										style={styles.clapImage}
-										title='ClapImage'
-									/>
-								</TouchableOpacity>
+								<View>
+									<TouchableOpacity
+										activeOpacity={0.7}
+										style={styles.clapButton}
+										onPress={() => this.onLikePress(post, myLike)}
+									>
+										<Image
+											source={require('../../../assets/firecolors.png')}
+											style={styles.clapImage}
+											title="ClapImage"
+										/>
+									</TouchableOpacity>
+									{this.renderClaps(true)}
+								</View>
 							) : (
 								<TouchableOpacity
 									activeOpacity={0.7}
 									style={styles.clapButton}
-									onPress={() => this.onLikePress(post, myLike)}>
+									onPress={() => this.onLikePress(post, myLike)}
+								>
 									<Image
 										source={require('../../../assets/fire.png')}
 										style={styles.clapImage}
-										title='ClapImage'
+										title="ClapImage"
 									/>
 								</TouchableOpacity>
 							)}
@@ -147,11 +175,12 @@ class FeedScreen extends Component {
 									<TouchableOpacity
 										activeOpacity={0.7}
 										style={styles.clapButton}
-										onPress={() => this.onLikePress(post, myLike)}>
+										onPress={() => this.onLikePress(post, myLike)}
+									>
 										<Image
 											source={require('../../../assets/hand-clap-green.png')}
 											style={styles.clapImage}
-											title='ClapImage'
+											title="ClapImage"
 										/>
 									</TouchableOpacity>
 									{this.renderClaps()}
@@ -160,17 +189,17 @@ class FeedScreen extends Component {
 								<TouchableOpacity
 									activeOpacity={0.7}
 									style={styles.clapButton}
-									onPress={() => this.onLikePress(post, myLike)}>
+									onPress={() => this.onLikePress(post, myLike)}
+								>
 									<Image
 										source={require('../../../assets/hand-clap-ol-2-512.png')}
 										style={styles.clapImage}
-										title='ClapImage'
+										title="ClapImage"
 									/>
 								</TouchableOpacity>
 							)}
 						</View>
 					)}
-
 					{post.likes.length === 1 ? (
 						<Text style={styles.clapNumber}>
 							{post.likes.length} {likeWord}
@@ -202,25 +231,29 @@ class FeedScreen extends Component {
 					style={styles.feed}
 					data={posts}
 					renderItem={({ item }) => this.renderPost(item)}
-					keyExtractor={item => item.id.toString()}
+					keyExtractor={(item) => item.id.toString()}
 					showsVerticalScrollIndicator={false}
 				/>
 
 				<View>
-					<Modal animationType='slide' transparent={true} visible={this.state.modalVisible}>
+					<Modal
+						animationType="slide"
+						transparent={true}
+						visible={this.state.modalVisible}
+					>
 						<View style={styles.centeredView}>
 							<View style={styles.modalView}>
 								<AntDesign
-									name='close'
+									name="close"
 									size={24}
-									color='white'
+									color="white"
 									onPress={() => this.onCloseModal(unseenLikes)}
 									style={styles.xbutton}
 								/>
 								<Text style={styles.modalText}> Notifications {'\n'} </Text>
 								<View style={styles.modalInnerTextContainer}>
 									<ScrollView>
-										{unseenLikes.map(post => {
+										{unseenLikes.map((post) => {
 											let object = this.stringifyNotification(post);
 											return (
 												<Text style={styles.modalInnerText} key={object.id}>
@@ -239,19 +272,19 @@ class FeedScreen extends Component {
 	}
 }
 
-const mapState = state => {
+const mapState = (state) => {
 	return {
 		posts: state.posts,
-		unseenLikes: state.unseenLikes
+		unseenLikes: state.unseenLikes,
 	};
 };
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch) => ({
 	getPosts: () => dispatch(getPosts()),
-	likePost: postId => dispatch(likePost(postId)),
-	unlikePost: postId => dispatch(unlikePost(postId)),
+	likePost: (postId) => dispatch(likePost(postId)),
+	unlikePost: (postId) => dispatch(unlikePost(postId)),
 	getUnseenLikes: () => dispatch(getUnseenLikes()),
-	updateLikesToSeen: unseenLikes => dispatch(updateLikesToSeen(unseenLikes))
+	updateLikesToSeen: (unseenLikes) => dispatch(updateLikesToSeen(unseenLikes)),
 });
 
 export default connect(mapState, mapDispatch)(FeedScreen);
