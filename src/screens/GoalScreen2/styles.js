@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		paddingTop: '18%',
+		paddingTop: '17%',
 		backgroundColor: '#8688BC',
 	},
 	nextButton: {

@@ -65,11 +65,14 @@ class FeedScreen extends Component {
 	};
 
 	stringifyNotification = (post) => {
-		const baseText = `cheered you on for completing ${post.completedDays} ${
-			post.completedDays === 1 ? 'day' : 'days'
-		} of ${post.title}`;
-
-		let text;
+		let text, baseText;
+		if (!post.completedDays) {
+			baseText = `cheered you on for setting the goal of ${post.title}`;
+		} else {
+			baseText = `applauded you for completing ${post.completedDays} ${
+				post.completedDays === 1 ? 'day' : 'days'
+			} of ${post.title}`;
+		}
 
 		switch (post.likes.length) {
 			case 1: {
