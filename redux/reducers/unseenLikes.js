@@ -2,6 +2,7 @@ import instance from '../axios';
 import { firebase } from '../../src/firebase/config';
 
 const SET_UNSEEN_LIKES = 'SET_UNSEEN_LIKES';
+
 const setUnseenLikes = unseenLikes => ({ type: SET_UNSEEN_LIKES, unseenLikes });
 
 export const getUnseenLikes = () => async dispatch => {
@@ -9,11 +10,8 @@ export const getUnseenLikes = () => async dispatch => {
 		const token = await firebase.auth().currentUser.getIdToken();
 		const { data } = await instance.post('/likes/unseen', { token });
 		const uid = await firebase.auth().currentUser.uid;
-		// data should be an array of posts with their likes attached, and the user of each like attached. seems way overkill but we need this info for now to display the notifications
-		//dispatch this thunk when the user clicks on the feed page, only display modal if length of likes is > 0
-
-		// filter likes before dispatch to only include likes that are not the current user - no one needs a notification that they liked their own post
-
+		// data will be an array of posts with their likes attached, and the firstName of user of each like included.
+		// filter likes before dispatch to only include likes that are not the current user
 		let filteredData = [];
 		for (let i = 0; i < data.length; i++) {
 			let newPost = data[i];
@@ -30,7 +28,7 @@ export const getUnseenLikes = () => async dispatch => {
 	}
 };
 
-//call this when user clicks on modal to close it
+// dispatched when user clicks on notification modal to close it
 export const updateLikesToSeen = postsWithLikes => async dispatch => {
 	try {
 		let likes = [];
@@ -41,7 +39,7 @@ export const updateLikesToSeen = postsWithLikes => async dispatch => {
 		}
 
 		const token = await firebase.auth().currentUser.getIdToken();
-		const res = await instance.put('/likes/update', { token, likes });
+		await instance.put('/likes/update', { token, likes });
 		dispatch(setUnseenLikes([]));
 	} catch (error) {
 		console.log(error);

@@ -4,7 +4,7 @@ const successMessagesTextOne = [
 	'Amazing!',
 	'Fantastic!',
 	'Impressive!',
-	'Eyyyyyyy!',
+	'Eyyyyyyy!'
 ];
 
 export const toastGeneratorTextOne = () => {
@@ -18,7 +18,7 @@ const successMessagesTextTwo = [
 	'One day down! 🐝',
 	'Another day completed! 🐝',
 	"You're getting there! 🐝",
-	'You are committed! 🐝',
+	'You are committed! 🐝'
 ];
 
 export const toastGeneratorTextTwo = () => {

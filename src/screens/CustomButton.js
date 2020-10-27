@@ -7,23 +7,21 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		backgroundColor: '#8688BC',
 		paddingVertical: 12,
-		borderRadius: 10,
+		borderRadius: 10
 	},
 	buttonText: {
 		fontWeight: '600',
 		color: 'white',
 		fontSize: 18,
-		textAlign: 'center',
-	},
+		textAlign: 'center'
+	}
 });
 
-const CustomButton = (props) => {
+const CustomButton = props => {
 	return (
 		<TouchableOpacity onPress={props.onPress} style={styles.width}>
 			<View style={{ ...styles.button, ...props.style }}>
-				<Text style={{ ...styles.buttonText, ...props.textStyle }}>
-					{props.title}
-				</Text>
+				<Text style={{ ...styles.buttonText, ...props.textStyle }}>{props.title}</Text>
 			</View>
 		</TouchableOpacity>
 	);

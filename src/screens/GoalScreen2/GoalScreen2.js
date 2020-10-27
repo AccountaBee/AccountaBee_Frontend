@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import CustomButton from '../CustomButton';
 import NumericInput from 'react-native-numeric-input';
-import styles from './styles';
 import { connect } from 'react-redux';
 import { setGoalsThunk } from '../../../redux/reducers/goals';
 import { newGoalPost } from '../../../redux/reducers/posts';
+import styles from './styles';
 
 function GoalScreen2(props) {
 	const [allGoals, setAllGoals] = useState([]);
@@ -17,7 +17,7 @@ function GoalScreen2(props) {
 
 	const setFrequency = (value, title) => {
 		if (allGoals) {
-			const newGoals = allGoals.map((goal) => {
+			const newGoals = allGoals.map(goal => {
 				if (goal.title === title) {
 					goal.frequency = value;
 					return goal;
@@ -64,7 +64,7 @@ function GoalScreen2(props) {
 								iconStyle={{ color: '#8688BC' }}
 								textColor={{ color: '#8688BC' }}
 								value={goal.frequency}
-								onChange={(value) => setFrequency(value, goal.title)}
+								onChange={value => setFrequency(value, goal.title)}
 							/>
 						</View>
 					</View>
@@ -72,22 +72,18 @@ function GoalScreen2(props) {
 			<Text style={styles.subheader}>
 				You can edit these goals at any point from your Goals dashboard.
 			</Text>
-			<CustomButton
-				style={styles.nextButton}
-				title="SET GOALS"
-				onPress={() => setGoalsPress()}
-			/>
+			<CustomButton style={styles.nextButton} title='SET GOALS' onPress={() => setGoalsPress()} />
 		</>
 	);
 }
 
-const mapState = (state) => ({
-	goals: state.goals,
+const mapState = state => ({
+	goals: state.goals
 });
 
-const mapDispatch = (dispatch) => ({
-	setGoals: (goals) => dispatch(setGoalsThunk(goals)),
-	newGoalPost: (title, frequency) => dispatch(newGoalPost(title, frequency)),
+const mapDispatch = dispatch => ({
+	setGoals: goals => dispatch(setGoalsThunk(goals)),
+	newGoalPost: (title, frequency) => dispatch(newGoalPost(title, frequency))
 });
 
 export default connect(mapState, mapDispatch)(GoalScreen2);

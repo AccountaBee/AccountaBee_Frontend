@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions } from 'react-native';
-
 const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
@@ -8,7 +7,7 @@ export default StyleSheet.create({
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
-		zIndex: -1,
+		zIndex: -1
 	},
 	headline: {
 		marginTop: 10,
@@ -16,33 +15,33 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		fontWeight: '500',
-		marginBottom: 20,
+		marginBottom: 20
 	},
 	logout: {
 		marginTop: '6%',
 		minWidth: '40%',
-		alignSelf: 'center',
+		alignSelf: 'center'
 	},
 	editPic: {
 		backgroundColor: '#424347',
 		opacity: 0.6,
 		minWidth: '40%',
 		paddingHorizontal: 10,
-		alignSelf: 'center',
+		alignSelf: 'center'
 	},
 	picContainer: {
 		minHeight: '20%',
 		alignItems: 'center',
-		justifyContent: 'center',
+		justifyContent: 'center'
 	},
 	photo: {
 		marginTop: '10%',
-		alignSelf: 'center',
+		alignSelf: 'center'
 	},
 	text: {
 		marginTop: '4%',
 		fontSize: 0.042 * width,
-		color: '#424347',
+		color: '#424347'
 	},
 	section: {
 		marginTop: '10%',
@@ -55,6 +54,6 @@ export default StyleSheet.create({
 		borderBottomLeftRadius: 50,
 		borderBottomRightRadius: 80,
 		borderColor: '#424347',
-		paddingBottom: '5%',
-	},
+		paddingBottom: '5%'
+	}
 });

@@ -8,7 +8,7 @@ const successMessages = [
 	'You achieved all your goals\nfor the week!\n\nLook at you go!',
 	'You achieved all your goals\nfor the week!\n\nAwesome job staying on task!',
 	"You achieved all your goals\nfor the week!\n\nYou're on fire!",
-	'You achieved all your goals\nfor the week!\n\nYour commitment is super impressive!',
+	'You achieved all your goals\nfor the week!\n\nYour commitment is super impressive!'
 ];
 
 export const messageGenerator = () => {

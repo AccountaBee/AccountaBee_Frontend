@@ -7,6 +7,7 @@ const SET_REQUESTS = 'SET_REQUESTS';
 
 const setRequests = requests => ({ type: SET_REQUESTS, requests });
 
+// get friend requests
 export const getRequests = () => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();

@@ -6,7 +6,7 @@ export default StyleSheet.create({
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#8688BC',
-		zIndex: -1,
+		zIndex: -1
 	},
 	headline: {
 		marginTop: 10,
@@ -14,7 +14,7 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
-		fontWeight: '500',
+		fontWeight: '500'
 	},
 	noGoals: {
 		color: '#424347',
@@ -22,23 +22,23 @@ export default StyleSheet.create({
 		marginTop: '40%',
 		textAlign: 'center',
 		maxWidth: '80%',
-		alignSelf: 'center',
+		alignSelf: 'center'
 	},
 	button: {
 		width: '40%',
 		marginTop: 20,
 		backgroundColor: '#8688BC',
 		alignSelf: 'center',
-		marginBottom: '30%',
+		marginBottom: '30%'
 	},
 	fullScreen: {
-		paddingBottom: 120,
+		paddingBottom: 120
 	},
 	centeredView: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: 22,
+		marginTop: 22
 	},
 	modalView: {
 		margin: 40,
@@ -49,27 +49,27 @@ export default StyleSheet.create({
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
-			height: 2,
+			height: 2
 		},
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
-		elevation: 5,
+		elevation: 5
 	},
 	modalText: {
 		color: '#424347',
 		fontSize: 18,
 		marginBottom: 15,
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 	spinnerTextStyle: {
-		color: '#8688BC',
+		color: '#8688BC'
 	},
 	spinnerContainer: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
-	},
+		backgroundColor: '#F5FCFF'
+	}
 });
 
 export const pieStyle = StyleSheet.create({
@@ -78,24 +78,24 @@ export const pieStyle = StyleSheet.create({
 		justifyContent: 'center',
 		textAlignVertical: 'center',
 		marginLeft: '8%',
-		maxWidth: '44%',
+		maxWidth: '44%'
 	},
 	container: {
 		justifyContent: 'space-between',
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		borderBottomWidth: 0.5,
-		borderColor: '#424347',
+		borderColor: '#424347'
 	},
 	goalName: {
 		fontWeight: '500',
 		color: '#424347',
 		fontSize: 20,
-		paddingBottom: 15,
+		paddingBottom: 15
 	},
 	subhead: {
 		color: '#424347',
 		marginTop: 10,
-		fontSize: 16,
-	},
+		fontSize: 16
+	}
 });

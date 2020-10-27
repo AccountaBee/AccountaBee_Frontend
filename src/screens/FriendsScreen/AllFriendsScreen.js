@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import styles from './styles';
 import { connect } from 'react-redux';
 import { getFriends } from '../../../redux/reducers/friends';
+import styles from './styles';
 
 class AllFriendsScreen extends React.Component {
 	async componentDidMount() {
@@ -19,7 +19,7 @@ class AllFriendsScreen extends React.Component {
 				</View>
 				<View>
 					<>
-						{friends.map((friend) => (
+						{friends.map(friend => (
 							<View key={friend.uid}>
 								<Text>{friend.firstName}</Text>
 							</View>
@@ -31,12 +31,12 @@ class AllFriendsScreen extends React.Component {
 	}
 }
 
-const mapState = (state) => ({
-	friends: state.friends,
+const mapState = state => ({
+	friends: state.friends
 });
 
-const mapDispatch = (dispatch) => ({
-	getFriends: () => dispatch(getFriends()),
+const mapDispatch = dispatch => ({
+	getFriends: () => dispatch(getFriends())
 });
 
 export default connect(mapState, mapDispatch)(AllFriendsScreen);

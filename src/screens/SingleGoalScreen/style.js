@@ -7,7 +7,7 @@ export default StyleSheet.create({
 		paddingTop: 71,
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC',
+		backgroundColor: '#8688BC'
 	},
 	headline: {
 		color: 'white',
@@ -15,17 +15,17 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		marginTop: 10,
 		marginBottom: 20,
-		fontWeight: '500',
+		fontWeight: '500'
 	},
 	container: {
 		width: width,
 		marginTop: '6%',
 		paddingLeft: 35,
 		borderBottomColor: '#bbb',
-		borderBottomWidth: StyleSheet.hairlineWidth,
+		borderBottomWidth: StyleSheet.hairlineWidth
 	},
 	day: {
-		flexDirection: 'row',
+		flexDirection: 'row'
 	},
 	text: {
 		fontWeight: '500',
@@ -33,7 +33,7 @@ export default StyleSheet.create({
 		marginTop: '6%',
 		marginBottom: '4%',
 		position: 'relative',
-		bottom: '5%',
+		bottom: '5%'
 	},
 	circle: {
 		width: 30,
@@ -41,26 +41,26 @@ export default StyleSheet.create({
 		borderRadius: 15,
 		borderColor: 'red',
 		borderWidth: 3,
-		marginRight: 20,
+		marginRight: 20
 	},
 	completeCircle: {
-		borderColor: '#9FC78A',
+		borderColor: '#9FC78A'
 	},
 	activeCircle: {
-		borderColor: '#DA4453',
+		borderColor: '#DA4453'
 	},
 	incompleteCircle: {
-		borderColor: '#bbb',
+		borderColor: '#bbb'
 	},
 	incompleteText: {
-		color: '#bbb',
+		color: '#bbb'
 	},
 	activeText: {
-		color: '#29323c',
+		color: '#29323c'
 	},
 	completeText: {
 		color: '#9FC78A',
-		textDecorationLine: 'line-through',
+		textDecorationLine: 'line-through'
 	},
 	textInput: {
 		backgroundColor: 'white',
@@ -71,37 +71,37 @@ export default StyleSheet.create({
 		borderColor: 'white',
 		borderWidth: 1,
 		fontSize: 18,
-		marginRight: 0,
+		marginRight: 0
 	},
 	goals: {
 		paddingTop: 10,
 		fontSize: 20,
-		marginLeft: 10,
+		marginLeft: 10
 	},
 	breakBot: {
-		marginBottom: 20,
+		marginBottom: 20
 	},
 	breakTop: {
-		marginTop: 20,
+		marginTop: 20
 	},
 	breakTop2: {
-		marginTop: 40,
+		marginTop: 40
 	},
 	customHeader: {
 		textAlign: 'center',
 		fontSize: 20,
-		marginTop: 100,
+		marginTop: 100
 	},
 	button: {
 		paddingVertical: 16,
 		paddingHorizontal: 10,
 		marginTop: 0,
 		marginLeft: 0,
-		backgroundColor: '#9FC78A',
+		backgroundColor: '#9FC78A'
 	},
 	centeredView: {
 		flex: 1,
-		justifyContent: 'flex-end',
+		justifyContent: 'flex-end'
 	},
 	modalView: {
 		flex: 1,
@@ -117,29 +117,29 @@ export default StyleSheet.create({
 		shadowColor: '#000',
 		shadowOpacity: 0.5,
 		shadowRadius: 3.84,
-		elevation: 0,
+		elevation: 0
 	},
 	textStyle: {
 		color: 'white',
 		fontWeight: 'bold',
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 	modalText: {
 		marginTop: 25,
 		marginBottom: 15,
 		textAlign: 'center',
 		color: 'white',
-		fontSize: 35,
+		fontSize: 35
 	},
 	modalInnerText: {
 		marginBottom: 12,
 		textAlign: 'center',
 		color: 'white',
 		fontSize: 20,
-		marginTop: 10,
+		marginTop: 10
 	},
 	xbutton: {
-		marginTop: 20,
+		marginTop: 20
 	},
 	nextButton: {
 		alignSelf: 'center',
@@ -148,10 +148,10 @@ export default StyleSheet.create({
 		marginTop: 20,
 		height: 48,
 		borderRadius: 5,
-		justifyContent: 'center',
+		justifyContent: 'center'
 	},
 	buttonContainer: {
 		marginTop: 60,
-		width: '100%',
-	},
+		width: '100%'
+	}
 });
