@@ -1,6 +1,6 @@
-# AccountaBee_Frontend
+# AccountaBee
 
-#Technologies
+# Technologies
 
 We developed AccountaBee with JavaScript, React Native, Expo, Redux, Firebase Authentication, and Victory.js.
 
