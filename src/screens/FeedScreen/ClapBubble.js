@@ -5,7 +5,7 @@ import styles from './styles';
 export default class ClapBubble extends Component {
 	state = {
 		yPosition: new Animated.Value(0),
-		opacity: new Animated.Value(0),
+		opacity: new Animated.Value(0)
 	};
 
 	componentDidMount() {
@@ -14,13 +14,13 @@ export default class ClapBubble extends Component {
 			Animated.timing(yPosition, {
 				toValue: -40,
 				duration: 600,
-				useNativeDriver: false,
+				useNativeDriver: false
 			}),
 			Animated.timing(opacity, {
 				toValue: 1,
 				duration: 500,
-				useNativeDriver: false,
-			}),
+				useNativeDriver: false
+			})
 		]).start(() => {
 			setTimeout(() => {
 				this.props.animationComplete();
@@ -31,7 +31,7 @@ export default class ClapBubble extends Component {
 	render() {
 		let animationStyle = {
 			transform: [{ translateY: this.state.yPosition }],
-			opacity: this.state.opacity,
+			opacity: this.state.opacity
 		};
 		return (
 			<Animated.View
@@ -39,8 +39,7 @@ export default class ClapBubble extends Component {
 					this.props.fire
 						? [styles.clapBubble, animationStyle, styles.clapBubbleOrange]
 						: [styles.clapBubble, animationStyle, styles.clapBubbleGreen]
-				}
-			>
+				}>
 				<Text style={styles.clapText}>+1</Text>
 			</Animated.View>
 		);

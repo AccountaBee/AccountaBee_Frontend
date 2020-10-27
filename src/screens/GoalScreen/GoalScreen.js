@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, Alert, Keyboard } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import CustomDelButton from '../CustomDelButton';
 import CustomButton from '../CustomButton';
-import styles from './style';
 import { connect } from 'react-redux';
-import {
-	gotGoals,
-	deleteGoalThunk,
-	getGoalsThunk,
-} from '../../../redux/reducers/goals';
-import { ScrollView } from 'react-native-gesture-handler';
+import { gotGoals, deleteGoalThunk, getGoalsThunk } from '../../../redux/reducers/goals';
+import styles from './style';
 
 function GoalScreen(props) {
 	const [newGoal, setGoal] = useState('');
@@ -26,7 +22,7 @@ function GoalScreen(props) {
 		if (allGoals && allGoals.length < 3) {
 			let newGoalObj = {
 				title: newGoal.trim(),
-				frequency: 3,
+				frequency: 3
 			};
 			setAllGoals([...allGoals, newGoalObj]);
 			setGoal('');
@@ -38,9 +34,7 @@ function GoalScreen(props) {
 
 	const handleGoalDel = async (title, goal) => {
 		if (!goal.id) {
-			setAllGoals(
-				allGoals.filter((currentGoal) => currentGoal.title !== title)
-			);
+			setAllGoals(allGoals.filter(currentGoal => currentGoal.title !== title));
 		} else {
 			await props.deleteGoal(goal.id, props.goals);
 		}
@@ -61,22 +55,16 @@ function GoalScreen(props) {
 				<Text style={[styles.headline, styles.bigger]}>
 					Hello{props.username ? ' ' + props.username : ''}!
 				</Text>
-				<Text style={styles.headline}>
-					What does a healthy, productive week look like to you?
-				</Text>
+				<Text style={styles.headline}>What does a healthy, productive week look like to you?</Text>
 				<Text style={styles.headline}>Please enter up to 3 goals.</Text>
 				<View style={styles.flex}>
 					<TextInput
 						style={styles.textInput}
-						placeholder="Please enter a goal"
-						onChangeText={(text) => setGoal(text)}
+						placeholder='Please enter a goal'
+						onChangeText={text => setGoal(text)}
 						value={newGoal}
 					/>
-					<CustomButton
-						title="Add"
-						style={styles.button}
-						onPress={addGoalHander}
-					/>
+					<CustomButton title='Add' style={styles.button} onPress={addGoalHander} />
 				</View>
 			</View>
 			<View>
@@ -91,21 +79,14 @@ function GoalScreen(props) {
 									<Text style={styles.goals}>
 										{idx + 1}. {goal.title}
 									</Text>
-									<CustomDelButton
-										onPress={() => handleGoalDel(goal.title, goal, props.goals)}
-									/>
+									<CustomDelButton onPress={() => handleGoalDel(goal.title, goal, props.goals)} />
 								</View>
 							</View>
 						))}
 						<Text style={styles.subheader}>
-							Once you're happy with these goals,{'\n'}let's set their weekly
-							frequency.
+							Once you're happy with these goals,{'\n'}let's set their weekly frequency.
 						</Text>
-						<CustomButton
-							style={styles.nextButton}
-							title="NEXT"
-							onPress={() => nextPage()}
-						/>
+						<CustomButton style={styles.nextButton} title='NEXT' onPress={() => nextPage()} />
 					</View>
 				</ScrollView>
 			</View>
@@ -113,15 +94,15 @@ function GoalScreen(props) {
 	);
 }
 
-const mapState = (state) => ({
+const mapState = state => ({
 	username: state.user.firstName,
-	goals: state.goals,
+	goals: state.goals
 });
 
-const mapDispatch = (dispatch) => ({
+const mapDispatch = dispatch => ({
 	getGoals: () => dispatch(getGoalsThunk()),
-	setGoals: (goals) => dispatch(gotGoals(goals)),
-	deleteGoal: (goalId, goals) => dispatch(deleteGoalThunk(goalId, goals)),
+	setGoals: goals => dispatch(gotGoals(goals)),
+	deleteGoal: (goalId, goals) => dispatch(deleteGoalThunk(goalId, goals))
 });
 
 export default connect(mapState, mapDispatch)(GoalScreen);

@@ -23,7 +23,6 @@ export const sendRequest = email => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
 		await instance.post('/friends/request', { token, email });
-		// dispatch(getSentRequests(token));
 		Alert.alert(null, `You sent a friend request to ${email}`);
 	} catch (error) {
 		Alert.alert(

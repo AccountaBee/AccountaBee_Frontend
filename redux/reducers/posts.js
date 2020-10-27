@@ -2,14 +2,13 @@ import instance from '../axios';
 import { firebase } from '../../src/firebase/config';
 
 const SET_POST = 'SET_POST';
-const setPost = post => ({ type: SET_POST, post });
-
 const SET_POSTS = 'SET_POSTS';
-const setPosts = posts => ({ type: SET_POSTS, posts });
 const ADD_LIKE = 'ADD_LIKE';
-const addLike = (postId, like) => ({ type: ADD_LIKE, payload: { postId, like } });
-
 const REMOVE_LIKE = 'REMOVE_LIKE';
+
+const setPost = post => ({ type: SET_POST, post });
+const setPosts = posts => ({ type: SET_POSTS, posts });
+const addLike = (postId, like) => ({ type: ADD_LIKE, payload: { postId, like } });
 const removeLike = (postId, like) => ({ type: REMOVE_LIKE, payload: { postId, like } });
 
 // getting posts for feed
@@ -42,6 +41,7 @@ export const unlikePost = postId => async dispatch => {
 	}
 };
 
+// new post when user checks off a day of goal
 export const newPost = (title, completedDays, targetDaysMet) => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();
@@ -58,6 +58,7 @@ export const newPost = (title, completedDays, targetDaysMet) => async dispatch =
 	}
 };
 
+// new post when user sets a goal
 export const newGoalPost = (title, frequency) => async dispatch => {
 	try {
 		const token = await firebase.auth().currentUser.getIdToken();

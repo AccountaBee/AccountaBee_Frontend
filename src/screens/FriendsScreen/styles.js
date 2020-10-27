@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions } from 'react-native';
-
 const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
@@ -7,7 +6,7 @@ export default StyleSheet.create({
 		paddingTop: '18%',
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC',
+		backgroundColor: '#8688BC'
 	},
 	headline: {
 		marginTop: 10,
@@ -15,13 +14,13 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
-		fontWeight: '500',
+		fontWeight: '500'
 	},
 	subheading: {
 		fontWeight: '700',
 		fontSize: 20,
 		padding: 15,
-		color: '#424347',
+		color: '#424347'
 	},
 	outerContainer: {
 		display: 'flex',
@@ -30,7 +29,7 @@ export default StyleSheet.create({
 		marginHorizontal: '5%',
 		marginVertical: '2%',
 		maxWidth: '95%',
-		justifyContent: 'space-between',
+		justifyContent: 'space-between'
 	},
 	leftRequestContainer: {
 		display: 'flex',
@@ -39,12 +38,12 @@ export default StyleSheet.create({
 		borderRadius: 5,
 		marginVertical: '2%',
 		marginLeft: 15,
-		backgroundColor: '#FFF',
+		backgroundColor: '#FFF'
 	},
 	rightRequestContainer: {
 		display: 'flex',
 		alignSelf: 'center',
-		borderRadius: 5,
+		borderRadius: 5
 	},
 	photo: {
 		height: 60,
@@ -52,36 +51,36 @@ export default StyleSheet.create({
 		borderRadius: 30,
 		marginRight: '7%',
 		alignSelf: 'center',
-		justifyContent: 'center',
+		justifyContent: 'center'
 	},
 	icon: {
 		color: '#9FC78A',
 		paddingLeft: '2%',
-		marginRight: '2%',
+		marginRight: '2%'
 	},
 	iconNo: {
 		color: 'black',
 		paddingLeft: '2%',
-		marginRight: '2%',
+		marginRight: '2%'
 	},
 	iconContainer: {
-		flexDirection: 'row',
+		flexDirection: 'row'
 	},
 	requestBottom: {
 		display: 'flex',
-		flexDirection: 'row',
+		flexDirection: 'row'
 	},
 	name: {
 		fontSize: 0.045 * width,
 		fontWeight: '700',
 		alignSelf: 'center',
 		textAlignVertical: 'center',
-		color: '#424347',
+		color: '#424347'
 	},
 	email: {
 		fontSize: 20,
 		padding: 10,
-		color: '#424347',
+		color: '#424347'
 	},
 	instructions: {
 		alignSelf: 'center',
@@ -90,7 +89,7 @@ export default StyleSheet.create({
 		fontSize: 0.045 * width,
 		textAlign: 'center',
 		padding: 10,
-		color: '#424347',
+		color: '#424347'
 	},
 	input: {
 		height: 48,
@@ -99,14 +98,14 @@ export default StyleSheet.create({
 		backgroundColor: 'white',
 		fontSize: 20,
 		marginHorizontal: 15,
-		paddingLeft: 10,
+		paddingLeft: 10
 	},
 	sendButton: {
 		fontWeight: 'bold',
 		color: 'white',
 		fontSize: 18,
 		textAlign: 'center',
-		fontFamily: 'Avenir',
+		fontFamily: 'Avenir'
 	},
 	buttonContainer: {
 		width: '40%',
@@ -115,6 +114,6 @@ export default StyleSheet.create({
 		marginTop: '4%',
 		backgroundColor: '#9FC78A',
 		paddingVertical: 12,
-		borderRadius: 10,
-	},
+		borderRadius: 10
+	}
 });

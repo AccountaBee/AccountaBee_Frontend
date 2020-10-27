@@ -8,7 +8,7 @@ const firebaseConfig = {
 	databaseURL: process.env.EXPO_API_DATABASE_URL,
 	projectId: process.env.EXPO_API_PROJECT_ID,
 	storageBucket: process.env.EXPO_API_STORAGEBUCKET,
-	appId: process.env.EXPO_API_APP_ID,
+	appId: process.env.EXPO_API_APP_ID
 };
 
 if (!firebase.apps.length) {

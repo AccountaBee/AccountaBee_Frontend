@@ -1,21 +1,18 @@
 import React from 'react';
 import { Text, View, TextInput, Image, Alert, Keyboard } from 'react-native';
-import styles from './styles';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import {
-	getSentRequests,
-	sendRequest,
-} from '../../../redux/reducers/sentRequests';
+import { getSentRequests, sendRequest } from '../../../redux/reducers/sentRequests';
 import { confirmRequest, getRequests } from '../../../redux/reducers/requests';
 import { getFriends } from '../../../redux/reducers/friends';
 import { Feather } from '@expo/vector-icons';
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import styles from './styles';
 
 class FriendsScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: '',
+			email: ''
 		};
 	}
 
@@ -25,7 +22,7 @@ class FriendsScreen extends React.Component {
 		await this.props.getFriends();
 	}
 
-	handleChange = (email) => {
+	handleChange = email => {
 		this.setState({ email });
 	};
 
@@ -45,6 +42,7 @@ class FriendsScreen extends React.Component {
 
 	render() {
 		const { requests } = this.props || [];
+
 		return (
 			<View>
 				<View style={styles.headlineContainer}>
@@ -54,14 +52,11 @@ class FriendsScreen extends React.Component {
 					{requests && requests.length ? (
 						<View>
 							<Text style={styles.subheading}>Friend Requests</Text>
-							{requests.map((request) => (
+							{requests.map(request => (
 								<View key={request.uid} style={styles.outerContainer}>
 									<View style={styles.leftRequestContainer}>
 										{request.profilePicture ? (
-											<Image
-												style={styles.photo}
-												source={{ uri: request.profilePicture }}
-											/>
+											<Image style={styles.photo} source={{ uri: request.profilePicture }} />
 										) : (
 											<Image
 												style={styles.photo}
@@ -73,16 +68,14 @@ class FriendsScreen extends React.Component {
 									<View style={styles.rightRequestContainer}>
 										<View style={styles.iconContainer}>
 											<Feather
-												name="check"
+												name='check'
 												size={30}
 												style={styles.icon}
-												onPress={() =>
-													this.onReplyPress('confirmed', request.uid)
-												}
+												onPress={() => this.onReplyPress('confirmed', request.uid)}
 											/>
 											<Feather
 												style={styles.iconNo}
-												name="x"
+												name='x'
 												size={30}
 												onPress={() => this.onReplyPress('denied', request.uid)}
 											/>
@@ -95,18 +88,17 @@ class FriendsScreen extends React.Component {
 
 					<View>
 						<Text style={styles.instructions}>
-							Add a buddy to hold yourself accountable! {'\n\n'}Once they
-							approve, you will be able to encourage each other when you set and
-							complete goals!
+							Add a buddy to hold yourself accountable! {'\n\n'}Once they approve, you will be able
+							to encourage each other when you set and complete goals!
 						</Text>
 						<View>
 							<TextInput
-								onChangeText={(email) => this.handleChange(email)}
+								onChangeText={email => this.handleChange(email)}
 								style={styles.input}
 								placeholder="Friend's email"
-								placeholderTextColor="#aaaaaa"
-								underlineColorAndroid="transparent"
-								autoCapitalize="none"
+								placeholderTextColor='#aaaaaa'
+								underlineColorAndroid='transparent'
+								autoCapitalize='none'
 							/>
 							<View style={styles.buttonContainer}>
 								<TouchableOpacity onPress={() => this.onRequestPress()}>
@@ -121,20 +113,19 @@ class FriendsScreen extends React.Component {
 	}
 }
 
-const mapState = (state) => ({
+const mapState = state => ({
 	sentRequests: state.sentRequests,
 	requests: state.requests,
 	friends: state.friends,
-	user: state.user,
+	user: state.user
 });
 
-const mapDispatch = (dispatch) => ({
+const mapDispatch = dispatch => ({
 	getSentRequests: () => dispatch(getSentRequests()),
 	getRequests: () => dispatch(getRequests()),
 	getFriends: () => dispatch(getFriends()),
-	sendRequest: (email) => dispatch(sendRequest(email)),
-	confirmRequest: (status, senderId) =>
-		dispatch(confirmRequest(status, senderId)),
+	sendRequest: email => dispatch(sendRequest(email)),
+	confirmRequest: (status, senderId) => dispatch(confirmRequest(status, senderId))
 });
 
 export default connect(mapState, mapDispatch)(FriendsScreen);

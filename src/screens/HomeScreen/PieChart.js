@@ -10,10 +10,7 @@ export default function GoalPieChart(props) {
 	return (
 		<TouchableOpacity
 			style={pieStyle.container}
-			onPress={() =>
-				props.navigation.navigate('Single Goal', { goal: props.goal })
-			}
-		>
+			onPress={() => props.navigation.navigate('Single Goal', { goal: props.goal })}>
 			<View style={pieStyle.textContainer}>
 				<Text style={pieStyle.goalName}>{title}</Text>
 				<Text style={pieStyle.subhead}>

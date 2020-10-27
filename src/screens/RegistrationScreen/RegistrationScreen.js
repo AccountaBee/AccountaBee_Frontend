@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Text, TextInput, View, Image, Alert, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../../firebase/config';
-import styles from './styles';
 import CustomButton from '../CustomButton';
 import { registerNewUser } from '../../../redux/reducers/users';
 import { connect } from 'react-redux';
+import styles from './styles';
 
 function RegistrationScreen(props) {
 	const [firstName, setFirstName] = useState('');
@@ -31,15 +31,13 @@ function RegistrationScreen(props) {
 				const body = {
 					token,
 					email,
-					firstName,
+					firstName
 				};
 				await props.gotUser(body);
 				props.navigation.navigate('All Goals');
 			})
 			.catch(() => {
-				Alert.alert(
-					'Sorry, there was a problem creating an account. Please try again!'
-				);
+				Alert.alert('Sorry, there was a problem creating an account. Please try again!');
 			});
 	};
 
@@ -47,56 +45,52 @@ function RegistrationScreen(props) {
 		<View style={styles.container}>
 			<KeyboardAwareScrollView
 				style={{ flex: 1, width: '100%' }}
-				keyboardShouldPersistTaps="always"
-			>
+				keyboardShouldPersistTaps='always'>
 				<View style={styles.beeContainer}>
-					<Image
-						source={require('../../../assets/bee.png')}
-						style={styles.bee}
-					/>
+					<Image source={require('../../../assets/bee.png')} style={styles.bee} />
 				</View>
 				<Text style={styles.header}>ACCOUNTABEE</Text>
 				<View>
 					<TextInput
 						style={styles.input}
-						placeholder="First Name"
-						placeholderTextColor="#aaaaaa"
-						onChangeText={(text) => setFirstName(text)}
+						placeholder='First Name'
+						placeholderTextColor='#aaaaaa'
+						onChangeText={text => setFirstName(text)}
 						value={firstName}
-						underlineColorAndroid="transparent"
-						autoCapitalize="none"
+						underlineColorAndroid='transparent'
+						autoCapitalize='none'
 					/>
 					<TextInput
 						style={styles.input}
-						placeholder="Email"
-						placeholderTextColor="#aaaaaa"
-						onChangeText={(text) => setEmail(text)}
+						placeholder='Email'
+						placeholderTextColor='#aaaaaa'
+						onChangeText={text => setEmail(text)}
 						value={email}
-						underlineColorAndroid="transparent"
-						autoCapitalize="none"
+						underlineColorAndroid='transparent'
+						autoCapitalize='none'
 					/>
 					<TextInput
 						style={styles.input}
-						placeholderTextColor="#aaaaaa"
+						placeholderTextColor='#aaaaaa'
 						secureTextEntry
-						placeholder="Password"
-						onChangeText={(text) => setPassword(text)}
+						placeholder='Password'
+						onChangeText={text => setPassword(text)}
 						value={password}
-						underlineColorAndroid="transparent"
-						autoCapitalize="none"
+						underlineColorAndroid='transparent'
+						autoCapitalize='none'
 					/>
 					<TextInput
 						style={styles.input}
-						placeholderTextColor="#aaaaaa"
+						placeholderTextColor='#aaaaaa'
 						secureTextEntry
-						placeholder="Confirm Password"
-						onChangeText={(text) => setConfirmPassword(text)}
+						placeholder='Confirm Password'
+						onChangeText={text => setConfirmPassword(text)}
 						value={confirmPassword}
-						underlineColorAndroid="transparent"
-						autoCapitalize="none"
+						underlineColorAndroid='transparent'
+						autoCapitalize='none'
 					/>
 					<CustomButton
-						title="CREATE ACCOUNT"
+						title='CREATE ACCOUNT'
 						style={styles.button}
 						onPress={() => onRegisterPress()}
 					/>
@@ -114,12 +108,12 @@ function RegistrationScreen(props) {
 	);
 }
 
-const mapState = (state) => ({
-	user: state.user,
+const mapState = state => ({
+	user: state.user
 });
 
-const mapDispatch = (dispatch) => ({
-	gotUser: (user) => dispatch(registerNewUser(user)),
+const mapDispatch = dispatch => ({
+	gotUser: user => dispatch(registerNewUser(user))
 });
 
 export default connect(mapState, mapDispatch)(RegistrationScreen);

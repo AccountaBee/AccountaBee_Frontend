@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { getRequests } from '../../../redux/reducers/requests';
 import IconBadge from 'react-native-icon-badge';

@@ -9,9 +9,9 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { connect } from 'react-redux';
 import { getUser } from '../../../redux/reducers/users';
 import { getGoalsThunk, resetGoalsThunk } from '../../../redux/reducers/goals';
+import GoalPieChart from './PieChart';
 import CustomButton from '../CustomButton';
 import styles from './styles';
-import GoalPieChart from './PieChart';
 
 const pieCalculations = (completedDays, frequency) => {
 	const pieData = [],
@@ -59,21 +59,11 @@ function HomeScreen(props) {
 				// eslint-disable-next-line no-inner-declarations
 				async function reset(uid) {
 					let now = new Date();
-					let today = new Date(
-						now.getFullYear(),
-						now.getMonth(),
-						now.getDate()
-					);
-					let lastSunday = new Date(
-						today.setDate(today.getDate() - today.getDay())
-					);
-					const lastTimeUpdated = props.goals.map(
-						(goal) => new Date(goal.updatedAt)
-					);
+					let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+					let lastSunday = new Date(today.setDate(today.getDate() - today.getDay()));
+					const lastTimeUpdated = props.goals.map(goal => new Date(goal.updatedAt));
 					//change variable 'lastSunday' to 'now' for demo
-					const oldGoalsCheck = lastTimeUpdated.some(
-						(time) => time < lastSunday
-					);
+					const oldGoalsCheck = lastTimeUpdated.some(time => time < lastSunday);
 					if (oldGoalsCheck) {
 						await props.resetGoals(uid);
 						setCelebration(false);
@@ -89,7 +79,7 @@ function HomeScreen(props) {
 		React.useCallback(() => {
 			if (
 				props.goals.length &&
-				props.goals.every((goal) => goal.completedDays >= goal.frequency) &&
+				props.goals.every(goal => goal.completedDays >= goal.frequency) &&
 				!celebration
 			) {
 				setCelebration(true);
@@ -108,11 +98,11 @@ function HomeScreen(props) {
 			<View style={styles.spinnerContainer}>
 				<Spinner
 					visible={true}
-					textContent="Loading..."
+					textContent='Loading...'
 					textStyle={styles.spinnerTextStyle}
-					color="#8688BC"
-					animation="fade"
-					overlayColor="white"
+					color='#8688BC'
+					animation='fade'
+					overlayColor='white'
 				/>
 			</View>
 		);
@@ -127,7 +117,7 @@ function HomeScreen(props) {
 						{props.goals.length ? (
 							props.goals
 								.sort((a, b) => a.id - b.id)
-								.map((goal) => {
+								.map(goal => {
 									if (goal.status === 'active') {
 										const [data, graphicColor] = pieCalculations(
 											goal.completedDays,
@@ -172,9 +162,9 @@ function HomeScreen(props) {
 												<Text style={styles.modalText}>{message}</Text>
 												<TouchableHighlight>
 													<AntDesign
-														name="closecircleo"
+														name='closecircleo'
 														size={24}
-														color="#8688BC"
+														color='#8688BC'
 														style={styles.xbutton}
 														onPress={() => setCelebratedAlready(true)}
 													/>
@@ -192,15 +182,15 @@ function HomeScreen(props) {
 	}
 }
 
-const mapState = (state) => ({
+const mapState = state => ({
 	user: state.user,
-	goals: state.goals,
+	goals: state.goals
 });
 
-const mapDispatch = (dispatch) => ({
+const mapDispatch = dispatch => ({
 	getGoals: () => dispatch(getGoalsThunk()),
 	getUser: () => dispatch(getUser()),
-	resetGoals: (uid) => dispatch(resetGoalsThunk(uid)),
+	resetGoals: uid => dispatch(resetGoalsThunk(uid))
 });
 
 export default connect(mapState, mapDispatch)(HomeScreen);

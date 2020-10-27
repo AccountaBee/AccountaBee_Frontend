@@ -7,7 +7,7 @@ export default StyleSheet.create({
 		paddingTop: '18%',
 		paddingLeft: 20,
 		paddingRight: 20,
-		backgroundColor: '#8688BC',
+		backgroundColor: '#8688BC'
 	},
 	headline: {
 		marginTop: 10,
@@ -15,13 +15,13 @@ export default StyleSheet.create({
 		fontSize: 26,
 		textAlign: 'center',
 		marginBottom: 20,
-		fontWeight: '500',
+		fontWeight: '500'
 	},
 	row: {
-		flexDirection: 'row',
+		flexDirection: 'row'
 	},
 	testClaps: {
-		marginLeft: 100,
+		marginLeft: 100
 	},
 	textInput: {
 		backgroundColor: 'white',
@@ -32,18 +32,18 @@ export default StyleSheet.create({
 		borderColor: 'white',
 		borderWidth: 1,
 		fontSize: 18,
-		marginRight: 0,
+		marginRight: 0
 	},
 	button: {
 		paddingVertical: 16,
 		paddingHorizontal: 10,
 		marginTop: 0,
 		marginLeft: 0,
-		backgroundColor: '#9FC78A',
+		backgroundColor: '#9FC78A'
 	},
 	centeredView: {
 		flex: 1,
-		justifyContent: 'flex-end',
+		justifyContent: 'flex-end'
 	},
 	modalView: {
 		flex: 1,
@@ -59,19 +59,19 @@ export default StyleSheet.create({
 		shadowColor: '#000',
 		shadowOpacity: 0.5,
 		shadowRadius: 3.84,
-		elevation: 0,
+		elevation: 0
 	},
 	textStyle: {
 		color: 'white',
 		fontWeight: 'bold',
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 	modalText: {
 		marginTop: 25,
 		marginBottom: 5,
 		textAlign: 'center',
 		color: 'white',
-		fontSize: 20,
+		fontSize: 20
 	},
 	modalInnerTextContainer: {
 		borderRadius: 5,
@@ -79,7 +79,7 @@ export default StyleSheet.create({
 		marginVertical: 8,
 		marginLeft: 10,
 		marginRight: 10,
-		justifyContent: 'space-between',
+		justifyContent: 'space-between'
 	},
 	modalInnerText: {
 		marginBottom: 12,
@@ -87,10 +87,10 @@ export default StyleSheet.create({
 		color: 'white',
 		fontSize: 20,
 		marginTop: 10,
-		flexDirection: 'row',
+		flexDirection: 'row'
 	},
 	xbutton: {
-		marginTop: 20,
+		marginTop: 20
 	},
 	clapButton: {
 		position: 'absolute',
@@ -101,7 +101,7 @@ export default StyleSheet.create({
 		top: 4,
 		justifyContent: 'center',
 		alignItems: 'center',
-		elevation: 3,
+		elevation: 3
 	},
 	clapBubble: {
 		height: 35,
@@ -110,36 +110,36 @@ export default StyleSheet.create({
 		top: 4,
 		justifyContent: 'center',
 		alignContent: 'center',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	clapBubbleGreen: {
 		backgroundColor: '#bddbad',
-		right: 90,
+		right: 90
 	},
 	clapBubbleOrange: {
 		backgroundColor: '#FBB374',
-		right: 90,
+		right: 90
 	},
 	clapImage: {
 		width: 25,
 		height: 25,
 		justifyContent: 'center',
 		alignContent: 'center',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	clapNumber: {
 		fontSize: 12,
 		marginTop: 13,
-		marginLeft: 43,
+		marginLeft: 43
 	},
 	clapText: {
 		color: 'white',
-		fontSize: 14,
+		fontSize: 14
 	},
 	viewAllComments: {
 		marginTop: 10,
 		marginBottom: 10,
-		fontSize: 12,
+		fontSize: 12
 	},
 	feedItem: {
 		minHeight: 150,
@@ -149,29 +149,29 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		marginVertical: 8,
 		marginLeft: 10,
-		marginRight: 10,
+		marginRight: 10
 	},
 	feedContent: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	userName: {
 		fontSize: 15,
 		fontWeight: '500',
-		color: '#454D65',
+		color: '#454D65'
 	},
 	userImage: {
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		marginRight: 16,
+		marginRight: 16
 	},
 	post: {
 		marginTop: 10,
 		marginBottom: '1%',
 		fontSize: 0.039 * width,
 		color: '#838899',
-		maxWidth: '95%',
-	},
+		maxWidth: '95%'
+	}
 });
