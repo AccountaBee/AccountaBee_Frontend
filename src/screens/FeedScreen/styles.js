@@ -1,5 +1,6 @@
-import { StyleSheet, Dimensions, Platform } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 const { height } = Dimensions.get('window');
+const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
 	container: {
@@ -98,7 +99,6 @@ export default StyleSheet.create({
 		borderRadius: 30,
 		backgroundColor: '#ecf0f1',
 		top: 4,
-		left: 250,
 		justifyContent: 'center',
 		alignItems: 'center',
 		elevation: 3,
@@ -114,11 +114,11 @@ export default StyleSheet.create({
 	},
 	clapBubbleGreen: {
 		backgroundColor: '#bddbad',
-		left: 15,
+		right: 90,
 	},
 	clapBubbleOrange: {
 		backgroundColor: '#FBB374',
-		left: 10,
+		right: 90,
 	},
 	clapImage: {
 		width: 25,
@@ -130,7 +130,7 @@ export default StyleSheet.create({
 	clapNumber: {
 		fontSize: 12,
 		marginTop: 13,
-		marginLeft: 190,
+		marginLeft: 43,
 	},
 	clapText: {
 		color: 'white',
@@ -142,7 +142,7 @@ export default StyleSheet.create({
 		fontSize: 12,
 	},
 	feedItem: {
-		height: 150,
+		minHeight: 150,
 		backgroundColor: '#FFF',
 		borderRadius: 5,
 		padding: 8,
@@ -169,8 +169,9 @@ export default StyleSheet.create({
 	},
 	post: {
 		marginTop: 10,
-		fontSize: 16,
+		marginBottom: '1%',
+		fontSize: 0.039 * width,
 		color: '#838899',
-		maxWidth: '80%',
+		maxWidth: '95%',
 	},
 });
