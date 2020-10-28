@@ -9,9 +9,9 @@ View a walkthrough of AccountaBee on YouTube [here.](https://www.youtube.com/wat
 
 ## Technologies
 
-We developed AccountaBee with JavaScript, React Native, Expo, React Navigation, Redux, Firebase Authentication, and Victory.js.
+We developed AccountaBee with JavaScript, React Native, React Navigation, Redux, Expo, Firebase Authentication, and Victory.js.
 
-Our [backend](https://https://github.com/AccountaBee/accountaBee-backend "AccountaBee Backend Repository") was created with Node.js, Express, PostgreSQL, and Sequelize, and deployed on Heroku.
+Our [backend](https://github.com/AccountaBee/accountaBee-backend "AccountaBee Backend Repository") was created with Node.js, Express, PostgreSQL, and Sequelize, and deployed on Heroku.
 
 
 ## Authors
