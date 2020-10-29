@@ -21,7 +21,6 @@ Note: testing this app requires downloading 'expo client' on an iOS  product.
 3. Sign in to expo with the following credentials:
 
     • Username: teambee2008@gmail.com
-
     • Password: 123456
 
 4. On the profile page under published projects, click on accountabee
