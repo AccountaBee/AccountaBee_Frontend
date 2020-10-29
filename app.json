@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-firebase",
-    "slug": "react-native-firebase",
+    "name": "AccountaBee",
+    "slug": "accountabee",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,6 +21,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Socially accountable goal setting for you and your friends.\n\nAccountaBee is a mobile app that lets you and your friends set weekly goals, check them off as the week progresses, and keep each other socially accountable. With a feed that updates you on your friends' progress, you can encourage and applaud each others' efforts and achieve your goals together.",
+    "githubUrl": "https://github.com/AccountaBee"
   }
 }
