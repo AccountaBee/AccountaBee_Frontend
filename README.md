@@ -11,8 +11,21 @@ View a walkthrough of AccountaBee on YouTube [here.](https://www.youtube.com/wat
 
 We developed AccountaBee with JavaScript, React Native, React Navigation, Redux, Expo, Firebase Authentication, and Victory.js.
 
-Our [backend](https://github.com/AccountaBee/accountaBee-backend "AccountaBee Backend Repository") was created with Node.js, Express, PostgreSQL, and Sequelize, and deployed on Heroku.
+Our [backend](https://github.com/AccountaBee/AccountaBee-Backend "AccountaBee Backend Repository") was created with Node.js, Express, PostgreSQL, and Sequelize, and deployed on Heroku.
 
+## Setup
+Note: testing this app requires downloading 'expo client' on an iOS  product. 
+
+1. On your iOS device, download expo client from the app store
+2. Open the expo app and click on profile
+3. Sign in to expo with the following credentials:
+
+    • Username: teambee2008@gmail.com
+    
+    • Password: 123456
+
+4. On the profile page under published projects, click on accountabee
+5. Sign up for an AccountaBee account or log in. You now have access to AccountaBee!
 
 ## Authors
 
