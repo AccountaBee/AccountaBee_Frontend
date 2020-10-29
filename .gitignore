@@ -8,7 +8,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-src/firebase/*
+src/firebase/config.js
 .env
 
 # macOS
